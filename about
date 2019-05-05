@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>About trevorblum.name</title>
+		<!-- link to main stylesheet -->
+		<link rel="stylesheet" type="text/css" href="/css/main.css">
+	</head>
+	<nav>
+    		<ul>
+        		<li><a href="./">Home</a></li>
+    		</ul>
+		</nav>
+<img src="images/background.png" alt=darktree height="480" width="640">
+		<div class="container">
+    		<div class="blurb">
+        		<h3>Once, there was site named trevorblum.com.<br> It was a wild garden, overgrown with weeds and briars. <br><br>Unlike the tales, no Prince was going to come and hack through the brambles <br>to give it ( in a manner of speaking ) the kiss of life.<br><br>As always has to be part of the story, the wicked witch ICANN had cast a spell which,<br> if not broken by a Prince, would ensure the death of trevorblum.com when the site registration expired.
+<br><br>
+I ( not exactly Briar Rose ) had a plan to recover any goodies from the dying site<br> and create a brilliant new and dazzling site better and even more wonderful than the old.<br><br><br>
+
+This, briefly is it. A replacement for the dying site, long live the King.
+
+</h3>
+				
+		<footer>
+    		<ul>
+        		<li><a href="mailto:trevorblumweb@dodo.com.au">email</a></li>
+			</ul>
+		</footer>
+	</body>
+</html>
