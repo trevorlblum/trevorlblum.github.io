@@ -1,0 +1,462 @@
+Listing all filenames in a directory: 
+[0] ".DS_Store"
+[1] "Catalogue.txt"
+[2] "files"
+[3] "index.html"
+[4] "selection.png"
+
+Listing info about all files in a directory: 
+Name: .DS_Store Is directory: false Size: 6148
+Last Modified: Sat Jun 29 22:12:35 AEST 2019
+-----------------------
+Name: Catalogue.txt Is directory: false Size: 1532
+Last Modified: Fri Jun 28 12:19:27 AEST 2019
+-----------------------
+Name: files Is directory: true Size: 272
+Last Modified: Sat Jun 29 21:45:45 AEST 2019
+-----------------------
+Name: index.html Is directory: false Size: 903
+Last Modified: Sat Jun 29 22:00:32 AEST 2019
+-----------------------
+Name: selection.png Is directory: false Size: 469985
+Last Modified: Sat Jun 29 22:00:32 AEST 2019
+-----------------------
+
+Listing info about all files in a directory and all subdirectories: 
+Name: selection
+Full path: /users/trevorblum/documents/selection Is directory: true Size: 238
+Last Modified: Sat Jun 29 22:12:30 AEST 2019
+-----------------------
+Name: .DS_Store
+Full path: /users/trevorblum/documents/selection/.DS_Store Size: 6148
+Last Modified: Sat Jun 29 22:12:35 AEST 2019
+-----------------------
+Name: Catalogue.txt
+Full path: /users/trevorblum/documents/selection/Catalogue.txt Size: 1532
+Last Modified: Fri Jun 28 12:19:27 AEST 2019
+-----------------------
+Name: files
+Full path: /users/trevorblum/documents/selection/files Is directory: true Size: 272
+Last Modified: Sat Jun 29 21:45:45 AEST 2019
+-----------------------
+Name: .DS_Store
+Full path: /users/trevorblum/documents/selection/files/.DS_Store Size: 10244
+Last Modified: Sat Jun 29 21:45:52 AEST 2019
+
+-----------------------
+Name: creatures
+Full path: /users/trevorblum/documents/selection/files/creatures Is directory: true Size: 204
+Last Modified: Sat Jun 29 21:46:24 AEST 2019
+-----------------------
+Name: .DS_Store
+Full path: /users/trevorblum/documents/selection/files/creatures/.DS_Store Size: 6148
+Last Modified: Sat Jun 29 21:45:57 AEST 2019
+-----------------------
+Name: creatures.png
+Full path: /users/trevorblum/documents/selection/files/creatures/creatures.png Size: 3339815
+Last Modified: Sat Jun 29 21:46:25 AEST 2019
+-----------------------
+Name: files
+Full path: /users/trevorblum/documents/selection/files/creatures/files Is directory: true Size: 578
+Last Modified: Sat Jun 29 21:45:14 AEST 2019
+-----------------------
+Name: A3-IMG_4772.jpg
+Full path: /users/trevorblum/documents/selection/files/creatures/files/A3-IMG_4772.jpg Size: 473504
+Last Modified: Mon May 14 21:57:59 AEST 2012
+-----------------------
+Name: beetle.png
+Full path: /users/trevorblum/documents/selection/files/creatures/files/beetle.png Size: 1315303
+Last Modified: Wed Jan 09 23:09:35 AEDT 2019
+-----------------------
+Name: dragonfly.png
+Full path: /users/trevorblum/documents/selection/files/creatures/files/dragonfly.png Size: 7532507
+Last Modified: Sat Dec 03 21:13:00 AEDT 2016
+-----------------------
+Name: Female Spinebill.jpg
+Full path: /users/trevorblum/documents/selection/files/creatures/files/Female Spinebill.jpg Size: 614894
+Last Modified: Fri Mar 30 12:42:17 AEDT 2012
+-----------------------
+Name: Gotcha!.jpg
+Full path: /users/trevorblum/documents/selection/files/creatures/files/Gotcha!.jpg Size: 3199287
+Last Modified: Fri Mar 27 12:52:53 AEDT 2015
+-----------------------
+Name: Green Bug CIMG0400-crop.jpg
+Full path: /users/trevorblum/documents/selection/files/creatures/files/Green Bug CIMG0400-crop.jpg Size: 671597
+Last Modified: Thu Dec 20 21:08:34 AEDT 2012
+-----------------------
+Name: IMG_3374-Stick insect crop close-up.jpg
+Full path: /users/trevorblum/documents/selection/files/creatures/files/IMG_3374-Stick insect crop close-up.jpg Size: 471730
+Last Modified: Mon Feb 28 23:06:48 AEDT 2011
+-----------------------
+Name: native bee on poker.png
+Full path: /users/trevorblum/documents/selection/files/creatures/files/native bee on poker.png Size: 6623567
+Last Modified: Fri Jun 28 11:34:11 AEST 2019
+-----------------------
+Name: P1000184-1.jpeg
+Full path: /users/trevorblum/documents/selection/files/creatures/files/P1000184-1.jpeg Size: 8181417
+Last Modified: Sun Feb 17 23:20:19 AEDT 2019
+-----------------------
+Name: P1000255.jpg
+Full path: /users/trevorblum/documents/selection/files/creatures/files/P1000255.jpg Size: 1887288
+Last Modified: Mon Mar 18 22:06:31 AEDT 2019
+-----------------------
+Name: post-focus fly.png
+Full path: /users/trevorblum/documents/selection/files/creatures/files/post-focus fly.png Size: 4789671
+Last Modified: Sat Jan 26 00:25:36 AEDT 2019
+-----------------------
+Name: Silver Eye.JPG
+Full path: /users/trevorblum/documents/selection/files/creatures/files/Silver Eye.JPG Size: 2105351
+Last Modified: Thu Dec 17 23:26:44 AEDT 2015
+-----------------------
+Name: Spider bee capture.jpg
+Full path: /users/trevorblum/documents/selection/files/creatures/files/Spider bee capture.jpg Size: 5689656
+Last Modified: Mon Dec 08 09:54:00 AEDT 2008
+-----------------------
+Name: spinebill.png
+Full path: /users/trevorblum/documents/selection/files/creatures/files/spinebill.png Size: 3420165
+Last Modified: Mon Dec 03 12:08:23 AEDT 2018
+-----------------------
+Name: White rose spider.jpg
+Full path: /users/trevorblum/documents/selection/files/creatures/files/White rose spider.jpg Size: 711116
+Last Modified: Sat May 02 11:24:00 AEST 2009
+-----------------------
+Name: index.html
+Full path: /users/trevorblum/documents/selection/files/creatures/index.html Size: 1976
+Last Modified: Sat Jun 29 21:46:26 AEST 2019
+
+-----------------------
+Name: Flowers
+Full path: /users/trevorblum/documents/selection/files/Flowers Is directory: true Size: 204
+Last Modified: Wed Jun 26 21:08:20 AEST 2019
+-----------------------
+Name: .DS_Store
+Full path: /users/trevorblum/documents/selection/files/Flowers/.DS_Store Size: 6148
+Last Modified: Wed Jun 26 21:43:54 AEST 2019
+-----------------------
+Name: files
+Full path: /users/trevorblum/documents/selection/files/Flowers/files Is directory: true Size: 408
+Last Modified: Wed Jun 26 21:30:40 AEST 2019
+-----------------------
+Name: 20161112_144035.JPG
+Full path: /users/trevorblum/documents/selection/files/Flowers/files/20161112_144035.JPG Size: 5268632
+Last Modified: Sat Nov 12 14:40:35 AEDT 2016
+-----------------------
+Name: 20190614_141409.JPG
+Full path: /users/trevorblum/documents/selection/files/Flowers/files/20190614_141409.JPG Size: 5124754
+Last Modified: Sat Jun 22 13:28:48 AEST 2019
+-----------------------
+Name: autumn-13.jpg
+Full path: /users/trevorblum/documents/selection/files/Flowers/files/autumn-13.jpg Size: 477834
+Last Modified: Fri May 31 14:14:15 AEST 2013
+-----------------------
+Name: CIMG0413.jpg
+Full path: /users/trevorblum/documents/selection/files/Flowers/files/CIMG0413.jpg Size: 397760
+Last Modified: Mon Dec 31 16:41:04 AEDT 2012
+-----------------------
+Name: Coralid Fungus.JPG
+Full path: /users/trevorblum/documents/selection/files/Flowers/files/Coralid Fungus.JPG Size: 3372508
+Last Modified: Tue Oct 04 22:06:22 AEDT 2016
+-----------------------
+Name: Hairy pod.png
+Full path: /users/trevorblum/documents/selection/files/Flowers/files/Hairy pod.png Size: 2940793
+Last Modified: Sun Mar 12 13:28:51 AEDT 2017
+-----------------------
+Name: IMG_4688-crop.jpg
+Full path: /users/trevorblum/documents/selection/files/Flowers/files/IMG_4688-crop.jpg Size: 370793
+Last Modified: Sat Jul 07 16:38:20 AEST 2012
+-----------------------
+Name: Light in Autumn.jpg
+Full path: /users/trevorblum/documents/selection/files/Flowers/files/Light in Autumn.jpg Size: 1346007
+Last Modified: Wed Sep 03 22:21:07 AEST 2014
+-----------------------
+Name: Webbed Rose.JPG
+Full path: /users/trevorblum/documents/selection/files/Flowers/files/Webbed Rose.JPG Size: 2137844
+Last Modified: Thu Dec 17 23:25:32 AEDT 2015
+-----------------------
+Name: wet tree.png
+Full path: /users/trevorblum/documents/selection/files/Flowers/files/wet tree.png Size: 4074278
+Last Modified: Thu Dec 13 20:34:47 AEDT 2018
+-----------------------
+Name: Flowers.png
+Full path: /users/trevorblum/documents/selection/files/Flowers/Flowers.png Size: 2136407
+Last Modified: Wed Jun 26 21:33:37 AEST 2019
+-----------------------
+Name: index.html
+Full path: /users/trevorblum/documents/selection/files/Flowers/index.html Size: 1373
+Last Modified: Wed Jun 26 21:33:37 AEST 2019
+
+-----------------------
+Name: landscapes
+Full path: /users/trevorblum/documents/selection/files/landscapes Is directory: true Size: 204
+Last Modified: Wed Jun 26 21:05:42 AEST 2019
+-----------------------
+Name: .DS_Store
+Full path: /users/trevorblum/documents/selection/files/landscapes/.DS_Store Size: 6148
+Last Modified: Wed Jun 26 21:47:50 AEST 2019
+-----------------------
+Name: files
+Full path: /users/trevorblum/documents/selection/files/landscapes/files Is directory: true Size: 578
+Last Modified: Wed Jun 26 21:30:02 AEST 2019
+-----------------------
+Name: 20150422_151851.jpeg
+Full path: /users/trevorblum/documents/selection/files/landscapes/files/20150422_151851.jpeg Size: 643107
+Last Modified: Thu Apr 30 10:25:41 AEST 2015
+-----------------------
+Name: 20171119_150747.JPG
+Full path: /users/trevorblum/documents/selection/files/landscapes/files/20171119_150747.JPG Size: 6357479
+Last Modified: Sun Nov 19 15:07:46 AEDT 2017
+-----------------------
+Name: gembrook fields.png
+Full path: /users/trevorblum/documents/selection/files/landscapes/files/gembrook fields.png Size: 19667462
+Last Modified: Sat Jun 22 13:24:50 AEST 2019
+-----------------------
+Name: gembrook mist_1.JPG
+Full path: /users/trevorblum/documents/selection/files/landscapes/files/gembrook mist_1.JPG Size: 3370725
+Last Modified: Tue Jun 25 22:50:10 AEST 2019
+-----------------------
+Name: Gembrook mist_2.JPG
+Full path: /users/trevorblum/documents/selection/files/landscapes/files/Gembrook mist_2.JPG Size: 3114171
+Last Modified: Sun Jun 23 22:47:24 AEST 2019
+-----------------------
+Name: Gembrook Sunset.png
+Full path: /users/trevorblum/documents/selection/files/landscapes/files/Gembrook Sunset.png Size: 8492500
+Last Modified: Sat Jun 22 13:23:20 AEST 2019
+-----------------------
+Name: Grapevines.jpg
+Full path: /users/trevorblum/documents/selection/files/landscapes/files/Grapevines.jpg Size: 9366475
+Last Modified: Thu Apr 30 15:36:16 AEST 2015
+-----------------------
+Name: IMG_0300-crop-adjust.jpg
+Full path: /users/trevorblum/documents/selection/files/landscapes/files/IMG_0300-crop-adjust.jpg Size: 1056417
+Last Modified: Wed Jun 09 09:16:17 AEST 2010
+-----------------------
+Name: IMG_1268.JPG
+Full path: /users/trevorblum/documents/selection/files/landscapes/files/IMG_1268.JPG Size: 6332039
+Last Modified: Tue May 12 11:26:00 AEST 2009
+-----------------------
+Name: IMG_9502-crop.jpg
+Full path: /users/trevorblum/documents/selection/files/landscapes/files/IMG_9502-crop.jpg Size: 3015610
+Last Modified: Thu Dec 04 11:18:00 AEDT 2008
+-----------------------
+Name: MVI_1523 Breaking Waves.jpeg
+Full path: /users/trevorblum/documents/selection/files/landscapes/files/MVI_1523 Breaking Waves.jpeg Size: 1585579
+Last Modified: Fri Jan 02 00:11:50 AEDT 2015
+-----------------------
+Name: Ploughing.png
+Full path: /users/trevorblum/documents/selection/files/landscapes/files/Ploughing.png Size: 10192038
+Last Modified: Fri Oct 05 22:33:17 AEST 2018
+-----------------------
+Name: ruined shed.jpg
+Full path: /users/trevorblum/documents/selection/files/landscapes/files/ruined shed.jpg Size: 5661528
+Last Modified: Thu Jul 28 20:54:18 AEST 2011
+-----------------------
+Name: sunset extreme.png
+Full path: /users/trevorblum/documents/selection/files/landscapes/files/sunset extreme.png Size: 5527564
+Last Modified: Thu Jul 09 20:49:45 AEST 2015
+-----------------------
+Name: woori yalloc_2 30-1-2015.jpg
+Full path: /users/trevorblum/documents/selection/files/landscapes/files/woori yalloc_2 30-1-2015.jpg Size: 18109503
+Last Modified: Thu Apr 30 15:37:00 AEST 2015
+-----------------------
+Name: index.html
+Full path: /users/trevorblum/documents/selection/files/landscapes/index.html Size: 1999
+Last Modified: Wed Jun 26 21:32:43 AEST 2019
+-----------------------
+Name: landscapes.png
+Full path: /users/trevorblum/documents/selection/files/landscapes/landscapes.png Size: 2343050
+Last Modified: Wed Jun 26 21:32:41 AEST 2019
+
+-----------------------
+Name: miscellaneous
+Full path: /users/trevorblum/documents/selection/files/miscellaneous Is directory: true Size: 204
+Last Modified: Wed Jun 26 21:05:01 AEST 2019
+-----------------------
+Name: .DS_Store
+Full path: /users/trevorblum/documents/selection/files/miscellaneous/.DS_Store Size: 6148
+Last Modified: Wed Jun 26 21:49:40 AEST 2019
+-----------------------
+Name: files
+Full path: /users/trevorblum/documents/selection/files/miscellaneous/files Is directory: true Size: 544
+Last Modified: Wed Jun 26 21:31:03 AEST 2019
+-----------------------
+Name: 20151222_121546.JPG
+Full path: /users/trevorblum/documents/selection/files/miscellaneous/files/20151222_121546.JPG Size: 2057472
+Last Modified: Tue Dec 22 20:38:40 AEDT 2015
+-----------------------
+Name: bottle tree.png
+Full path: /users/trevorblum/documents/selection/files/miscellaneous/files/bottle tree.png Size: 18622057
+Last Modified: Wed Apr 19 13:29:11 AEST 2017
+-----------------------
+Name: BT loves LP.png
+Full path: /users/trevorblum/documents/selection/files/miscellaneous/files/BT loves LP.png Size: 7034375
+Last Modified: Tue Nov 10 21:50:05 AEDT 2015
+-----------------------
+Name: Conditioned Graffiti.JPG
+Full path: /users/trevorblum/documents/selection/files/miscellaneous/files/Conditioned Graffiti.JPG Size: 6642496
+Last Modified: Mon Jul 21 09:11:14 AEST 2014
+-----------------------
+Name: Edged 20140517_145955.JPG
+Full path: /users/trevorblum/documents/selection/files/miscellaneous/files/Edged 20140517_145955.JPG Size: 13492809
+Last Modified: Sun Nov 22 12:52:32 AEDT 2015
+-----------------------
+Name: Edged CIMG0413.jpg
+Full path: /users/trevorblum/documents/selection/files/miscellaneous/files/Edged CIMG0413.jpg Size: 2590031
+Last Modified: Sun Nov 22 13:05:41 AEDT 2015
+-----------------------
+Name: IMG_2282-crop adjust.jpg
+Full path: /users/trevorblum/documents/selection/files/miscellaneous/files/IMG_2282-crop adjust.jpg Size: 1743342
+Last Modified: Sun Sep 14 12:55:07 AEST 2014
+-----------------------
+Name: IMG_4569-adjust.jpg
+Full path: /users/trevorblum/documents/selection/files/miscellaneous/files/IMG_4569-adjust.jpg Size: 2758145
+Last Modified: Thu Mar 08 22:04:46 AEDT 2012
+-----------------------
+Name: IMG_4846-crop2.jpg
+Full path: /users/trevorblum/documents/selection/files/miscellaneous/files/IMG_4846-crop2.jpg Size: 597722
+Last Modified: Fri Nov 30 22:19:22 AEDT 2012
+-----------------------
+Name: john+adrian.png
+Full path: /users/trevorblum/documents/selection/files/miscellaneous/files/john+adrian.png Size: 14730501
+Last Modified: Thu Jun 06 14:17:44 AEST 2019
+-----------------------
+Name: Shadow and reality.png
+Full path: /users/trevorblum/documents/selection/files/miscellaneous/files/Shadow and reality.png Size: 6143347
+Last Modified: Wed Apr 19 13:25:03 AEST 2017
+-----------------------
+Name: Web Colours IMG_4198.jpg
+Full path: /users/trevorblum/documents/selection/files/miscellaneous/files/Web Colours IMG_4198.jpg Size: 559951
+Last Modified: Sun Oct 28 22:13:58 AEDT 2012
+-----------------------
+Name: webbed feet?.png
+Full path: /users/trevorblum/documents/selection/files/miscellaneous/files/webbed feet?.png Size: 6001581
+Last Modified: Wed Apr 19 13:30:09 AEST 2017
+-----------------------
+Name: webs.png
+Full path: /users/trevorblum/documents/selection/files/miscellaneous/files/webs.png Size: 8991947
+Last Modified: Wed Apr 19 13:27:49 AEST 2017
+-----------------------
+Name: index.html
+Full path: /users/trevorblum/documents/selection/files/miscellaneous/index.html Size: 1883
+Last Modified: Wed Jun 26 23:14:07 AEST 2019
+-----------------------
+Name: miscellaneous.png
+Full path: /users/trevorblum/documents/selection/files/miscellaneous/miscellaneous.png Size: 2924488
+Last Modified: Wed Jun 26 23:14:08 AEST 2019
+
+-----------------------
+Name: patterns
+Full path: /users/trevorblum/documents/selection/files/patterns Is directory: true Size: 204
+Last Modified: Sat Jun 29 21:00:55 AEST 2019
+-----------------------
+Name: .DS_Store
+Full path: /users/trevorblum/documents/selection/files/patterns/.DS_Store Size: 6148
+Last Modified: Sat Jun 29 21:27:37 AEST 2019
+-----------------------
+Name: files
+Full path: /users/trevorblum/documents/selection/files/patterns/files Is directory: true Size: 816
+Last Modified: Wed Jun 26 21:29:20 AEST 2019
+-----------------------
+Name: 20141222_144659.jpg
+Full path: /users/trevorblum/documents/selection/files/patterns/files/20141222_144659.jpg Size: 12849715
+Last Modified: Sun Dec 21 23:23:03 AEDT 2014
+-----------------------
+Name: 20190614_141440.JPG
+Full path: /users/trevorblum/documents/selection/files/patterns/files/20190614_141440.JPG Size: 2044780
+Last Modified: Sat Jun 22 13:20:34 AEST 2019
+-----------------------
+Name: bark pattern.png
+Full path: /users/trevorblum/documents/selection/files/patterns/files/bark pattern.png Size: 11205058
+Last Modified: Tue Nov 10 22:13:40 AEDT 2015
+-----------------------
+Name: bark.png
+Full path: /users/trevorblum/documents/selection/files/patterns/files/bark.png Size: 26470495
+Last Modified: Thu Jul 09 20:54:49 AEST 2015
+-----------------------
+Name: Conkers.jpg
+Full path: /users/trevorblum/documents/selection/files/patterns/files/Conkers.jpg Size: 3506227
+Last Modified: Thu Mar 26 10:35:22 AEDT 2015
+-----------------------
+Name: Edged Galvanised Window.jpg
+Full path: /users/trevorblum/documents/selection/files/patterns/files/Edged Galvanised Window.jpg Size: 30919787
+Last Modified: Sun Nov 22 13:23:55 AEDT 2015
+-----------------------
+Name: grader tracks.png
+Full path: /users/trevorblum/documents/selection/files/patterns/files/grader tracks.png Size: 6434262
+Last Modified: Thu Aug 04 17:36:15 AEST 2016
+-----------------------
+Name: IMG_2080-Extremed.jpg
+Full path: /users/trevorblum/documents/selection/files/patterns/files/IMG_2080-Extremed.jpg Size: 7034777
+Last Modified: Thu Feb 25 21:17:07 AEDT 2010
+-----------------------
+Name: IMG_2122.JPG
+Full path: /users/trevorblum/documents/selection/files/patterns/files/IMG_2122.JPG Size: 4615264
+Last Modified: Sat Sep 13 21:42:09 AEST 2014
+-----------------------
+Name: leaf on leaf.png
+Full path: /users/trevorblum/documents/selection/files/patterns/files/leaf on leaf.png Size: 13252938
+Last Modified: Thu Aug 04 17:15:21 AEST 2016
+-----------------------
+Name: NGV ceiling.jpeg
+Full path: /users/trevorblum/documents/selection/files/patterns/files/NGV ceiling.jpeg Size: 1546148
+Last Modified: Mon Dec 28 22:27:50 AEDT 2015
+-----------------------
+Name: P1070504.JPG
+Full path: /users/trevorblum/documents/selection/files/patterns/files/P1070504.JPG Size: 7393640
+Last Modified: Sat Sep 13 21:25:22 AEST 2014
+-----------------------
+Name: P1080045.JPG
+Full path: /users/trevorblum/documents/selection/files/patterns/files/P1080045.JPG Size: 7257238
+Last Modified: Sat Oct 11 22:04:58 AEDT 2014
+-----------------------
+Name: Ringed table top.png
+Full path: /users/trevorblum/documents/selection/files/patterns/files/Ringed table top.png Size: 10423482
+Last Modified: Sat Oct 17 20:50:53 AEDT 2015
+-----------------------
+Name: rockface IMG_1912.jpg
+Full path: /users/trevorblum/documents/selection/files/patterns/files/rockface IMG_1912.jpg Size: 1910382
+Last Modified: Thu Jun 28 21:46:27 AEST 2012
+-----------------------
+Name: Shell Crop.jpg
+Full path: /users/trevorblum/documents/selection/files/patterns/files/Shell Crop.jpg Size: 3047975
+Last Modified: Thu Apr 30 15:33:15 AEST 2015
+-----------------------
+Name: tracks_1.png
+Full path: /users/trevorblum/documents/selection/files/patterns/files/tracks_1.png Size: 16415690
+Last Modified: Sun Apr 02 11:40:21 AEST 2017
+-----------------------
+Name: tracks_2.png
+Full path: /users/trevorblum/documents/selection/files/patterns/files/tracks_2.png Size: 16141122
+Last Modified: Sun Apr 02 11:42:18 AEST 2017
+-----------------------
+Name: tracks_3.png
+Full path: /users/trevorblum/documents/selection/files/patterns/files/tracks_3.png Size: 12887374
+Last Modified: Sun Apr 02 11:44:05 AEST 2017
+-----------------------
+Name: Unkind Cut.jpg
+Full path: /users/trevorblum/documents/selection/files/patterns/files/Unkind Cut.jpg Size: 5519625
+Last Modified: Thu Apr 30 15:40:57 AEST 2015
+-----------------------
+Name: worm tracks.png
+Full path: /users/trevorblum/documents/selection/files/patterns/files/worm tracks.png Size: 14433523
+Last Modified: Thu Aug 04 17:23:13 AEST 2016
+-----------------------
+Name: wormed stump.png
+Full path: /users/trevorblum/documents/selection/files/patterns/files/wormed stump.png Size: 11063322
+Last Modified: Wed Apr 19 13:28:29 AEST 2017
+-----------------------
+Name: index.html
+Full path: /users/trevorblum/documents/selection/files/patterns/index.html Size: 2615
+Last Modified: Sat Jun 29 21:02:40 AEST 2019
+-----------------------
+Name: patterns.png
+Full path: /users/trevorblum/documents/selection/files/patterns/patterns.png Size: 2491288
+Last Modified: Sat Jun 29 21:02:41 AEST 2019
+-----------------------
+Name: index.html
+Full path: /users/trevorblum/documents/selection/index.html Size: 903
+Last Modified: Sat Jun 29 22:00:32 AEST 2019
+-----------------------
+Name: selection.png
+Full path: /users/trevorblum/documents/selection/selection.png Size: 469985
+Last Modified: Sat Jun 29 22:00:32 AEST 2019
+-----------------------
