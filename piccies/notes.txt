@@ -1,0 +1,20 @@
+Structure is : top folder ( eg selection )has a files folder with hierarchical content and .png images for lower folders ( eg creatures requires a creatures.png at the top level)
+
+Any folder enfolding a sub-folder decorates the sub-folder display icon with a .png of the same name as the sub-folder. In the example, recent has a sub-folder images, hence has a decoration images.png in the recetn folder.
+
+
+Selection - files folder and decoration.png's for next level, eg recent
+recent has a files folder of images, so has an images.png file
+
+selection
+--files
+  --recent --creatures ...
+   --images
+
+decoration files :
+selection recent.png creatures.png... and /files
+   selection recent.png creatures.png.../files/recent images.png and /images 
+     selection recent.png creatures.png... /files/recent/files/images has no further subfolders, hence no decoration.png's
+
+Which comes down to a decoration .png is used if it has the name of a descent folder, else the folder icon is undecorated.
+
