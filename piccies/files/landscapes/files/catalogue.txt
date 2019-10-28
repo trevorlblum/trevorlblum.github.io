@@ -1,6 +1,6 @@
 
 Base Folder 
-/Users/trevorblum/Documents/CCL images copy/selection/files/landscapes/files
+/Users/trevorblum/Documents/GitHub/trevorlblum.github.io/piccies/files/landscapes/files
 Breaking Waves.jpeg
 catalogue.txt
 emerald autmn.jpg
@@ -8,7 +8,6 @@ gembrook fields.jpg
 gembrook mist_1.jpg
 Gembrook mist_2.jpg
 gembrook sunset.jpg
-gembrook sunset.png
 Grapevines.jpg
 landscape.jpg
 mowing.jpg
