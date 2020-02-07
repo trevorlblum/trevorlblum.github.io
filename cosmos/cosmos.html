@@ -4,16 +4,16 @@
    maybe need a checkbox to allow choice - retain all 'n' values or only the three initial
   4/2/2020 changed under chart numbers to clickable images by using innerHTML build
   3/2/2020 'new image' does not accept 'onclick'. To make that work,
-  use innerHTML with prototype like "<img id='ii' src='black.png' onclick='showmatrix()'>;"
+  use innerHTML with prototype like "<img id='ii' src='images/black.png' onclick='showmatrix()'>;
   3/2/2020 trials of text data matrix from tabbed data
   2/1/2020 line and bar version with values-->
 <!DOCTYPE=html>
 <html>
-<title> Show letter frequencies</title>
-<h1>COSMOS puzzle 'assistant'<h1>
+<title> Cosmos Letter Puzzle</title>
+<h1>COSMOS letter puzzle 'assistant'<h1>
 <div class='buttons' align='left' >
-<img src='showplot.png' onclick='chartfreqs()' >
-<img src='showmatrix.png' onclick='showmatrix()' >
+<img src='images/showplot.png' onclick='chartfreqs()' >
+<img src='images/showmatrix.png' onclick='showmatrix()' >
 
 </div>
 <head>
@@ -62,22 +62,22 @@ function showmatrix(){// shows data array, modified by clicks
 var text="<div class='matrix'>";
 var tc=0;
   for(i=0;i<data.length;i++){
-   if(data[i]==0) text+="<img id='d"+i+"' src=black.png>";
+   if(data[i]==0) text+="<img id='d"+i+"' src=images/black.png>";
       else 
-    if(data[i]<27)text+="<img id='d"+i+"' src="+data[i]+".png>";
-             else text+="<img id='d"+i+"' src='alphabit"+data[i]+".png'>";//show fixed clue
+    if(data[i]<27)text+="<img id='d"+i+"' src=images/"+data[i]+".png>";
+             else text+="<img id='d"+i+"' src=images/alphabit"+data[i]+".png>";//show fixed clue
     if((i%15)==14)text+="<br>";
   } 
-  //  text="<div class='content' align='left' ><img src='showplot.png' onclick='chartfreqs()' ><img  src='showmatrix.png' onclick='showmatrix()' ></div>"+text;
+  //  text="<div class='content' align='left' ><img src=images/showplot.png onclick='chartfreqs()' ><img  src='images/showmatrix.png' onclick='showmatrix()' ></div>"+text;
     document.getElementById('matrix').innerHTML=text;
-    for(i=1;i<27;i++)document.getElementById('n'+i).src=i+".png";//on show matrix reset number line
+    for(i=1;i<27;i++)document.getElementById('n'+i).src="images/"+i+".png";//on show matrix reset number line
     showclues();
 }
 
 function showclues(){//place three given clues as alpha on the number line
 var c=clues.split(",");
 for(i=1;i<26;i++){
-  for(cl=0;cl<c.length;cl+=2)if(i==c[cl+1])document.getElementById('n'+i).src='alphabit'+c[cl]+'.png';//replace number line element by alpha clue
+  for(cl=0;cl<c.length;cl+=2)if(i==c[cl+1])document.getElementById('n'+i).src="images/alphabit"+c[cl]+".png";//replace number line element by alpha clue
   }
   for(i=1;i<data.length;i++){
     for(cl=0;cl<c.length;cl+=2)if(data[i]==c[cl+1])data[i]=c[cl];//replace data element by alpha clue (9 becomes "M")
@@ -105,15 +105,15 @@ context.beginPath();context.moveTo(5,255-5*freq[0]);
 for(i=0;i<freq.length;i++){
 context.lineTo(17+(i)*30,255-5*freq[i]);
 //img=new Image(30,30);
-//img.id='i+1';img.src=i+1+'.png';
+//img.id='i+1';img.src=images/i+1+'.png';
 drawBar(context,3+i*30,255-5*freq[i],30,5*freq[i],'#CCCCDD');
 context.font = "bold 15px Arial";
 context.fillStyle="#0000ff";
 context.fillText(freq[i],12+i*30,250-5*freq[i]);
 //document.getElementById('div1').appendChild(img);//add <img 1-26> in javascript not provide 'onclick' with new images
- textnums+="<img id='n"+(i+1)+"' src='"+(i+1)+".png' onclick='nclick("+(i+1)+")' >";
+ textnums+="<img id='n"+(i+1)+"' src='images/"+(i+1)+".png' onclick='nclick("+(i+1)+")' >";
  var source="alphabit"+String.fromCharCode(65+i)+".png";
- textalphs+="<img id='a"+(i+1)+"' src='"+source+"' onclick='aclick("+(i+1)+")' >";
+ textalphs+="<img id='a"+(i+1)+"' src='images/"+source+"' onclick='aclick("+(i+1)+")' >";
  context.stroke();
  }
 document.getElementById('div1').innerHTML=textnums+"<br>"+textalphs;
@@ -136,14 +136,14 @@ showclues();
 
 function nclick(){//click on number in row - replace image with alphachoice
 if(replace!=0){
- document.getElementById('n'+arguments[0]).src="alphabit"+String.fromCharCode(64+replace)+".png";
+ document.getElementById('n'+arguments[0]).src="images/alphabit"+String.fromCharCode(64+replace)+".png";
  for(i=0;i<data.length;i++) //replace matrix element with alpha
-    if(data[i]==arguments[0])document.getElementById('d'+i).src= "alphabit"+String.fromCharCode(64+replace)+".png";
+    if(data[i]==arguments[0])document.getElementById('d'+i).src="images/alphabit"+String.fromCharCode(64+replace)+".png";
   }
     if(replace==0) {
-    document.getElementById('n'+arguments[0]).src= arguments[0]+".png";//reset number line
+    document.getElementById('n'+arguments[0]).src="images/"+arguments[0]+".png";//reset number line
     for(i=0;i<data.length;i++)
-    if(data[i]==arguments[0])document.getElementById('d'+i).src= arguments[0]+".png";//reset matrix
+    if(data[i]==arguments[0])document.getElementById('d'+i).src="images/"+arguments[0]+".png";//reset matrix
     }
   replace=0;
  }

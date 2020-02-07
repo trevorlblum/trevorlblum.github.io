@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<!-- 29/01/2020 detecting mouseover to display alpha equivalent of number-->
+<html>
+<title>Mouseover alpha substitute</title>
+
+<body>
+<h1>This provides mouseover conversion of number to alpha and setting to target<br>
+Click on target restores visited alphas to initial numeric sequence <br>
+</h1>
+<div id='para'><p>The function alphaImg() is triggered when the user moves the mouse pointer over the image.</p>
+<p>The function numImg() is triggered when the mouse pointer is moved out of the image.</p>
+</div>
+<div id="divid"><br>this is divid<br></div>
+<div>
+<head>
+<script>
+var ptr=0;
+
+var numarray=[''];// empty array to define - maybe use as replacement key swapping old num for new
+for(i=0;i<26;i++)numarray[i]=i;
+document.getElementById('para').innerHTML="<h2>div para - numarray default print "+numarray+"</h2>";
+
+document.write('Starting text');
+populate();
+
+function populate(){
+var text="";
+for(p=1;p<27;p++)text+='<img id='+p+' onmouseover="numImg('+p+')"'+' onmouseout="alphaImg('+p+')" border="0" src="'+p+'.png" alt="'+p+'.png not found" width="32" height="32">';
+document.getElementById('divid').innerHTML=text;
+}
+
+function src_click(x){
+populate();
+ x.src="black.png";
+}
+
+function numImg(x) { //on mouseover,paste to target
+var source; source="alphabit"+String.fromCharCode(64+parseInt(x))+".png";
+  document.getElementById('set').src=source;
+}
+
+function alphaImg(x) {
+var source; source="alphabit"+String.fromCharCode(64+parseInt(x))+".png";
+document.getElementById(x).src=source;
+}
+function shownum(x){
+document.getElementById('set').src=x;
+}
+</script>
+</head>
+
+
+<br>target image 
+<img id='set' onclick="src_click(this)" onmouseover="shownum('black.png')"  border="0" src="nblack.png" alt="not found" width="32" height="32">
+</div>
+</body>
+</html>
