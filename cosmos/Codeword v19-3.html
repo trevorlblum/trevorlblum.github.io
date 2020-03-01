@@ -1,4 +1,5 @@
-<!--29/2/2020 Darkened selections working version v19-3. Maybe need reject duplicate selections
+<!--1/3/2020 clearing dark selection on alpha choice must reset number equivalent also
+  29/2/2020 Darkened selections working version v19-3. Maybe need reject duplicate selections
   need to replace selected alphabit images with darkened versions so we know what we have used
   6/2/2020 fixed 'clear' to show fixed clues in matrix. moved buttons to top
   also made click on number without an alpha prior resets number - sort of 'undo'
@@ -180,6 +181,14 @@ return ret;
 
 function aclick(){//click on alpha in row - set id for num to use as replacement
  replace=arguments[0];
+ var tmp=document.getElementById('a'+arguments[0]).src; tmp=tmp.substring(tmp.length-18,tmp.length-14);
+//tmp is "dark" if previously clicked
+if(tmp=="dark") {
+  replace=0;
+  document.getElementById('a'+arguments[0]).src="images/alphabit"+String.fromCharCode(64+arguments[0])+".png";
+  //now reset number line as well...
+ }
+ else 
  document.getElementById('a'+arguments[0]).src="images/dark/alphabit"+String.fromCharCode(64+arguments[0])+".png";
 }
 </script>
