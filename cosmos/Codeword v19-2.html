@@ -155,12 +155,8 @@ showclues();
 }
 
 function nclick(){//click on number in row - replace image with alpha choice
-if(replace!=0){
- document.getElementById('n'+arguments[0]).src="images/alphabit"+String.fromCharCode(64+replace)+".png";
- for(i=0;i<data.length;i++) //replace matrix element with alpha
-    if(data[i]==arguments[0])document.getElementById('d'+i).src="images/alphabit"+String.fromCharCode(64+replace)+".png";
-  }
-    if(replace==0) {
+
+     {
     var tmp=(document.getElementById('n'+arguments[0]).src);
     tmp=tmp.charAt(tmp.length-5);                      //n line 9 may be X, so we want to replace a line 'x'-64
     if(intFromAlpha(tmp)>64){ // there was an alpha image at the clicked point, so do the reset things. Avoids error in unset case
@@ -171,9 +167,13 @@ if(replace!=0){
     if(data[i]==arguments[0])document.getElementById('d'+i).src="images/"+arguments[0]+".png";//reset matrix
     }
   }
+if(replace!=0){
+ document.getElementById('n'+arguments[0]).src="images/alphabit"+String.fromCharCode(64+replace)+".png";
+ for(i=0;i<data.length;i++) //replace matrix element with alpha
+    if(data[i]==arguments[0])document.getElementById('d'+i).src="images/alphabit"+String.fromCharCode(64+replace)+".png";
+  }
   replace=0;
  }
-
 // homebrew function to enable backtrack from alpha name to ordinal in alpha choice line
 function intFromAlpha(alpha){
 var ret;
