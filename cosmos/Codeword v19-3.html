@@ -14,7 +14,7 @@
 <!DOCTYPE=html>
 <html>
 <title> Cosmos Letter Puzzle</title>
-<h2>Codeword Puzzle 'assistant' by Trevor <br>Codeword acknowledgements -  
+<h2>Codeword Puzzle 'assistant' by Trevor. Acknowledgements -  
 <a href="https://www.snodger.com.au"> Snodger Media </a>
 <div class='buttons' align='left' >
 <img src='images/showplot.png' onclick='chartfreqs()' >
@@ -77,6 +77,9 @@ var replace=0; // holds alpha id for num click replacement
 var img=new Image(30,30);
 var data=matrixdata.split("\t");// needs terminal tab to get all elements
 var english=efreq.split(",");
+
+chartfreqs();
+showmatrix();
 
 function showmatrix(){// shows data array, modified by clicks
 var text="<div class='matrix'>";
@@ -195,7 +198,6 @@ if(tmp=="dark") replace=0; //stays dark until numeric reset.
 </head>
 <body>
 <h2>You are given a clue letter to start with B-4
-<a href="help.html"> A smidgen of Help<br></h2>
 <div class='rectangle'></div>
 </body>
 </html> 
