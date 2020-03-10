@@ -1,5 +1,5 @@
 <!--click to avoid duplicates wip in aclick routine 8/3/2020 works at last...
-7/3/2020 fixing clues display and wip for one or more clues options
+  7/3/2020 fixing clues display and wip for one or more clues options
    4/3/2020 clearing a number/alpha substitute prior to accepting new one
    removes bug where an uncleared override leaves orphans in 'a'
    1/3/2020 clearing dark selection on alpha choice resets number equivalent also
@@ -79,6 +79,7 @@ var matrixdata="24	20	1	9	20	23	21	9	0	5	25	20	9	16	21	\
 25	16	21	4	13	20	0	19	17	12	4	16	9	12	19	\
 19	0	9	0	21	0	21	0	15	0	25	0	19	0	12	\
 15	25	16	0	18	21	3	13	21	25	19	0	16	20	16";
+
 
 const canvas=document.getElementById('canvas');
 const context=canvas.getContext('2d');
@@ -207,23 +208,23 @@ return ret;
 function aclick(){  //click on alpha in row - set id for num to use as replacement
 var tmp="";
 var found="false";
-var list="list is "; 
 replace=arguments[0];
 var cmp=String.fromCharCode(64+arguments[0]);// e.g. 19  replace=arguments[0];
+var clue=tmp.substring(tmp.length-11,tmp.length-6)!="clues";
  for(i=1;i<27;i++)
   {
-  tmp=document.getElementById('n'+i).src; //number or alpha in top line?
+  tmp=document.getElementById('n'+i).src;         //number or alpha in top line?
   tmp=tmp.substring(tmp.length-13,tmp.length-5);  //is this an alphabit?
-  if(tmp=="alphabit"){//document.getElementById('clues').innerHTML=tmp; 
-     tmp=document.getElementById('n'+i).src; //get name again for alpha ID match
+  if(tmp=="alphabit" || clue=='clues'){           // alphabit or clue - leave it alone
+     tmp=document.getElementById('n'+i).src;      //get name again for alpha ID match
      tmp=tmp.substring(tmp.length-5,tmp.length-4);// alpha ID extracted
      if(tmp==cmp)
       {   
         found="true";replace=0;
       }
-    }
-  }
-  if(found=='false')document.getElementById('a'+arguments[0]).src="images/dark/alphabit"+String.fromCharCode(64+arguments[0])+".png";
+   }
+ }
+ if(found=='false')document.getElementById('a'+arguments[0]).src="images/dark/alphabit"+String.fromCharCode(64+arguments[0])+".png";
 }
 
 function nref(){ //return 1 or 2 digit numeric reference
@@ -250,7 +251,7 @@ function listclues(){
 </script>
 </head>
 <body>
-<h2>Your starting clue(s) are set in the number line above and matrix below.
+<h2>Your starting clue is - or clues are - set in the number line above and matrix below.
 <div class='rectangle'></div>
 </body>
 </html> 

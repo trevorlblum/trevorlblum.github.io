@@ -61,15 +61,15 @@
 <div id='matrix' </dv>
 
 <script>
-var clues="F,4,L,22";
+var clues="F,4";
 var efreq="8.45,1.43,3.59,3.75,12.21,2.12,1.55,4.05,7.83,0.32,0.63,3.97,2.48,6.65,7.77,1.74,0.18,6.76,7.16,9.26,2.74,1.56,1.40,0.25,2.02,0.13";
 var freq=[11,1,1,1,22,10,4,1,6,1,16,14,7,3,1,4,12,9,4,12,2,4,1,9,1,4];
 var matrixdata="15	14	18	17	22	3	12	14	0	9	18	7	15	9	8	\
 17	0	9	0	14	0	7	0	17	0	12	0	14	0	17	\
 2	17	2	6	18	2	17	8	5	0	9	21	9	24	25	\
-6	0	15	0	24	0	15	0	18	0	25	0	22	0	1	\
+6	0	15	0	24	0	15	0	16	0	25	0	22	0	1	\
 4	14	24	19	17	9	0	9	2	9	1	14	8	24	9	\
-9	0	4	0	25	0	8	0	3	0	10	0	0	0	26	\
+9	0	4	0	25	0	8	0	3	0	10	0	0	0	25	\
 22	9	24	15	0	13	24	12	15	24	17	22	24	2	0	\
 22	0	2	0	21	0	2	0	14	0	24	0	12	0	4	\
 0	15	14	23	3	24	15	14	0	9	25	21	24	25	9	\
@@ -79,6 +79,7 @@ var matrixdata="15	14	18	17	22	3	12	14	0	9	18	7	15	9	8	\
 14	9	15	0	15	14	22	9	20	0	5	15	9	13	17	\
 11	0	24	0	9	0	8	0	14	0	17	0	25	0	3	\
 14	25	21	3	22	4	0	9	18	5	14	18	12	17	18";
+
 const canvas=document.getElementById('canvas');
 const context=canvas.getContext('2d');
 context.fillStyle='blue';
@@ -208,21 +209,21 @@ var tmp="";
 var found="false";
 replace=arguments[0];
 var cmp=String.fromCharCode(64+arguments[0]);// e.g. 19  replace=arguments[0];
- //if(tmp.substring(tmp.length-11,tmp.length-6)!="clues"){
+var clue=tmp.substring(tmp.length-11,tmp.length-6)!="clues";
  for(i=1;i<27;i++)
   {
-  tmp=document.getElementById('n'+i).src; //number or alpha in top line?
+  tmp=document.getElementById('n'+i).src;         //number or alpha in top line?
   tmp=tmp.substring(tmp.length-13,tmp.length-5);  //is this an alphabit?
-  if(tmp=="alphabit"){//document.getElementById('clues').innerHTML=tmp; 
-     tmp=document.getElementById('n'+i).src; //get name again for alpha ID match
+  if(tmp=="alphabit" || clue=='clues'){           // alphabit or clue - leave it alone
+     tmp=document.getElementById('n'+i).src;      //get name again for alpha ID match
      tmp=tmp.substring(tmp.length-5,tmp.length-4);// alpha ID extracted
      if(tmp==cmp)
       {   
         found="true";replace=0;
       }
-    }
-}
-  if(found=='false')document.getElementById('a'+arguments[0]).src="images/dark/alphabit"+String.fromCharCode(64+arguments[0])+".png";
+   }
+ }
+ if(found=='false')document.getElementById('a'+arguments[0]).src="images/dark/alphabit"+String.fromCharCode(64+arguments[0])+".png";
 }
 
 function nref(){ //return 1 or 2 digit numeric reference
