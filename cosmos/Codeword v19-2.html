@@ -1,4 +1,7 @@
-<!--click to avoid duplicates wip in aclick routine 8/3/2020 works at last...
+<!--10/3/2020 trial of double click seems to conflict with single click if both events are requested in an object
+  30/3/2020 added extras to clue list.
+  bugs with extra clues fixed. last number line replace and first matrix element replace.
+  click to avoid duplicates wip in aclick routine 8/3/2020 works at last...
   7/3/2020 fixing clues display and wip for one or more clues options
    4/3/2020 clearing a number/alpha substitute prior to accepting new one
    removes bug where an uncleared override leaves orphans in 'a'
@@ -23,6 +26,8 @@
 <div class='buttons' align='left' >
 <img src='images/showplot.png' onclick='chartfreqs()' >
 <img src='images/showmatrix.png' onclick='showmatrix()' >
+<img src='images/moreclues.png' onclick='moreclues()' >
+
 </div>
 </h2>
 <head>
@@ -30,7 +35,7 @@
    .buttons { 
         left: 15px;
         top: 100px;
-        width:210px;
+        width:290px;
         background-color: #afafaf; 
       }
    .matrix{
@@ -52,6 +57,7 @@
     width:460px;height:460px;background:#eeeeff;
    }
 </style>
+
 <div id='clues'>
 <div id='header' >
 <div id='cnv' align='left'>
@@ -61,7 +67,9 @@
 <div id='matrix' </dv>
 
 <script>
-var clues="B,1";
+var cluecount=1;
+var clues="B,1"
+var extras="V,10,M,22,T,16,P,4".split(",");
 var efreq="8.45,1.43,3.59,3.75,12.21,2.12,1.55,4.05,7.83,0.32,0.63,3.97,2.48,6.65,7.77,1.74,0.18,6.76,7.16,9.26,2.74,1.56,1.40,0.25,2.02,0.13";
 var freq=[11,1,1,1,22,10,4,1,6,1,16,14,7,3,1,4,12,9,4,12,2,4,1,9,1,4];
 var matrixdata="24	20	1	9	20	23	21	9	0	5	25	20	9	16	21	\
@@ -79,7 +87,6 @@ var matrixdata="24	20	1	9	20	23	21	9	0	5	25	20	9	16	21	\
 25	16	21	4	13	20	0	19	17	12	4	16	9	12	19	\
 19	0	9	0	21	0	21	0	15	0	25	0	19	0	12	\
 15	25	16	0	18	21	3	13	21	25	19	0	16	20	16";
-
 
 const canvas=document.getElementById('canvas');
 const context=canvas.getContext('2d');
@@ -110,13 +117,13 @@ var tc=0;
 
 function showclues(){//place the given clues as alpha on the number line
 var c=clues.split(",");
-for(i=1;i<26;i++){
+for(i=1;i<27;i++){
   for(cl=0;cl<c.length;cl+=2)if(i==c[cl+1]){
      document.getElementById('n'+i).src="images/dark/alphabit"+c[cl]+".png";//replace number line element by alpha clue (greyed)
      document.getElementById('n'+i).src="images/clues/"+c[cl]+".png";//replace alpha line element by alpha clue (greyed)
     }
   }
-  for(i=1;i<data.length;i++){
+  for(i=0;i<data.length;i++){
     for(cl=0;cl<c.length;cl+=2)if(data[i]==c[cl+1])data[i]=c[cl];//replace data element by alpha clue (9 becomes "M")
   }
 }
@@ -246,6 +253,13 @@ return aref;
 
 function listclues(){
    document.getElementById('clues').innerHTML+="<h3>You have a clue to begin with "+clues+"</h3>";
+}
+function moreclues(){
+if(cluecount<extras.length*2)clues+=","+extras[cluecount-1]+","+extras[cluecount];
+//window.alert(clues);
+cluecount+=2;
+chartfreqs();
+showmatrix();
 }
 
 </script>
