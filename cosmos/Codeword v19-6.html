@@ -1,5 +1,6 @@
 <!--10/3/2020 trial of double click seems to conflict with single click if both events are requested in an object
   30/3/2020 added extras to clue list.
+  bugs with extra clues fixed. last number line replace and first matrix element replace.
   click to avoid duplicates wip in aclick routine 8/3/2020 works at last...
   7/3/2020 fixing clues display and wip for one or more clues options
    4/3/2020 clearing a number/alpha substitute prior to accepting new one
@@ -31,20 +32,21 @@
 </h2>
 <head>
 <style>
-   .buttons { 
+ .buttons { 
         left: 15px;
         top: 100px;
         width:290px;
         background-color: #afafaf; 
       }
-   .matrix{
-      position:fixed;
+ .matrix{
       align: 'center';
       left: 200px;
       width:500px;
       top:450px;
      }
 .div1{
+    position:Absolute;
+    top:45px;
      align: 'center'
     }
 .clues{
@@ -59,11 +61,11 @@
 
 <div id='clues'>
 <div id='header' >
-<div id='cnv' align='left'>
-<canvas id='canvas' height='250'; width='780' style="border:2px solid black;"></canvas>
-</div>
+
+<canvas id='canvas' height='250'; width='780' style="border:3px solid black;" > </canvas>
+
 <div id='div1' align='left'></div>
-<div id='matrix' </dv>
+<div id='matrix' </div>
 
 <script>
 var cluecount=1;
@@ -86,6 +88,7 @@ var matrixdata="9	13	1	15	17	11	10	6	0	21	17	23	10	9	13	\
 13	18	20	17	11	0	17	7	17	20	3	20	17	17	2	\
 2	0	18	0	13	0	0	0	20	0	4	0	1	0	11	\
 3	13	4	11	21	10	2	17	0	14	17	16	6	0	13";
+
 const canvas=document.getElementById('canvas');
 const context=canvas.getContext('2d');
 context.fillStyle='blue';
@@ -108,20 +111,20 @@ var tc=0;
     if((i%15)==14)text+="<br>";
   } 
   //  text="<div class='content' align='left' ><img src=images/showplot.png onclick='chartfreqs()' ><img  src='images/showmatrix.png' onclick='showmatrix()' ></div>"+text;
-    document.getElementById('matrix').innerHTML=text;
+    document.getElementById('matrix').innerHTML="<br>"+text;
     for(i=1;i<27;i++)document.getElementById('n'+i).src="images/"+i+".png";//on show matrix reset number line
     showclues();
 }
 
 function showclues(){//place the given clues as alpha on the number line
 var c=clues.split(",");
-for(i=1;i<26;i++){
+for(i=1;i<27;i++){
   for(cl=0;cl<c.length;cl+=2)if(i==c[cl+1]){
      document.getElementById('n'+i).src="images/dark/alphabit"+c[cl]+".png";//replace number line element by alpha clue (greyed)
      document.getElementById('n'+i).src="images/clues/"+c[cl]+".png";//replace alpha line element by alpha clue (greyed)
     }
   }
-  for(i=1;i<data.length;i++){
+  for(i=0;i<data.length;i++){
     for(cl=0;cl<c.length;cl+=2)if(data[i]==c[cl+1])data[i]=c[cl];//replace data element by alpha clue (9 becomes "M")
   }
 }
@@ -263,7 +266,8 @@ showmatrix();
 </script>
 </head>
 <body>
-<h2>Your starting clue is - or clues are - set in the number line above and matrix below.
-<div class='rectangle'></div>
+<div class='div1'>
+<h3>Your starting clue is - or clues are - set in the number line above and matrix below.</h3>
+</div>
 </body>
 </html> 

@@ -32,20 +32,21 @@
 </h2>
 <head>
 <style>
-   .buttons { 
+ .buttons { 
         left: 15px;
         top: 100px;
         width:290px;
         background-color: #afafaf; 
       }
-   .matrix{
-      position:fixed;
+ .matrix{
       align: 'center';
       left: 200px;
       width:500px;
       top:450px;
      }
 .div1{
+    position:Absolute;
+    top:45px;
      align: 'center'
     }
 .clues{
@@ -60,11 +61,11 @@
 
 <div id='clues'>
 <div id='header' >
-<div id='cnv' align='left'>
-<canvas id='canvas' height='250'; width='780' style="border:2px solid black;"></canvas>
-</div>
+
+<canvas id='canvas' height='250'; width='780' style="border:3px solid black;" > </canvas>
+
 <div id='div1' align='left'></div>
-<div id='matrix' </dv>
+<div id='matrix' </div>
 
 <script>
 var cluecount=1;
@@ -87,8 +88,7 @@ var matrixdata="7	22	1	11	22	1	0	11	9	7	16	22	25	2	1	\
 2	11	3	10	19	1	2	11	23	0	25	9	20	8	22	\
 19	0	9	0	0	0	23	0	16	0	21	0	7	0	23	\
 2	12	3	22	24	20	14	1	0	16	2	14	2	2	11";
-													
-
+										
 const canvas=document.getElementById('canvas');
 const context=canvas.getContext('2d');
 context.fillStyle='blue';
@@ -111,7 +111,7 @@ var tc=0;
     if((i%15)==14)text+="<br>";
   } 
   //  text="<div class='content' align='left' ><img src=images/showplot.png onclick='chartfreqs()' ><img  src='images/showmatrix.png' onclick='showmatrix()' ></div>"+text;
-    document.getElementById('matrix').innerHTML=text;
+    document.getElementById('matrix').innerHTML="<br>"+text;
     for(i=1;i<27;i++)document.getElementById('n'+i).src="images/"+i+".png";//on show matrix reset number line
     showclues();
 }
@@ -266,7 +266,8 @@ showmatrix();
 </script>
 </head>
 <body>
-<h2>Your starting clue is - or clues are - set in the number line above and matrix below.
-<div class='rectangle'></div>
+<div class='div1'>
+<h3>Your starting clue is - or clues are - set in the number line above and matrix below.</h3>
+</div>
 </body>
 </html> 

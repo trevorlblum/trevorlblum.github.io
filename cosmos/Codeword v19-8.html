@@ -32,20 +32,21 @@
 </h2>
 <head>
 <style>
-   .buttons { 
+ .buttons { 
         left: 15px;
         top: 100px;
         width:290px;
         background-color: #afafaf; 
       }
-   .matrix{
-      position:fixed;
+ .matrix{
       align: 'center';
       left: 200px;
       width:500px;
       top:450px;
      }
 .div1{
+    position:Absolute;
+    top:45px;
      align: 'center'
     }
 .clues{
@@ -60,16 +61,16 @@
 
 <div id='clues'>
 <div id='header' >
-<div id='cnv' align='left'>
-<canvas id='canvas' height='250'; width='780' style="border:2px solid black;"></canvas>
-</div>
+
+<canvas id='canvas' height='250'; width='780' style="border:3px solid black;" > </canvas>
+
 <div id='div1' align='left'></div>
-<div id='matrix' </dv>
+<div id='matrix' </div>
 
 <script>
 var cluecount=1;
 var clues="W,8"
-var extras="O,4".split(",");
+var extras="O,4,U,7,L,17,M,16,".split(",");
 var efreq="8.45,1.43,3.59,3.75,12.21,2.12,1.55,4.05,7.83,0.32,0.63,3.97,2.48,6.65,7.77,1.74,0.18,6.76,7.16,9.26,2.74,1.56,1.40,0.25,2.02,0.13";
 var freq=[11,1,1,1,22,10,4,1,6,1,16,14,7,3,1,4,12,9,4,12,2,4,1,9,1,4];
 var matrixdata="17	4	22	10	21	2	15	11	0	20	11	10	10	5	10	\
@@ -86,8 +87,8 @@ var matrixdata="17	4	22	10	21	2	15	11	0	20	11	10	10	5	10	\
 11	0	9	0	22	0	11	0	4	0	9	0	21	0	23	\
 25	9	3	17	10	18	25	4	9	0	20	7	2	0	7	\
 5	0	25	0	11	0	17	0	0	0	21	0	17	0	25	\
-13	15	2	10	21	0	17	25	20	13	2	8	10	17	17";														
-
+13	15	2	10	21	0	17	25	20	13	2	8	10	17	17";					
+		
 const canvas=document.getElementById('canvas');
 const context=canvas.getContext('2d');
 context.fillStyle='blue';
@@ -110,7 +111,7 @@ var tc=0;
     if((i%15)==14)text+="<br>";
   } 
   //  text="<div class='content' align='left' ><img src=images/showplot.png onclick='chartfreqs()' ><img  src='images/showmatrix.png' onclick='showmatrix()' ></div>"+text;
-    document.getElementById('matrix').innerHTML=text;
+    document.getElementById('matrix').innerHTML="<br>"+text;
     for(i=1;i<27;i++)document.getElementById('n'+i).src="images/"+i+".png";//on show matrix reset number line
     showclues();
 }
@@ -265,7 +266,8 @@ showmatrix();
 </script>
 </head>
 <body>
-<h2>Your starting clue is - or clues are - set in the number line above and matrix below.
-<div class='rectangle'></div>
+<div class='div1'>
+<h3>Your starting clue is - or clues are - set in the number line above and matrix below.</h3>
+</div>
 </body>
 </html> 
