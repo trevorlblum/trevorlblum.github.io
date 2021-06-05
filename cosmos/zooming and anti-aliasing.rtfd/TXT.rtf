@@ -1,0 +1,156 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf610
+{\fonttbl\f0\froman\fcharset0 Times-Roman;\f1\fmodern\fcharset0 Courier;\f2\fswiss\fcharset0 Helvetica;
+\f3\fmodern\fcharset0 Courier-Oblique;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;\red0\green0\blue233;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;\cssrgb\c0\c0\c93333;}
+{\*\listtable{\list\listtemplateid1\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid1\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid1}
+{\list\listtemplateid2\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid101\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid2}}
+{\*\listoverridetable{\listoverride\listid1\listoverridecount0\ls1}{\listoverride\listid2\listoverridecount0\ls2}}
+\paperw11900\paperh16840\margl1440\margr1440\vieww18000\viewh11400\viewkind0
+\deftab720
+\pard\pardeftab720\sl280\sa240\partightenfactor0
+
+\f0\fs24 \cf2 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 \
+\pard\pardeftab720\sl440\sa298\partightenfactor0
+{\field{\*\fldinst{HYPERLINK "https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Pixel_manipulation_with_canvas#zooming_and_anti-aliasing"}}{\fldrslt 
+\b\fs36 \cf3 \ul \ulc3 \strokec3 Zooming and anti-aliasing}}
+\b\fs36 \
+\pard\pardeftab720\sl280\sa240\partightenfactor0
+
+\b0\fs24 \cf2 With the help of the {\field{\*\fldinst{HYPERLINK "https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/drawImage"}}{\fldrslt 
+\f1 \cf3 \ul \ulc3 \strokec3 drawImage()}} method, a second canvas and the {\field{\*\fldinst{HYPERLINK "https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/imageSmoothingEnabled"}}{\fldrslt 
+\f1 \cf3 \ul \ulc3 \strokec3 imageSmoothingEnabled}} property, we are able to zoom into our picture and see the details. A third canvas without\'a0{\field{\*\fldinst{HYPERLINK "https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/imageSmoothingEnabled"}}{\fldrslt 
+\f1 \cf3 \ul \ulc3 \strokec3 imageSmoothingEnabled}} is also drawn onto to be able to have a side by side comparison\'a0\
+We get the position of the mouse and crop an image of 5 pixels left and above to 5 pixels right and below. Then we copy that one over to another canvas and resize the image to the size we want it to. In the zoom canvas we resize a 10\'d710 pixel crop of the original canvas to 200\'d7200.\
+\pard\pardeftab720\sl280\partightenfactor0
+
+\f1 \cf2 zoomctx.drawImage(canvas,\
+                  Math.min(Math.max(0, x - 5), img.width - 10),\
+                  Math.min(Math.max(0, y - 5), img.height - 10),\
+                  10, 10, 0, 0, 200, 200);\
+\pard\pardeftab720\sl280\sa240\partightenfactor0
+
+\f0 \cf2 Zoom example:\
+\pard\pardeftab720\sl280\partightenfactor0
+
+\f1 \cf2 var img = new Image();\
+img.crossOrigin = 'anonymous';\
+img.src = './assets/rhino.jpg';\
+img.onload = function() \{\
+  draw(this);\
+\};\
+\
+function draw(img) \{\
+  var canvas = document.getElementById('canvas');\
+  var ctx = canvas.getContext('2d');\
+  ctx.drawImage(img, 0, 0);\
+\
+  var smoothedZoomCtx = document.getElementById('smoothed-zoom').getContext('2d');\
+  smoothedZoomCtx.imageSmoothingEnabled = true;\
+  smoothedZoomCtx.mozImageSmoothingEnabled = true;\
+  smoothedZoomCtx.webkitImageSmoothingEnabled = true;\
+  smoothedZoomCtx.msImageSmoothingEnabled = true;\
+\
+  var pixelatedZoomCtx = document.getElementById('pixelated-zoom').getContext('2d');\
+  pixelatedZoomCtx.imageSmoothingEnabled = false;\
+  pixelatedZoomCtx.mozImageSmoothingEnabled = false;\
+  pixelatedZoomCtx.webkitImageSmoothingEnabled = false;\
+  pixelatedZoomCtx.msImageSmoothingEnabled = false;\
+\
+  var zoom = function(ctx, x, y) \{\
+    ctx.drawImage(canvas,\
+        Math.min(Math.max(0, x - 5), img.width - 10),\
+        Math.min(Math.max(0, y - 5), img.height - 10),\
+        10, 10,\
+        0, 0,\
+        200, 200);\
+  \};\
+\
+  canvas.addEventListener('mousemove', function(event) \{\
+    const x = event.layerX;\
+    const y = event.layerY;\
+    zoom(smoothedZoomCtx, x, y);\
+    zoom(pixelatedZoomCtx, x, y);\
+  \});\
+\}\
+\pard\pardeftab720\sl280\sa240\partightenfactor0
+
+\f0 \cf2 The code's usage is demonstrated in the following live example:\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f2 \cf0 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {{\NeXTGraphic Screen Shot 2021-06-05 at 2.50.47 pm.png \width15460 \height5480 \appleattachmentpadding0 \appleembedtype0 \appleaqc
+}¬}
+\f0 \cf2 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 \
+\pard\pardeftab720\sl280\sa240\partightenfactor0
+\cf2 Also see the source code \'97 {\field{\*\fldinst{HYPERLINK "https://github.com/mdn/dom-examples/blob/master/canvas/pixel-manipulation/image-smoothing.html"}}{\fldrslt \cf3 \ul \ulc3 \strokec3 HTML}}, {\field{\*\fldinst{HYPERLINK "https://github.com/mdn/dom-examples/blob/master/canvas/pixel-manipulation/image-smoothing.js"}}{\fldrslt \cf3 \ul \ulc3 \strokec3 JavaScript}}.\
+\pard\pardeftab720\sl440\sa298\partightenfactor0
+{\field{\*\fldinst{HYPERLINK "https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Pixel_manipulation_with_canvas#saving_images"}}{\fldrslt 
+\b\fs36 \cf3 \ul \ulc3 \strokec3 Saving images}}
+\b\fs36 \
+\pard\pardeftab720\sl280\sa240\partightenfactor0
+
+\b0\fs24 \cf2 The {\field{\*\fldinst{HYPERLINK "https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement"}}{\fldrslt 
+\f1 \cf3 \ul \ulc3 \strokec3 HTMLCanvasElement}} provides a 
+\f1 toDataURL()
+\f0  method, which is useful when saving images. It returns a {\field{\*\fldinst{HYPERLINK "https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URIs"}}{\fldrslt \cf3 \ul \ulc3 \strokec3 data URI}} containing a representation of the image in the format specified by the 
+\f1 type
+\f0  parameter (defaults to {\field{\*\fldinst{HYPERLINK "https://en.wikipedia.org/wiki/Portable_Network_Graphics"}}{\fldrslt \cf3 \ul \ulc3 \strokec3 PNG}}). The returned image is in a resolution of 96 dpi.\
+\pard\pardeftab720\sl280\sa240\partightenfactor0
+
+\b \cf2 Note:
+\b0  Be aware that if the canvas contains any pixels that were obtained from another {\field{\*\fldinst{HYPERLINK "https://developer.mozilla.org/en-US/docs/Glossary/Origin"}}{\fldrslt \cf3 \ul \ulc3 \strokec3 origin}} without using CORS, the canvas is 
+\b tainted
+\b0  and its contents can no longer be read and saved. See {\field{\*\fldinst{HYPERLINK "https://developer.mozilla.org/en-US/docs/Web/HTML/CORS_enabled_image#security_and_tainted_canvases"}}{\fldrslt \cf3 \ul \ulc3 \strokec3 Security and tainted canvases}} in {\field{\*\fldinst{HYPERLINK "https://developer.mozilla.org/en-US/docs/Web/HTML/CORS_enabled_image"}}{\fldrslt \cf3 \ul \ulc3 \strokec3 Allowing cross-origin use of images and canvas}}\
+\pard\pardeftab720\sl280\partightenfactor0
+{\field{\*\fldinst{HYPERLINK "https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/toDataURL"}}{\fldrslt 
+\f1 \cf3 \ul \ulc3 \strokec3 canvas.toDataURL('image/png')}}\
+Default setting. Creates a PNG image.\
+{\field{\*\fldinst{HYPERLINK "https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/toDataURL"}}{\fldrslt 
+\f1 \cf3 \ul \ulc3 \strokec3 canvas.toDataURL('image/jpeg', quality)}}\
+Creates a JPG image. Optionally, you can provide a quality in the range from 0 to 1, with one being the best quality and with 0 almost not recognizable but small in file size.\
+\pard\pardeftab720\sl280\sa240\partightenfactor0
+\cf2 Once you have generated a data URI from you canvas, you are able to use it as the source of any {\field{\*\fldinst{HYPERLINK "https://developer.mozilla.org/en-US/docs/Web/HTML/Element/image"}}{\fldrslt 
+\f1 \cf3 \ul \ulc3 \strokec3 <image>}} or put it into a hyper link with a {\field{\*\fldinst{HYPERLINK "https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#attr-download"}}{\fldrslt \cf3 \ul \ulc3 \strokec3 download attribute}} to save it to disc, for example.\
+You can also create a {\field{\*\fldinst{HYPERLINK "https://developer.mozilla.org/en-US/docs/Web/API/Blob"}}{\fldrslt 
+\f1 \cf3 \ul \ulc3 \strokec3 Blob}} from the canvas.\
+\pard\pardeftab720\sl280\partightenfactor0
+{\field{\*\fldinst{HYPERLINK "https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/toBlob"}}{\fldrslt 
+\f1 \cf3 \ul \ulc3 \strokec3 canvas.toBlob(
+\f3\i callback
+\f1\i0 , 
+\f3\i type
+\f1\i0 , 
+\f3\i encoderOptions
+\f1\i0 )}}\
+Creates a 
+\f1 Blob
+\f0  object representing the image contained in the canvas.\
+\pard\pardeftab720\sl440\sa298\partightenfactor0
+{\field{\*\fldinst{HYPERLINK "https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Pixel_manipulation_with_canvas#see_also"}}{\fldrslt 
+\b\fs36 \cf3 \ul \ulc3 \strokec3 See also}}
+\b\fs36 \
+\pard\tx220\tx720\pardeftab720\li720\fi-720\sl280\partightenfactor0
+\ls1\ilvl0
+\f1\b0\fs24 \cf3 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}{\field{\*\fldinst{HYPERLINK "https://developer.mozilla.org/en-US/docs/Web/API/ImageData"}}{\fldrslt \expnd0\expndtw0\kerning0
+\ul \outl0\strokewidth0 \strokec3 ImageData}}
+\f0 \cf2 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 \
+\pard\tx220\tx720\pardeftab720\li720\fi-720\sl280\partightenfactor0
+\ls1\ilvl0\cf3 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}{\field{\*\fldinst{HYPERLINK "https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Manipulating_video_using_canvas"}}{\fldrslt \expnd0\expndtw0\kerning0
+\ul \outl0\strokewidth0 \strokec3 Manipulating video using canvas}}\cf2 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 \
+\ls1\ilvl0\cf3 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}{\field{\*\fldinst{HYPERLINK "https://codepo8.github.io/canvas-images-and-pixels/"}}{\fldrslt \expnd0\expndtw0\kerning0
+\ul \outl0\strokewidth0 \strokec3 Canvas, images and pixels \'96 by Christian Heilmann}}\cf2 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 \
+\pard\pardeftab720\sl280\sa240\partightenfactor0
+\cf2 \
+\pard\tx220\tx720\pardeftab720\li720\fi-720\sl280\partightenfactor0
+\ls2\ilvl0\cf3 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}{\field{\*\fldinst{HYPERLINK "https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Advanced_animations"}}{\fldrslt \expnd0\expndtw0\kerning0
+\ul \outl0\strokewidth0 \strokec3 \'ab Previous}}\cf2 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 \
+\pard\tx220\tx720\pardeftab720\li720\fi-720\sl280\partightenfactor0
+\ls2\ilvl0\cf2 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 \
+}
