@@ -18,10 +18,14 @@
 
 var c=document.getElementById("imgcnv");
 var ctx=c.getContext("2d");
-var img=document.getElementById("cnv");
-ctx.drawImage(img,0,0);
+var imgObj=new Image();
+imgObj.onload=function(){
+  ctx.drawImage(imgObj,0,0);
+};
+imgObj.src='./7 Colors.png';
+
 ctx.font="20px Arial";
-ctx.fillText("7 Colors should be here",10,10);
+ctx.fillText("7 Colors should be here",10,20);
 
 
 for(i=0;i<5;i++){j=i*50;document.getElementById("demo").innerHTML+="<p id='demo" +j+"' onclick=\"myFunction('line id" +j + "')\">" +j +" click this </p>";}
