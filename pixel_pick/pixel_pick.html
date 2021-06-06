@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<!--5/6/2021 base of pixel picker in javascript -->
+<html>
+<body>
+
+<canvas id="imgcnv" width="500" height="500" style="border:3px solid #d3d3d3;">
+</canvas>
+<p>Get a pixel value from image</p>
+
+<p id="res" onclick="clearres()" >Result goes here</p>
+<p id="demo" ></p>
+<img id="cnv" src="./7 Colors.png" onclick="myFunction('7 Colors')" width="500" height="500" >
+<img id="Rhino" src="./rhino.png" onclick="myFunction('rhino.png')" width="300" height="227" >
+
+<script>
+//"https:/trevorblum.name/hoverfly.png" works for second invocation image but not for canvas
+// canvas display fails on refresh but shows no console error. Shows border but no image
+
+var c=document.getElementById("imgcnv");
+var ctx=c.getContext("2d");
+var img=document.getElementById("cnv");
+ctx.drawImage(img,0,0);
+ctx.font="20px Arial";
+ctx.fillText("7 Colors should be here",10,10);
+
+
+for(i=0;i<5;i++){j=i*50;document.getElementById("demo").innerHTML+="<p id='demo" +j+"' onclick=\"myFunction('line id" +j + "')\">" +j +" click this </p>";}
+
+function myFunction(Z) {
+  document.getElementById("res").innerHTML = "<h2>YOU CLICKED "+Z+"!</h2>";}
+
+function clearres(){ document.getElementById("res").innerHTML ="Result goes here";}
+
+</script>
+
+
+</body>
+</html>
