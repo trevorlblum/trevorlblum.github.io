@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <!--5/6/2021 base of pixel picker in javascript -->
+<!-- show some images and a canvas for urine test sample colour pick-up from canvas -->
+
 <html>
 <body>
 
-<canvas id="imgcnv" width="500" height="500" style="border:3px solid #d3d3d3;">
+<canvas id="imgcnv" width="500" height="500" style="border:3px solid #d3d3d3;" >
 </canvas>
 <p>Get a pixel value from image</p>
 
@@ -13,20 +15,20 @@
 <img id="Rhino" src="./rhino.png" onclick="myFunction('rhino.png')" width="300" height="227" >
 
 <script>
-//"https:/trevorblum.name/hoverfly.png" works for second invocation image but not for canvas
-// canvas display fails on refresh but shows no console error. Shows border but no image
 
-var c=document.getElementById("imgcnv");
-var ctx=c.getContext("2d");
-var imgObj=new Image();
-imgObj.onload=function(){
-  ctx.drawImage(imgObj,0,0);
-};
-imgObj.src='./7 Colors.png';
+var cv=document.getElementById("imgcnv");
+if(cv.getContext) {   //check if canvas has context
+  var ctxcnv=cv.getContext("2d");
+  ctxcnv.font="20px Arial";
+  ctxcnv.fillText("7 Colors should be here",10,10);
+  var imgObj=new Image();
 
-ctx.font="20px Arial";
-ctx.fillText("7 Colors should be here",10,20);
-
+  imgObj.onload=function(){
+    ctxcnv.drawImage(imgObj,0,0);
+  };
+  imgObj.src="./7 Colors.png";
+}
+else { myFunction("BUT CANVAS NO CONTEXT");}
 
 for(i=0;i<5;i++){j=i*50;document.getElementById("demo").innerHTML+="<p id='demo" +j+"' onclick=\"myFunction('line id" +j + "')\">" +j +" click this </p>";}
 
@@ -34,6 +36,36 @@ function myFunction(Z) {
   document.getElementById("res").innerHTML = "<h2>YOU CLICKED "+Z+"!</h2>";}
 
 function clearres(){ document.getElementById("res").innerHTML ="Result goes here";}
+
+function msg(Msg){
+  var d=ctx.getImageData(0,0,10,10);
+  document.getElementById("res").innerHTML = "<h2>Message "+Msg+" image data is "+d+"!</h2>";
+
+}
+// from color-picker
+var hoveredColor = document.getElementById('hovered-color');
+var selectedColor = document.getElementById('selected-color');
+
+
+function pick(event, destination) {
+  var x = event.layerX;
+  var y = event.layerY;
+  var pixel = ctxcnv.getImageData(x, y, 1, 1);
+  var data = pixel.data;
+
+	const rgba = `rgba(${data[0]}, ${data[1]}, ${data[2]}, ${data[3] / 255})`;
+	destination.style.background = rgba;
+	destination.textContent = rgba;
+
+	return rgba;
+}
+
+imgcnv.addEventListener('mousemove', function(event) {
+	pick(event, hoveredColor);
+});
+imgcnv.addEventListener('click', function(event) {
+	pick(event, selectedColor);
+});
 
 </script>
 
