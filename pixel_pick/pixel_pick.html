@@ -4,12 +4,9 @@
 
 <html>
 <body>
-<canvas id="hovered-color" width="500" height="500" style="border:3px solid #d3d3d3;" >
-</canvas>
-<canvas id="selected-color" width="500" height="500" style="border:3px solid #d3d3d3;">
-</canvas>
-<canvas id="imgcnv" width="500" height="500" style="border:3px solid #d3d3d3;" >
-</canvas>
+<canvas id="hovered-color" width="500" height="500" style="border:3px solid #d3d3d3;" ></canvas>
+<canvas id="selected-color" width="500" height="500" style="border:3px solid #d3d3d3;"></canvas>
+<canvas id="imgcnv" width="500" height="500" style="border:3px solid #d3d3d3;" ></canvas>
 <p>Get a pixel value from image</p>
 
 <p id="res" onclick="clearres()" >Result goes here</p>
@@ -18,7 +15,7 @@
 <img id="Rhino" src="./rhino.png" onclick="myFunction('rhino.png')" width="300" height="227" >
 
 <script>
-
+msg("in script");
 var cv=document.getElementById("imgcnv");
 if(cv.getContext) {   //check if canvas has context
   var ctxcnv=cv.getContext("2d");
@@ -55,7 +52,7 @@ function pick(event, destination) {
   var y = event.layerY;
   var pixel = ctxcnv.getImageData(x, y, 1, 1);
   var data = pixel.data;
-
+        msg("pick fn");
 	const rgba = `rgba(${data[0]}, ${data[1]}, ${data[2]}, ${data[3] / 255})`;
 	destination.style.background = rgba;
 	destination.textContent = rgba;
@@ -64,9 +61,11 @@ function pick(event, destination) {
 }
 
 imgcnv.addEventListener('mousemove', function(event) {
+        msg("imgcnv hover");
 	pick(event, hoveredColor);
 });
 imgcnv.addEventListener('click', function(event) {
+        msg("imgcnv click");
 	pick(event, selectedColor);
 });
 

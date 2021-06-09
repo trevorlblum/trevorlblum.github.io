@@ -1,0 +1,50 @@
+<!--to avoid CORS and security errors, must run from server (localhost etc..) 
+  myCanvas works fine, but clear does nothing - must be clearX ( reserved words??)
+  appears to not like .png's - jpg's ok
+<img id="clear" src="clear.jpg" alt="blank" width="220" height="277"> -->
+<!DOCTYPE html>
+<html>
+<body>
+<p id="all" >place for responses</p>
+<img id="clear" src="clear.jpg" alt="blank" width="40" height="40">
+<p>Image to use: click to copy, hover to clear canvas below </p>
+<img id="scream" src="img_the_scream.jpg" alt="The Scream" onclick="myCanvas()" onmouseover="clearX()" width="60" height="70">
+
+<p>Canvas to fill:</p>
+<canvas id="myCanvas" onmouseover="myCanvas()" width="250" height="300" style="border:1px solid #d3d3d3;">
+Your browser does not support the HTML canvas tag.</canvas>
+
+<p><button onclick="clearX()">Button clears</button></p>
+<p><button onclick="valuesX()">get values</button></p>
+
+<script>
+var All=document.getElementById("all").innerHTML="clear image :";
+var c = document.getElementById("myCanvas");
+var ctx = c.getContext("2d");
+ctx.font = "12px Arial";
+ctx.fillText("Click image or hover here for image copy",10,70);
+
+function myCanvas() {
+  var All=document.getElementById("all").innerHTML="in myCanvas";
+//  var c = document.getElementById("myCanvas");
+//  var ctx = c.getContext("2d");
+  var img = document.getElementById("scream");
+  ctx.drawImage(img,10,10);
+}
+function clearX(){
+  var All=document.getElementById("all").innerHTML="in clear";
+  var img = document.getElementById("clear");
+  ctx.drawImage(img,10,10);
+  ctx.font = "25px Arial";
+  ctx.fillText("cleared ",10,50);
+}
+
+function valuesX(){
+ var All=document.getElementById("all").innerHTML="in values";
+ var imgData=ctx.getImageData(10,10,50,50);
+ ctx.putImageData(imgData,10,70);
+}
+</script>
+
+</body>
+</html>
