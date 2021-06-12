@@ -1,0 +1,78 @@
+<!--to avoid CORS and security errors, must run from server (localhost etc..) 
+  myCanvas works fine, but clear does nothing - must be clearX ( reserved words??)
+  appears to not like .png's - jpg's ok
+<img id="clear" src="clear.jpg" alt="blank" width="220" height="277"> -->
+<!DOCTYPE html>
+<html>
+<body>
+<p id="all" >place for responses</p>
+<img id="clear" src="clear.jpg" alt="blank" width="40" height="40">
+<img id="rhino" src="rhino.jpg" alt="blank" width="40" height="40">
+
+<p>Image to use: click to copy, hover to clear canvas below </p>
+<img id="scream" src="img_the_scream.jpg" alt="The Scream" onclick="myCanvas()" onmouseover="clearX()" width="60" height="70">
+
+<p><button onclick="clearX()">Button clears</button></p>
+<p><button onclick="valuesX()">get values</button></p>
+<p>Canvas to fill:</p>
+
+<canvas id="myCanvas" onmouseover="myCanvas()" width="250" height="300" style="border:1px solid #d3d3d3;">
+Your browser does not support the HTML canvas tag.</canvas>
+<canvas id="myCanvasx" onmouseover="myCanvasx()" width="300" height="227" style="border:1px solid #d3d3d3;">
+Your browser does not support the HTML canvas tag.</canvas>
+
+
+<script>
+var All=document.getElementById("all").innerHTML="clear image :";
+var c = document.getElementById("myCanvas");
+var ctx = c.getContext("2d");
+ctx.font = "12px Arial";
+ctx.fillText("Click image or hover here for image copy",10,70);
+var cx = document.getElementById("myCanvasx");
+var ctxx = cx.getContext("2d");
+ctxx.fillText("Click image or hover here for image copy",10,70);
+
+
+function myCanvas() {
+  var All=document.getElementById("all").innerHTML="in myCanvas";
+  var img = document.getElementById("scream");
+  ctx.drawImage(img,10,10);
+}
+function myCanvasx() {
+  var All=document.getElementById("all").innerHTML="in myCanvasx";
+  var img = document.getElementById("rhino");
+  ctxx.drawImage(img,10,10);
+}
+function clearX(){
+  var All=document.getElementById("all").innerHTML="in clear";
+  var img = document.getElementById("clear");
+  ctx.drawImage(img,10,10);
+  ctx.font = "25px Arial";
+  ctx.fillText("cleared ",10,50);
+  ctxx.drawImage(img,10,10);
+}
+
+function valuesX(){
+ var All=document.getElementById("all").innerHTML="in valuesX";
+ var imgData=ctx.getImageData(100,150,50,50);
+  ctx.putImageData(imgData,150,150); 
+
+//avg's appear to be zero
+ var i;
+ var avg=new Uint8ClampedArray(4);
+ for(i=0;i<imgData.data.length;i+=4){ avg[i]=avg[i]+imgData.data[i];}
+ for(i=0;i<imgData.data.length;i+=4){ avg[i]=avg[i]/(imgData.data.length);}
+  imgDatax=ctxx.createImageData(50,50);
+  for(i=0;i<imgData.data.length;i++){ imgDatax.data[i]=imgData.data[i];} // fudge image to imgDatax
+  for(i=0;i<imgDatax.data.length;i+=4){
+   imgDatax.data[i]=imgDatax.data[i];//+avg[i];
+   imgDatax.data[i+1]=imgDatax.data[i+1];//+avg[i+1];
+   imgDatax.data[i+2]=imgDatax.data[i+2];//+avg[i+2];
+   imgDatax.data[i+3]=imgDatax.data[i+3];//+avg[i+3];
+  }
+  ctxx.putImageData(imgDatax,75,120); 
+ }
+</script>
+
+</body>
+</html>
