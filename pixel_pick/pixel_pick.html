@@ -1,6 +1,9 @@
 <!DOCTYPE html>
-<!--5/6/2021 base of pixel picker in javascript -->
-<!-- show some images and a canvas for urine test sample colour pick-up from canvas -->
+<!--10/6/2021 msg fails on ctxcnv reference
+  5/6/2021 base of pixel picker in javascript
+  sketch to show some images and a canvas for urine test sample colour pick-up from canvas 
+  refer to click_hover.html for working version with different images.
+-->
 
 <html>
 <body>
@@ -15,7 +18,6 @@
 <img id="Rhino" src="./rhino.png" onclick="myFunction('rhino.png')" width="300" height="227" >
 
 <script>
-msg("in script");
 var cv=document.getElementById("imgcnv");
 if(cv.getContext) {   //check if canvas has context
   var ctxcnv=cv.getContext("2d");
@@ -24,11 +26,13 @@ if(cv.getContext) {   //check if canvas has context
   var imgObj=new Image();
 
   imgObj.onload=function(){
-    ctxcnv.drawImage(imgObj,0,0);
+  ctxcnv.drawImage(imgObj,0,0);
   };
   imgObj.src="./7 Colors.png";
 }
 else { myFunction("BUT CANVAS NO CONTEXT");}
+msg("in script");
+
 
 for(i=0;i<5;i++){j=i*50;document.getElementById("demo").innerHTML+="<p id='demo" +j+"' onclick=\"myFunction('line id" +j + "')\">" +j +" click this </p>";}
 
@@ -38,7 +42,7 @@ function myFunction(Z) {
 function clearres(){ document.getElementById("res").innerHTML ="Result goes here";}
 
 function msg(Msg){
-  var d=ctx.getImageData(0,0,10,10);
+  var d=ctxcnv.getImageData(0,0,10,10);
   document.getElementById("res").innerHTML = "<h2>Message "+Msg+" image data is "+d+"!</h2>";
 
 }
