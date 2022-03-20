@@ -1,0 +1,152 @@
+<!DOCTYPE HTML>
+<!-- 31/01 got replacements working. now need to set matrix to puzzle numbers
+     also images in div three now hidden by html comment  
+<html>
+<head>
+<!--HTML-->
+</head>
+<h1>Drawing with mouse events</h1>
+<div id='datestamp'></div>
+<div id='canv'>
+<canvas id="myPics" width="520" height="490" style="border:3px solid black;" ></canvas>
+</div>
+<div id='one' >
+</div>
+<div id='two' >
+</div>
+<div id='three'></div>
+<!--CSS-->
+<style >
+canvas {
+  border: 1px solid black;
+  width: 560px;
+  height: 490px;
+}
+</style>
+<!--JavaScript-->
+<script>
+
+document.getElementById('datestamp').innerHTML="<h3>date is "+Date()+"</h3>";
+//first, build div two
+var mem;var pfx='';
+document.getElementById('one').innerHTML="<button onclick=matrix(context)>REDRAW MATRIX</button><br>";
+//do setup buttons
+for(i=1;i<27;i++){
+document.getElementById("two").innerHTML+='<button onmousedown=remember('+i+') ><img id=two'+i+' src=alphabit'+String.fromCharCode(64+parseInt(i))+'.png></button>';
+document.getElementById("one").innerHTML+='<button onmousedown=recall('+i+') ><img id=one'+i+' src='+i+'.png></button>';
+}
+//respond to canvas mouse
+function canvasevent(x){
+document.getElementById('two'+x).src="alphabitA.png";
+}
+function remember(x){
+mem=x;
+}
+function recall(x){
+var rec=document.getElementById('two'+x).src;
+document.getElementById('one'+x).src='alphabit'+String.fromCharCode(64+mem)+'.png';
+var newby=document.createElement("IMG");newby.id='one'+x; newby.src='alphabit'+String.fromCharCode(64+mem)+'.png';//document.getElementById('one'+x).src;
+context.drawImage(newby,30,30-10);
+//resolve(x,context);
+}
+function over(){
+document.getElementById('two1').src=mem+".png";
+}
+function resolve(numin,context){ //set matrix element by number to alpha equivalent
+var ptr=0;
+  for(iy=1;iy<16;iy++)for(ix=1;ix<16;ix++) {
+  ptr+=0;ptr=1+ptr%26;
+  var name='alphabit'+String.fromCharCode(64+parseInt(numin))+".png";
+  var newby=document.createElement("IMG");newby.id=ix*iy; newby.src=name;
+  if(ptr==numin)context.drawImage(newby,ix*30,iy*30-10);
+ }
+}
+function addit(){
+var numid=arguments[0]; 
+if(numid==1)document.getElementById('one').innerHTML=document.getElementById('one').innerHTML+"<br>";//clear div one at start=1
+var prevone=document.getElementById('one').innerHTML;
+ document.getElementById('one').innerHTML=prevone+"<button onclick=replaceit("
++numid+
+")> <img id="+numid+" src=alphabit"+String.fromCharCode(64+parseInt(numid)) +".png> </button>";
+}
+function replaceit(){
+numid=arguments[0];
+if(numid==1)document.getElementById('two').innerHTML="";//comment to stop clear on element 1
+var prevone=document.getElementById('two').innerHTML;
+ document.getElementById('two').innerHTML=prevone+" <button onclick=addit("+numid+")>"+numid+"</button>";
+resolve(numid,context);
+}
+function matrix(context){
+var ptr=0;
+  for(iy=1;iy<16;iy++)for(ix=1;ix<16;ix++) {
+    ptr=1+ptr%26;
+    var im;
+    im=document.getElementById('one'+ptr);
+    context.drawImage(im,ix*30,iy*30-10);
+   }
+}
+
+// When true, moving the mouse draws on the canvas
+let isDrawing = false;
+let x = 0;
+let y = 0;
+
+const myPics = document.getElementById('myPics');
+const context = myPics.getContext('2d');
+
+// The x and y offset of the canvas from the edge of the page
+const rect = myPics.getBoundingClientRect();
+
+// Add the event listeners for mousedown, mousemove, and mouseup
+myPics.addEventListener('mousedown', e => {
+  x = e.clientX - rect.left;
+  y = e.clientY - rect.top;
+  isDrawing = true;
+});
+
+myPics.addEventListener('mousemove', e => {
+  if (isDrawing === true) {
+    drawLine(context, x, y, e.clientX - rect.left, e.clientY - rect.top);
+    x = e.clientX - rect.left;
+    y = e.clientY - rect.top;
+  }
+});
+
+window.addEventListener('mouseup', e => {
+  if (isDrawing === true) {
+    drawLine(context, x, y, e.clientX - rect.left, e.clientY - rect.top);
+    x = 0;
+    y = 0;
+    isDrawing = false;
+  }
+});
+
+function drawLine(context, x1, y1, x2, y2) {
+  context.beginPath();
+matrix(context);
+  context.strokeStyle = 'black';
+  context.lineWidth = 1;
+  context.moveTo(x1, y1);
+  context.lineTo(x2, y2);
+  context.stroke();
+  context.closePath();
+}
+</script>
+<body>
+<div class='three'>
+<!--
+imag's held in div three<img id='image' src="black.png" ><img id='imag1' src="1.png" >
+<img id='imag2' src="2.png" ><img id='imag3' src="3.png" ><img id='imag4' src="4.png" >
+<img id='imag5' src="5.png" ><img id='imag6' src="6.png" ><img id='imag7' src="7.png" >
+<img id='imag8' src="8.png" ><img id='imag9' src="9.png" ><img id='imag10' src="10.png" >
+<img id='imag11' src="11.png" ><img id='imag12' src="12.png" ><img id='imag13' src="13.png" >
+<img id='imag14' src="14.png" ><img id='imag15' src="15.png" ><img id='imag16' src="16.png" >
+<img id='imag17' src="17.png" ><img id='imag18' src="18.png" ><img id='imag19' src="19.png" >
+<img id='imag20' src="20.png" ><img id='imag21' src="21.png" ><img id='imag22' src="22.png" >
+<img id='imag23' src="23.png" ><img id='imag24' src="24.png" ><img id='imag25' src="25.png" >
+<img id='imag26' src="26.png" >
+text in div three
+-->
+</div>
+</body>
+</html>
