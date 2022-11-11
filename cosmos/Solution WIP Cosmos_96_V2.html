@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<!-- 10/11/2022 aclick (line 244) changed to avoid set clues or dark (already selected) - needs monitoring for side effects
+<!-- 11/11/2022 help button shows alphas. onclick clears answers 
+  10/11/2022 aclick (line 244) changed to avoid set clues or dark (already selected) - needs monitoring for side effects
   10/11/2022 added HELP button for debug progress checking on answer - shows with <pre> text property needs images like clue lines
   9/11/2022 temporary check as text display 
   5/11/2020 does display of final matrix on all entered. Now needs to save and compare.
@@ -11,8 +12,8 @@
 
 <html>
 <title> Cosmos Letter Puzzle #96</title>
-<h2>Solution WIP Codeword Puzzle 'assistant' by Trevor (V2). Acknowledgements -  
-<a href="https://www.snodger.com.au"> Snodger Media </a>
+<h3>Solution WIP Codeword Puzzle 'assistant' by Trevor (V2). Acknowledgements -  
+<a href="https://www.snodger.com.au"> Snodger Media </a><br>Your starting clue is - or clues are - set in the number line above and matrix below.</h3>
 <div class='buttons' align='left' >
 <img src='images/showplot.png' onclick='chartfreqs()' >
 <img src='images/showmatrix.png' onclick='showmatrix()' >
@@ -64,6 +65,7 @@
 <div id='clues'></div>
 <div id='header'></div>
 <div id='welldone'></div>
+<div id='answer'></div>
 <canvas id='canvas' height='250'; width='780' style="border:3px solid black;" > </canvas>
 
 
@@ -92,7 +94,6 @@ function checkfinished(){
  var alldone="OK";
  var im="";
  for(i=1;i<27;i++){
-//    if(i==3)showsolution();//for debugging select items 1 and 2 overwrites matrix but
     im= document.getElementById('n'+i).src;
 // now does number line have any number not replaced? 
     if(im.includes("images/"+i+".png"))       //is there a number left?
@@ -292,21 +293,36 @@ function writesolution(){
 function showanswer(){
 if(answer!=null){              // if no answer in text file, skip this bit
 var letters=answer.split(","); // answer comes from .txt file
-document.getElementById('div1').innerHTML="<pre>";
-for(a=1;a<27;a++){for(l=1;l<27;l++)if(letters[l*2+1]==a)document.getElementById('div1').innerHTML+=letters[l*2]+".....";}
-document.getElementById('div1').innerHTML+="<br>";
-for(a=1;a<27;a++){for(l=1;l<27;l++)if(letters[l*2+1]==a)document.getElementById('div1').innerHTML+=a+"....";
-                                   if(a<7)document.getElementById('div1').innerHTML+="..";
-   }
+
  }
+document.getElementById('answer').innerHTML="";
+ for(a=1;a<27;a++)//a==1, is 'U' which is pngs/21
+  {
+    for(l=0;l<26;l++){
+      ll=l+1;
+      if(letters[l*2+1]==a)
+      {
+        x="images/A_Z.pngs/"+ll+".png";
+        document.getElementById('answer').innerHTML+="<img src="+x+" onclick='clearanswer()'> ";
+      }
+    }
+  }
+    document.getElementById('answer').innerHTML+="<br>";
+
+ for(a=1;a<27;a++)
+  {
+     x="images/"+a+".png";
+     document.getElementById('answer').innerHTML+=".<img src="+x+" onclick='clearanswer()'>";   
+  }
 }
 
-
+function clearanswer(){
+    document.getElementById('answer').innerHTML="";
+}
 </script>
 </head>
 <body>
-<div class='div1'>
-<h3>Your starting clue is - or clues are - set in the number line above and matrix below.</h3>
-</div>
+
+
 </body>
 </html> 
