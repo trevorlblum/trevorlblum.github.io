@@ -107,8 +107,8 @@ function checkfinished(){
    if(alldone=="OK"){
 //    document.getElementById('matrix').innerHTML+="<br>"+"ALL DONE"; 
     document.getElementById('welldone').innerHTML="<img src='images/welldone.png'>";
-//  now check solution against 'answer' from text file
-    document.getElementById('matrix').innerHTML+="<br>"+answer;
+//  now show solution against 'answer' from text file
+//    document.getElementById('matrix').innerHTML+="<br>"+answer;
     return True;
     }
   }
@@ -303,7 +303,7 @@ document.getElementById('answer').innerHTML="";
       if(letters[l*2+1]==a)
       {
         x="images/A_Z.pngs/"+ll+".png";
-        document.getElementById('answer').innerHTML+="<img src="+x+" onclick='clearanswer()'> ";
+        document.getElementById('answer').innerHTML+="<img src="+x+" onclick='clearanswer()'>";
       }
     }
   }
@@ -312,7 +312,7 @@ document.getElementById('answer').innerHTML="";
  for(a=1;a<27;a++)
   {
      x="images/"+a+".png";
-     document.getElementById('answer').innerHTML+=".<img src="+x+" onclick='clearanswer()'>";   
+     document.getElementById('answer').innerHTML+="<img src="+x+" onclick='clearanswer()'>";   
   }
 }
 
