@@ -1,0 +1,97 @@
+<!--12/6/2023 added parse for multiple images to expand.
+    Needs to run from website - URL for imgdir works but startup and fetches are local.
+
+    11/6/2023 added expand to view details and images as readable line text and images
+    added onclick display of Expand line details to result div.
+    Expand called line 377 29|3|3|15|3|slider pots,mini pots,toroids various|toroid.png,slider pot.png input.html:78:9
+    10/6/2023 displaying one image from BoxBin images. Onclick enlarges then diminishes.
+    <div1> needs to be before mashup text for easier viewing 
+    9/6/2023 Gave up on reading file by name. Used mashup.txt from mashup.pde decorated Box_Bin.csv
+    7/6/2023 this got jumbled sometime and only works for .png files
+    8/6/2023 it needs a way to get the textdata id to be ovewritten by the entered file name.
+
+    3/6/2023 input a value and show image(png) or text file (txt) name
+    to get text file data is next problem (maybe include as in cosmos case
+    requires data in atring array form which is a pain to use the .csv current format-->
+<!DOCTYPE html>
+<html>
+<div id="div1" div1 </div>
+
+<body>
+
+<h2>Inputs filename.png for display. If not .png shows mashup.txt</h2><br>
+
+<input  type="text" id="textin" value="....." >
+
+<img id="demo" src="images/logo.png" width="100" onclick="bigger()"><br>
+
+<p id="result" <br> Query result <br></p>
+ 
+<p id="namestack" <br>Image name stack<br></p>
+
+<p id="showit" <br>showit</p>
+
+<button onclick="myFunction()">press to see file entry</button>
+
+
+<script 'id="textdata" type="text/javascript" src="mashup.txt">';</script>
+
+<script>
+
+ imgdir="images/";
+
+function myFunction() 
+{
+  var x = document.getElementById("textin").value;
+  document.getElementById("demo").innerHTML = x;
+  if(x.substring(x.length-4)===".png")document.getElementById("showit").innerHTML="<br>This is the entry "+document.getElementById("textin").value+" <br><img src="+"\""+x+"\" width='300px' >";
+
+//input.html
+ document.getElementById("textin").innerHTML='id="textdata" type="text/javascript" src=\""'+x+">"+ "fixed file boxdata.txt button was "+ textin.value;
+
+if(x.substring(x.length-4)!=".png")
+  {
+    document.getElementById("showit").innerHTML+="<br>The input entered was "+document.getElementById("textin").value+" <p src="+"\""+x+"\"></P>";
+
+ document.getElementById("showit").innerHTML+="<br>This is the text in mashup.txt file <br>";
+ 
+ for(l=1;l<textdata.length;l++) // extract boxbin lines. Start at 1 to avoid .csv title line
+  { 
+    var thisname;thisname=textdata[l].split("|");
+    if(thisname[6]!="unknown.jpg"){                //item [6] is image name(s) for line
+    document.getElementById("namestack").innerHTML+=thisname[6];
+// fill image namestack from boxbin lines
+    var thisimage;
+    thisimage=thisname[6].split(","); 
+//extract all images for line
+    for(i=0;i<thisimage.length;i++) document.getElementById("namestack").innerHTML+="<img src=\""+imgdir+thisimage[i]+"\" width=\"50\" onclick =\"expand("+l+")\">:: ";
+   }
+    document.getElementById("showit").innerHTML+=textdata[l]+"<br>";   
+  }
+ }
+parse(textdata[1]);
+}
+
+
+function parse(S){ //get boxbin elements from string S
+var parse;
+parse=S.split("|");
+ document.getElementById("demo").src="/users/trevorblum/Documents/Processing/Box_Bin/images/"+parse[6];
+}
+
+function bigger(){
+ document.getElementById("showit").innerHTML="Text show removed for ease";
+ document.getElementById("demo").width=document.getElementById("demo").width*2;
+ if(document.getElementById("demo").width>400)document.getElementById("demo").width=100;
+}
+
+function expand(line){ // expand small image click to show line and images
+//console.log("Expand called line "+line+" "+textdata[line]);
+parse=textdata[line].split("|"); img=parse[6].split(",");
+document.getElementById("result").innerHTML="<h3>Expand called line "+line+" "+textdata[line]+"</h3>";
+ for(i=0;i<img.length;i++)document.getElementById("result").innerHTML+="<img src=\""+imgdir+img[i]+"\" width=\"200\" onclick=\"bigger()\">";
+}
+</script>
+
+</body>
+</html>
