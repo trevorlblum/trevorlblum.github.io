@@ -1,4 +1,6 @@
-<!--12/6/2023 added parse for multiple images to expand.
+<!--13/6/2023 Search function case-insensitive seems to work 
+    WIP bigger clicks and function should expand clicked image NOT logo
+    12/6/2023 added parse for multiple images to expand.
     Needs to run from website - URL for imgdir works but startup and fetches are local.
 
     11/6/2023 added expand to view details and images as readable line text and images
@@ -23,7 +25,7 @@
 
 <input  type="text" id="textin" value="....." >
 
-<img id="demo" src="images/logo.png" width="100" onclick="bigger()"><br>
+<img id="demo" src="images/logo.png" width="100" onclick="bigger(src)"><br>
 
 <p id="result" <br> Query result <br></p>
  
@@ -44,17 +46,23 @@ function myFunction()
 {
   var x = document.getElementById("textin").value;
   document.getElementById("demo").innerHTML = x;
-  if(x.substring(x.length-4)===".png")document.getElementById("showit").innerHTML="<br>This is the entry "+document.getElementById("textin").value+" <br><img src="+"\""+x+"\" width='300px' >";
+  if(x.substring(x.length-4)===".png")document.getElementById("showit").innerHTML="<br>This is the entry "+document.getElementById("textin").value+" <br><img src="+imgdir+x+" width='300px' >";
 
 //input.html
  document.getElementById("textin").innerHTML='id="textdata" type="text/javascript" src=\""'+x+">"+ "fixed file boxdata.txt button was "+ textin.value;
 
-if(x.substring(x.length-4)!=".png")
+if(x.substring(x.length-4)!=".png") // Easy one, show a .png file explicitly
   {
-    document.getElementById("showit").innerHTML+="<br>The input entered was "+document.getElementById("textin").value+" <p src="+"\""+x+"\"></P>";
+    document.getElementById("showit").innerHTML+="<br>The input entered was "+document.getElementById("textin").value+" <p src="+imgdir+"\""+x+"\"></P>";
 
- document.getElementById("showit").innerHTML+="<br>This is the text in mashup.txt file <br>";
+// process the mashup text
+search();
+
  
+document.getElementById("showit").innerHTML+="<br>This is the text in mashup.txt file <br>";
+ 
+//show the mashup text names in namestack
+
  for(l=1;l<textdata.length;l++) // extract boxbin lines. Start at 1 to avoid .csv title line
   { 
     var thisname;thisname=textdata[l].split("|");
@@ -76,11 +84,13 @@ parse(textdata[1]);
 function parse(S){ //get boxbin elements from string S
 var parse;
 parse=S.split("|");
- document.getElementById("demo").src=imagedir+"+parse[6]";
+ document.getElementById("demo").src=imgdir+parse[6];
 }
 
-function bigger(){
+function bigger(source){ //enlarge image in click loop
  document.getElementById("showit").innerHTML="Text show removed for ease";
+ source=document.getElementById("demo").src;
+console.log("Bigger source "+source);
  document.getElementById("demo").width=document.getElementById("demo").width*2;
  if(document.getElementById("demo").width>400)document.getElementById("demo").width=100;
 }
@@ -89,7 +99,27 @@ function expand(line){ // expand small image click to show line and images
 //console.log("Expand called line "+line+" "+textdata[line]);
 parse=textdata[line].split("|"); img=parse[6].split(",");
 document.getElementById("result").innerHTML="<h3>Expand called line "+line+" "+textdata[line]+"</h3>";
- for(i=0;i<img.length;i++)document.getElementById("result").innerHTML+="<img src=\""+imgdir+img[i]+"\" width=\"200\" onclick=\"bigger()\">";
+ for(i=0;i<img.length;i++)document.getElementById("result").innerHTML+="<img src=\""+imgdir+img[i]+"\" width=\"200\" onclick=\"bigger(src)\">";
+}
+
+function search(){ //setup search for input text
+console.log("search invoked");
+ for(l=1;l<textdata.length;l++) // extract boxbin lines. Start at 1 to avoid .csv title line
+  { 
+    var thisname;thisname=textdata[l].split("|");
+    if(thisname[5].toUpperCase().indexOf(textin.value.toUpperCase())!=-1) 
+   {
+               //item [6] is image name(s) for line
+      document.getElementById("namestack").innerHTML+=thisname[6];
+//    fill image namestack from boxbin lines
+      var thisimage;
+      thisimage=thisname[6].split(","); 
+//    extract all images for line
+      for(i=0;i<thisimage.length;i++) document.getElementById("namestack").innerHTML+="<img src=\""+imgdir+thisimage[i]+"\" width=\"50\" onclick =\"expand("+l+")\">:: ";
+      
+   }
+  }
+   document.getElementById("namestack").innerHTML+="<h3><br>End of search results<br></h3>";  
 }
 </script>
 
