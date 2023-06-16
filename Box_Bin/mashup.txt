@@ -402,4 +402,12 @@ const textdata=[
 "32|0|0|25|15|10 LED Bargraph LCD displays6off|10 led bargraph.png",
 "32|0|0|25|15|OpAmp 80volt TO-220|OPA453T.png",
 "32|0|0|25|15|MOSFET 400Volt 6Amp IRF730|mosfet.png",
-"33|0|0|16|16|Drawers, various. Last box again|unknown.jpg"];
+"33|0|0|8|13|Raspberry Pi 4 2GB with 5inch display|unknown.jpg",
+"33|8|0|8|13|Raspberry Pi 3 with 5inch display|unknown.jpg",
+"33|16|0|8|13|Raspberry 3 with PiFace, Raspberry Pi white case|unknown.jpg ",
+"33|24|0|8|13|Raspberry Pi 3 and Pi Zero with 3.5inch display, 4 Zero Ws 1.1 & 1.2|unknown.jpg",
+"33|0|13|8|13|Raspberry Pi 4 8GB and 4GB|unknown.jpg",
+"33|8|13|8|13|Raspberry 3B and Pi4 heatsink case|unknown.jpg",
+"33|16|13|8|13|Raspberry Pi power supplies 2off|unknown.jpg",
+"33|24|13|8|13|Raspberry pi ZeroW 1.1 with power supply, Wireless mouse|unknown.jpg ",
+"34|0|0|16|16|Drawers, various. Last box again|unknown.jpg"];
