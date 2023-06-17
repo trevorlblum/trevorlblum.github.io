@@ -1,4 +1,7 @@
-<!--15/6/2023 line 47 <script ....></script> works but Komodo, Sublime and browser complain. No answer yet
+<!--17/6/2023 WIP multiple word search. Currently each word, not conjunction.
+    modified to accept only if all terms present ie "pot 50k" or "ultra 40"
+    15/6/2023 line 47 <script ....></script> works but Komodo,
+    Sublime and browser complain. No answer yet
     14/6/2023 tidy up with new logo and expand line more informative
     added graphics ".png.jpg.jpeg.bmp" file extensions for direct display
     
@@ -30,7 +33,7 @@
 
 <body>
 
-<h2>Query app for Box_Binned items. Enter search text (e.g. opamp).<br>If ..... shows all data files. If .png/.jpg/.bmp image is shown.<br>Click on search-retrieved images for bin details.</h2><br>
+<h2>Query app for Box_Binned items. Enter search text (e.g. opamp lm741).<br>If ..... shows all data files. If .png/.jpg/.bmp image is shown.<br>Click on search-retrieved images for bin details.</h2><br>
 
 <input  type="text" id="textin" value="....." >
 
@@ -121,23 +124,30 @@ document.getElementById("result").innerHTML="<h3>Detail for line "+line+" Box "+
 }
 
 function search(){ //setup search for input text
-console.log("search invoked");
-
+//console.log("search invoked ");
+found=true;
  for(l=1;l<textdata.length;l++) // extract boxbin lines. Start at 1 to avoid .csv title line
   { 
+    found=true;
+    var words=textin.value.split(" ");
     var thisname;thisname=textdata[l].split("|");
-    if(thisname[5].toUpperCase().indexOf(textin.value.toUpperCase())!=-1) 
-   {
- //item [6] is image name(s) for line
+    for(w=0;w<words.length;w++){
+//      if(l<10)console.log("Search term "+words[w]);
+      if(thisname[5].toUpperCase().indexOf(words[w].toUpperCase())===-1)found=false; 
+     }     
+      if(found===true)
+      {
+//    item [6] is image name(s) for line
       document.getElementById("namestack").innerHTML+=thisname[6];
 //    fill image namestack from boxbin lines
       var thisimage;
       thisimage=thisname[6].split(","); 
 //    extract all images for line
       for(i=0;i<thisimage.length;i++) document.getElementById("namestack").innerHTML+="<img src=\""+imgdir+thisimage[i]+"\" width=\"50\" onclick =\"expand("+l+")\">:: ";
-      
-   }
+     
+   
   }
+}
    document.getElementById("namestack").innerHTML+="<h3><br>End of search results<br></h3>";  
 }
 </script>
