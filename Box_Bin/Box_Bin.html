@@ -1,5 +1,8 @@
-<!--17/6/2023 WIP multiple word search. Currently each word, not conjunction.
+<!--29/6/2023 clicked thumbnails now have no width limit. Some images need resize.
+    Logo clear removed in parse func.
+    17/6/2023 WIP multiple word search. Conjunction is to use all terms.
     modified to accept only if all terms present ie "pot 50k" or "ultra 40"
+    28/6/2023 onclick should enlarge clicked image (self)- pretty much right. Function bigger deleted.
     15/6/2023 line 47 <script ....></script> works but Komodo,
     Sublime and browser complain. No answer yet
     14/6/2023 tidy up with new logo and expand line more informative
@@ -37,7 +40,7 @@
 
 <input  type="text" id="textin" value="....." >
 
-<img id="demo" src="images/logo.png" width="100" onclick="bigger(src)"><br>
+<img id="demo" src="images/logo.png" width="100" ><br>
 
 <p id="result" <br> Query result <br></p>
  
@@ -73,54 +76,49 @@ document.getElementById("showit").innerHTML="<br>This is the entry "+imgdir+x+" 
 
 //if(graphics.indexOf(x.substring(x.length-4))!=-1) 
   {
-    document.getElementById("showit").innerHTML+="<br>The input entered was "+x+" <img src="+imgdir+x+"\">";
+    document.getElementById("showit").innerHTML+="<br>The input entered was "+textin;
 
 // process the mashup text
 if(searching) search();
 
 document.getElementById("showit").innerHTML+="<br>This is the text in mashup.txt file <br>";
 
-if(!searching){ // retrieves all data set if no search item (ie .....)
+if(!searching)
+{ // retrieves all data set if no search item (ie .....)
  
 //show the mashup text names in namestack
 
  for(l=1;l<textdata.length;l++) // extract boxbin lines. Start at 1 to avoid .csv title line
   { 
     var thisname;thisname=textdata[l].split("|");
-    if(thisname[6]!="unknown.jpg"){                //item [6] is image name(s) for line
-    document.getElementById("namestack").innerHTML+=thisname[6];
+    if(thisname[6]!="unknown.jpg")
+      { 
+//item [6] is image name(s) for line
+      document.getElementById("namestack").innerHTML+=thisname[6];
 // fill image namestack from boxbin lines
-    var thisimage;
-    thisimage=thisname[6].split(","); 
+      var thisimage;
+      thisimage=thisname[6].split(","); 
 //extract all images for line
-    for(i=0;i<thisimage.length;i++) document.getElementById("namestack").innerHTML+="<img src=\""+imgdir+thisimage[i]+"\" width=\"50\" onclick =\"expand("+l+")\">:: ";
+      for(i=0;i<thisimage.length;i++) document.getElementById("namestack").innerHTML+="<img src=\""+imgdir+thisimage[i]+"\" width=\"50\" onclick =\"expand("+l+")\">::";
+      }
+      document.getElementById("showit").innerHTML+=textdata[l]+"<br>";   
+      }
+    }
+    parse(textdata[1]);
    }
-    document.getElementById("showit").innerHTML+=textdata[l]+"<br>";   
-  }
- }
-parse(textdata[1]);
-}
 }
 
 function parse(S){ //get boxbin elements from string S
 var parse;
 parse=S.split("|");
- document.getElementById("demo").src=imgdir+parse[6];
-}
-
-function bigger(source){ //enlarge image in click loop
- document.getElementById("showit").innerHTML="Text show removed for ease";
- source=document.getElementById("demo").src;
-console.log("Bigger source "+source);
- document.getElementById("demo").width=document.getElementById("demo").width*2;
- if(document.getElementById("demo").width>400)document.getElementById("demo").width=100;
 }
 
 function expand(line){ // expand small image click to show line and images
 //console.log("Expand called line "+line+" "+textdata[line]);
-parse=textdata[line].split("|"); img=parse[6].split(",");
+parse=textdata[line].split("|");
+img=parse[6].split(",");
 document.getElementById("result").innerHTML="<h3>Detail for line "+line+" Box "+parse[0]+" : "+textdata[line]+"</h3>";
- for(i=0;i<img.length;i++)document.getElementById("result").innerHTML+="<img src=\""+imgdir+img[i]+"\" width=\"200\" onclick=\"bigger(src)\">";
+ for(i=0;i<img.length;i++)document.getElementById("result").innerHTML+="<img src=\""+imgdir+img[i]+"\"  onclick=\"expand("+line+")\">";
 }
 
 function search(){ //setup search for input text
@@ -143,11 +141,9 @@ found=true;
       var thisimage;
       thisimage=thisname[6].split(","); 
 //    extract all images for line
-      for(i=0;i<thisimage.length;i++) document.getElementById("namestack").innerHTML+="<img src=\""+imgdir+thisimage[i]+"\" width=\"50\" onclick =\"expand("+l+")\">:: ";
-     
-   
-  }
-}
+      for(i=0;i<thisimage.length;i++) document.getElementById("namestack").innerHTML+="<img src=\""+imgdir+thisimage[i]+"\" width=\"50\" onclick =\"expand("+l+")\">:: "; 
+      }
+   }
    document.getElementById("namestack").innerHTML+="<h3><br>End of search results<br></h3>";  
 }
 </script>
