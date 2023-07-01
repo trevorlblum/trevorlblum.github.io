@@ -1,5 +1,5 @@
-<!--1/7/2023 added title prompts to images
-    29/6/2023 Uploaded to git hub
+<!--1/7/2023 added title prompts to images. Added hover text to logo image.
+    moved input button closer to input rectangle
     Clicked thumbnails now have no width limit. Some images need resize.
     Logo clear removed in parse func.
     17/6/2023 WIP multiple word search. Conjunction is to use all terms.
@@ -35,22 +35,38 @@
 <!DOCTYPE html>
 <html>
 <div id="div1" div1 </div>
+<head>
+<style>
+
+ .hide {
+   display: none;
+ }
+ .myDIV:hover + .hide {
+   display: block;
+   color: black;
+  }
+
+</style>
+</head>
 
 <body>
 
-<h2>Query app for Box_Binned items. Enter search text (e.g. opamp lm741).<br>If ..... shows all data files. If .png/.jpg/.bmp image is shown.<br>Click on search-retrieved images for bin details.</h2><br>
+<h2>Query app for Box_Binned items. <br>Enter case-insensitive search text (e.g. opamp lm741).<br>..... shows all data files. Explicit .png/.jpg/.bmp extension image is shown.<br>Click on search-retrieved images for bin details.</h2><br>
 
-<input  type="text" id="textin" title="Enter search values eg cap 47 v" value="....." >
+<div class="myDIV">
+  <img id="demo" src="images/logo.png" width="100" ><br>
+  </div>
+ <div class="hide">"Enter multiword queries in the input box below (..... shows all data)"
+</div>
 
-<img id="demo" src="images/logo.png" width="100" title="Enter your search text in the left  input (..... shows all Box-Bin data)"><br>
+<input  type="text" id="textin" title="Enter search values eg cap 47 v" value="....." ><br>
+<button onclick="myFunction()">search for item entry</button>
 
 <p id="result" <br> Query result <br></p>
  
 <p id="namestack" <br>Retrieved images <br></p>
 
 <p id="showit" <br>Data files</p>
-
-<button onclick="myFunction()">search for item entry</button>
 
 <script id="textdata" type="text/javascript" src="mashup.txt"></script>
 
