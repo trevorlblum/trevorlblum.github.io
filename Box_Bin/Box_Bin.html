@@ -1,4 +1,6 @@
-<!--29/6/2023 clicked thumbnails now have no width limit. Some images need resize.
+<!--1/7/2023 added title prompts to images
+    29/6/2023 Uploaded to git hub
+    Clicked thumbnails now have no width limit. Some images need resize.
     Logo clear removed in parse func.
     17/6/2023 WIP multiple word search. Conjunction is to use all terms.
     modified to accept only if all terms present ie "pot 50k" or "ultra 40"
@@ -38,9 +40,9 @@
 
 <h2>Query app for Box_Binned items. Enter search text (e.g. opamp lm741).<br>If ..... shows all data files. If .png/.jpg/.bmp image is shown.<br>Click on search-retrieved images for bin details.</h2><br>
 
-<input  type="text" id="textin" value="....." >
+<input  type="text" id="textin" title="Enter search values eg cap 47 v" value="....." >
 
-<img id="demo" src="images/logo.png" width="100" ><br>
+<img id="demo" src="images/logo.png" width="100" title="Enter your search text in the left  input (..... shows all Box-Bin data)"><br>
 
 <p id="result" <br> Query result <br></p>
  
@@ -76,7 +78,7 @@ document.getElementById("showit").innerHTML="<br>This is the entry "+imgdir+x+" 
 
 //if(graphics.indexOf(x.substring(x.length-4))!=-1) 
   {
-    document.getElementById("showit").innerHTML+="<br>The input entered was "+textin;
+    document.getElementById("showit").innerHTML+="<br>The input entered was "+textin.value;
 
 // process the mashup text
 if(searching) search();
@@ -99,7 +101,7 @@ if(!searching)
       var thisimage;
       thisimage=thisname[6].split(","); 
 //extract all images for line
-      for(i=0;i<thisimage.length;i++) document.getElementById("namestack").innerHTML+="<img src=\""+imgdir+thisimage[i]+"\" width=\"50\" onclick =\"expand("+l+")\">::";
+      for(i=0;i<thisimage.length;i++) document.getElementById("namestack").innerHTML+="<img src=\""+imgdir+thisimage[i]+"\" width=\"50\" onclick =\"expand("+l+")\" title=\"Click for larger image\">::";
       }
       document.getElementById("showit").innerHTML+=textdata[l]+"<br>";   
       }
@@ -141,7 +143,7 @@ found=true;
       var thisimage;
       thisimage=thisname[6].split(","); 
 //    extract all images for line
-      for(i=0;i<thisimage.length;i++) document.getElementById("namestack").innerHTML+="<img src=\""+imgdir+thisimage[i]+"\" width=\"50\" onclick =\"expand("+l+")\">:: "; 
+      for(i=0;i<thisimage.length;i++) document.getElementById("namestack").innerHTML+="<img src=\""+imgdir+thisimage[i]+"\" width=\"50\" onclick =\"expand("+l+")\" title=\"Click to see larger image\">:: "; 
       }
    }
    document.getElementById("namestack").innerHTML+="<h3><br>End of search results<br></h3>";  
