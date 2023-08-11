@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<!--- 
+11/8/2023 imagelist as innerHTML works OK. Needs a bit of tidying but useable.
+10/8/2023 passing arguments works. Using innerHTML needs some thought to position images in-line and not overwrite initial display.
+NOTE: image names must have _, not space as in <img id="third" src="Rho_Ophiuci_JWST.png" or the browser separates the elements
+into "Rho" "Ophiuci" "JWST" as three separate entities, stuffing up the <img name totally.
+-->
+<html>
+
+<style>
+body {
+  width: 5000px;
+  height: 7500px;
+}
+button {
+  position: fixed;
+}
+</style>
+
+<body>
+
+
+<h2>The Window Object scrollTo() Method Mouse scrolls the document window mouseX*2 pixels horizontally and 0 vertically.</h2>
+<div id="0" onmousemove="scrollWin()"</div>
+<div id="1" onmousemove="scrollWin()"</div>
+<div id="2" onmousemove="scrollWin()"</div>
+<div id="3" onmousemove="scrollWin()"</div>
+<div id="4" onmousemove="scrollWin()"</div>
+<div id="5" onmousemove="scrollWin()"</div>
+<div id="6" onmousemove="scrollWin()"</div>
+
+<img id="1" src="rainbow_fish.png" width="500" onclick=doco("rainbow_fish.png")>
+<img id="2" src="Iliacme_socal_millipede.png" width="500" onclick=doco("Iliacme_socal_millipede.png")>
+<img id="3" src="Rho_Ophiuci_JWST.png" width="500" onclick=doco("Rho_Ophiuci_JWST.png")>
+<img id="4" src="20190614_141440.png" width="500" onclick=doco("20190614_141440.png")>
+<img id="5" src="20190614_141409.png" width="500" onclick=doco("20190614_141409.png")>
+<img id="6" src="20210101_140326.png" width="500" onclick=doco("20210101_140326.png")>
+
+<br>
+
+<script>
+imagelist='<img id="1" src="rainbow_fish.png" width="500" onclick=doco("rainbow_fish.png")>'
++' <img id="2" src="Iliacme_socal_millipede.png" width="500" onclick=doco("Iliacme_socal_millipede.png")><img id="3" src="Rho_Ophiuci_JWST.png" width="500" onclick=doco("Rho_Ophiuci_JWST.png")><img id="4" src="20190614_141440.png" width="500" onclick=doco("20190614_141440.png")><img id="5" src="20190614_141409.png" width="500" onclick=doco("20190614_141409.png")><img id="6" src="20210101_140326.png" width="500" onclick=doco("20210101_140326.png")>';
+
+
+mouseX=0;
+mouseY=0;
+lastx=0;
+lasty=0;
+moveok=true;
+function scrollWin() {
+if(moveok)window.scrollTo(mouseX*2-200, 100);  //only scroll when in series
+}
+function scrollM() {
+  window.scrollTo(0,100); //position expanded image and inhibit moves
+  moveok=false;
+}
+
+document.addEventListener("mousemove",()=>{
+mouseX=event.clientX;
+mouseY=event.clientY;
+});
+
+function doco(){   //doco primes image to expand and remembers where click came from
+document.getElementById("0").innerHTML='<img id="0" src="'+arguments[0]+'" width="1280px" onclick=roco("'+arguments[0]+'")>';
+lastx=mouseX;
+lasty=mouseY;
+scrollM();    // expanded image now at screen left
+}
+
+function roco(){    //roco restores image list and clicked position in series
+document.getElementById("0").innerHTML=imagelist+'<img id="0" src="'+arguments[0]+'" width="250" onclick=doco("'+arguments[0]+'")>';
+window.scrollTo(lastx,100);
+moveok=true;                   //restore moves within series
+}
+
+</script>
+
+</body>
+</html>
