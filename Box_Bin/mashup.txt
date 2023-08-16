@@ -370,7 +370,7 @@ const textdata=[
 "29|0|0|3|3|Buzzer/transducer?|unknown.jpg",
 "29|3|0|7|3|ZR1007 diodes|unknown.jpg",
 "29|10|0|3|3|5.5v 1Farad supecap|unknown.jpg",
-"29|13|0|7|3|12v 6watt bulb, 40KHz Ultrasound transducer|ultrasound1.png",
+"29|13|0|7|3|12v 6watt bulb, 40KHz Ultrasound transducer|ultrasound2.png",
 "29|0|0|3|3|40KHz Ultrasound transducer|ultrasound1.png",
 "29|3|0|12|3|slider pots, 35mm toroid|slider pot.png,toroid.png",
 "29|15|0|3|3|pots various|unknown.jpg",
