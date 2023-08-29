@@ -163,7 +163,7 @@ const textdata=[
 "13|14|0|5|4|VGA RGB plugs sockets |unknown.jpg",
 "13|0|4|5|4|Bridge Rectifiers 6amp |Bridge rectifier.png",
 "13|5|4|5|4|Electrolytics 10-470, 470ESR |electrolytic.png",
-"13|10|4|5|4|OpAmp LM1875, CA3140, TL084 quad FET |TL084.png",
+"13|10|4|5|4|OpAmp LM1875, CA3140, TL084 quad FET |TL084.png,lm1875.png",
 "13|14|4|5|4|Darlington BD682,BD681 |unknown.jpg",
 "13|0|8|5|4|Regulators LM317,7805,7809,7812,7815,3.3v |LM317.png",
 "13|5|8|5|4| Zener diodes 1n4728,1n4733,ZR1415,ZR1412,ZR1450,ZR1409|unknown.jpg",
