@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<!--- 8/10/2023 now needs tidyup to remove old search code still needed for screen display
+      NOTE: cmp=parsetest makes cmp the same location, etc. as parsetest but is not the same as
+      for(i=0;i<parsetest;i++)cmp[i]=parsetest[i];
+      7/10/2023 test on inbuilts and short file works fine but big file does not find word. Fixed, see 8/10
+      5/10/2023 pattern has to have all known letters in place eg.(... 5 ... 5 ... has to be ...Z...Z...).
+      Remove double spaces in pattern uses 'A B C  D E  F  G'.replace(/  /g,' '))
+     -->
+
+<head>
+  <title>Wordfinder</title>
+</head>
+<style>
+.divs { border:1px inset black; grid-area:menu; width:300px; }
+.divs2 { border:1px inset black; width:400px; }
+.divs3 { border:1px inset black; width:300px; }
+
+</style>
+
+
+<body>
+<div id="spacer" <br>spacer div<br></div>
+<div id="sample" <br>sample div <br></div>
+<div id="parse" <br>parse div<br></div>
+<div class="divs2" id="wordlist" <br>wordlist div <br></div>
+
+
+<p> Parse paragraph </p>
+Tryout for word pattern applet
+
+<p>Click the button to create a selection Pattern.</p>
+
+<button onclick="parse()">Try it</button>
+
+<script type="text/javascript" src="wordlist.txt"></script>
+<script>
+
+PatternDup=[0,0]; PatternDigraph=[0,0];parsed="";
+WordDup=[0,0];PDigraph=0;
+
+document.getElementById("sample").innerHTML+="A B C D E";
+
+searchv2();
+myFunction();
+function myFunction() {                   //Creates button with default text
+  var x = document.createElement("INPUT");
+  x.setAttribute("id","button");
+  x.setAttribute("type", "text");
+  x.setAttribute("placeholder", "Hello World!....");
+  x.setAttribute("value","14 V E R 14  P T 22 M 22 S T 22 C");
+  x.setAttribute("size","30");
+  document.body.appendChild(x);
+  //document.getElementById("parse").innerHTML="parsing"+x;
+  parse(x);
+}
+function parse(x){
+//show parse of input - multiple spaces need replace.
+  document.getElementById("wordlist").innerHTML="";
+  tmp=button.value.replace(/  /g,' ');             //remove extra spaces in pattern
+  parsed=tmp.split(" ");//button.value.split(" ");
+  len=parsed.length;
+  setpatterncriteria();
+// debug not needed  
+//for(i=0;i<len;i++)document.getElementById("wordlist").innerHTML+="parsed "+i+" is "+isNaN(parsed[i])+"<br>";
+
+//show wordlist sample
+  for(i=124360;i<124370;i++)if(words[i]==="GRANDEUR")document.getElementById("sample").innerHTML="word "+i+" is "+words[i]+"<br>";
+document.getElementById("sample").innerHTML+="Last word at "+words.length+ "is "+words[words.length-1];
+document.getElementById("parse").innerHTML="parsing button value= "+button.value+"<br>"; 
+//do search
+searchv2();
+}
+
+
+function setpatterncriteria(){ //Extract digraph and duplicate positions in pattern for use in word search.
+
+ //check for digraphs in pattern.  WIPthese should match word digraphs or fail selection         
+    PatternDigraph[0]=0;       
+    for(d=0;d<len-1;d++) if(parsed[d]===parsed[d+1])PatternDigraph[0]=d;
+
+ //check for multiple words in pattern
+     PatternDup[0]=0;PatternDup[1]=0;
+     for(i=0;i<len;i++)for(j=i+2;j<len;j++)if(parsed[i]===parsed[j]){PatternDup[0]=i;PatternDup[1]=j;}
+      document.getElementById("spacer").innerHTML="Multiples "+PatternDup[0]+", "+PatternDup[1]+" and Digraphs "+" "+PatternDigraph[0]+"<br>";
+}
+
+function searchv2()
+{  // search for patterns where each number implies specific letter
+   // as in "12 C 7 9 14 9 12" implies the 12 and 9 must be the same letter in their places
+   // single 14 is wild and C is in location 1
+   // fetch each letter/number and see if it is known. If known is it the same as previous?
+   // if not known add to paired list of number,letter
+
+
+test="14 V E R 14  P T 22 M 22 S T 22 C";//OVEROPTIMISTIC//"1 2  A N  D E  U 2"; //GRANDEUR 
+
+//tmp=test.replace(/  /g,' ');// remove double spaces console.log("Replace of test",test," is ",tmp);
+
+//["GRANDEUR","OVEROPTIMISTIC","OVEROPTIMISTIC","MONOPSONISTIC"];//
+cmp=[];//parsetest;//
+console.log("Start Words is ",words.length,"entries", "Pattern is ",parsed);
+processed=0;
+  for(l=0;l<words.length;l++)
+    {  
+// console.log("Word ",l," is ",wordt[l]);
+
+    if(words[l].length===parsed.length)
+      {
+      processed++;
+      for(i=0;i<parsed.length;i++)cmp[i]=parsed[i];   // set all cmp to all parsetest
+      for(i=0;i<parsed.length;i++)
+        { 
+         if(!isNaN(parsed[i]))
+           { // if [i] is a number, move its first word occurence to cmp
+           
+            for(j=0;j<parsed.length;j++)if(cmp[j]===parsed[i] && j>i)cmp[j]=words[l].substring(i,i+1);   
+            for(j=0;j<parsed.length;j++)if(cmp[j]===parsed[i])cmp[j]=words[l].substring(i,i+1);   
+           }
+         }
+      if(words[l].substring(0,words[l].length)=="OVEROPTIMISTIC")console.log("OVER word is ",words[l]," cmp is ",cmp);
+
+//         console.log(cmp);
+         found=true;
+         for(m=0;m<words[l].length;m++)if(cmp[m]!=words[l].substring(m,m+1))found=false;
+         if(found){
+           document.getElementById("wordlist").innerHTML+=words[l]+"<br>";
+console.log("word found=",words[l]);
+           console.log("cmp",cmp);
+         }
+      }
+   }
+ console.log("Processed ",processed);
+
+}
+</script>
+
+</body>
+</html>
