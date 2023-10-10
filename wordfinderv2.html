@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html>
-<!--- 8/10/2023 now needs tidyup to remove old search code still needed for screen display
+<!--- 11/10/2023 Added same number different letter discrimination. Seems to work well
+      10/10/2023 Need to check that each number is unique. Fahrenheitt should not have
+      been retrieved with different numbers in the last two places.
+      So letter in word[x] for 'n' must equal other letter in word[y] for 'n'
+      8/10/2023 now needs tidyup to remove old search code still needed for screen display
       NOTE: cmp=parsetest makes cmp the same location, etc. as parsetest but is not the same as
       for(i=0;i<parsetest;i++)cmp[i]=parsetest[i];
       7/10/2023 test on inbuilts and short file works fine but big file does not find word. Fixed, see 8/10
@@ -99,7 +103,7 @@ test="14 V E R 14  P T 22 M 22 S T 22 C";//OVEROPTIMISTIC//"1 2  A N  D E  U 2";
 
 //["GRANDEUR","OVEROPTIMISTIC","OVEROPTIMISTIC","MONOPSONISTIC"];//
 cmp=[];//parsetest;//
-console.log("Start Words is ",words.length,"entries", "Pattern is ",parsed);
+//console.log("Start Words is ",words.length,"entries", "Pattern is ",parsed);
 processed=0;
   for(l=0;l<words.length;l++)
     {  
@@ -118,19 +122,25 @@ processed=0;
             for(j=0;j<parsed.length;j++)if(cmp[j]===parsed[i])cmp[j]=words[l].substring(i,i+1);   
            }
          }
-      if(words[l].substring(0,words[l].length)=="OVEROPTIMISTIC")console.log("OVER word is ",words[l]," cmp is ",cmp);
 
 //         console.log(cmp);
          found=true;
          for(m=0;m<words[l].length;m++)if(cmp[m]!=words[l].substring(m,m+1))found=false;
+
+// here check that words[l].substring for 'n' is not equal to words[l].subs for 'm'
+// i.e. if cmp[i]===cmp[j] and parsed[i]!=parsed[j] word is not found
+         for(n=0;n<parsed.length;n++)for(m=n+1;m<parsed.length;m++)if(words[l].substring(m,m+1)===cmp[n] && parsed[m]!=parsed[n]) found=false;
+
+//         if(words[l].substring(0,words[l].length)=="OVEROPTIMISTIC")console.log("OVER word is ",words[l],"\n cmp is ",cmp,"\nparsed is ",parsed);
+
          if(found){
            document.getElementById("wordlist").innerHTML+=words[l]+"<br>";
-console.log("word found=",words[l]);
-           console.log("cmp",cmp);
+           //console.log("word found=",words[l]);
+           //console.log("cmp",cmp);
          }
       }
    }
- console.log("Processed ",processed);
+ //console.log("Processed ",processed);
 
 }
 </script>
