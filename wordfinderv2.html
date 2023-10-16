@@ -90,7 +90,9 @@ function setpatterncriteria(){ //Extract digraph and duplicate positions in patt
 }
 
 function searchv2()
-{  // search for patterns where each number implies specific letter
+{
+ resultfound=0;
+  // search for patterns where each number implies specific letter
    // as in "12 C 7 9 14 9 12" implies the 12 and 9 must be the same letter in their places
    // single 14 is wild and C is in location 1
    // fetch each letter/number and see if it is known. If known is it the same as previous?
@@ -107,6 +109,7 @@ cmp=[];//parsetest;//
 processed=0;
   for(l=0;l<words.length;l++)
     {  
+     if(resultfound>20){document.getElementById("wordlist").innerHTML+="<br>Found display limit is 20<br>";return;}
 // console.log("Word ",l," is ",wordt[l]);
 
     if(words[l].length===parsed.length)
@@ -137,11 +140,11 @@ processed=0;
            document.getElementById("wordlist").innerHTML+=words[l]+"<br>";
            //console.log("word found=",words[l]);
            //console.log("cmp",cmp);
+           resultfound++;
          }
       }
    }
- //console.log("Processed ",processed);
-
+// console.log("Processed ",processed, " result found ",resultfound);
 }
 </script>
 
