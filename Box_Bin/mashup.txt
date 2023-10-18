@@ -321,6 +321,7 @@ const textdata=[
 '24|24|6|6|6|Ferrite pot core LF1062|Ferrite core.png',
 '24|24|12|6|6|jumpers F-F 1inch Green,2inch Black,red,white, 3inch 10 color|M-F_2inch_jumper.png',
 '24|24|18|6|6|jumpers M-M 1inch Black,M-F 2inch Blue, 6 Colourx60piece|M-F_2inch_jumperx60.png',
+'24|24|24|6|6|UVC led strips DFRobot FIT0948 275nm|DFRobot_FIT0948_UVC.png',
 '25|0|0|5|5|10K B Pots with knobs|single-gang pot.png',
 '25|5|0|5|5|10K A two-gang Pots with knobs|two-gang pot.png',
 '25|10|0|5|5|D-Duino V4 Packet monitor|D-Duino Pinouts.png',
