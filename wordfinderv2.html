@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html>
-<!--- 17/10/2023 removed draft prompts and added double display in multiple answers. 
+<!--- 20/10/2023 adding ul/ol list routine requires search to create 
+      equivalent to ["word1","word2"] Array in listresults. Done
+      Modified list() to show all responses in Ul/Ol div
+      17/10/2023 removed draft prompts and added double display in multiple answers.
+      Failed to create <ul><li> sets using DOM.
       11/10/2023 Added same number different letter discrimination. Seems to work well
       10/10/2023 Need to check that each number is unique. Fahrenheitt should not have
       been retrieved with different numbers in the last two places.
@@ -19,15 +23,27 @@
 <style>
 .divs { border:1px inset black; grid-area:menu; width:300px; }
 .divs2 { border:1px inset black; width:400px; }
-.divs3 { border:1px inset black; width:300px; }
+.divs3 { border:1px inset black; width:500px; }
 
+ul {
+ columns:3;
+-webkit-columns:3;
+-moz-columns:3;
+}
+ol {
+ columns:2;
+-webkit-columns:2;
+-moz-columns:2;
+}
 </style>
 
 
 <body>
-<div id="sample" <br>sample div <br></div>
-<div id="parse" <br>parse div<br></div>
+<div id="sample" <br> <br></div>
+<div id="parse" <br> <br></div>
 <div class="divs2" id="wordlist" <br>wordlist div <br></div>
+<div class="divs3" id="ol_list" <br> ol_list results <br> </div>
+
 
 <p>Click the button to create a selection Pattern.</p>
 
@@ -39,16 +55,17 @@
 PatternDup=[0,0]; PatternDigraph=[0,0];parsed="";
 WordDup=[0,0];PDigraph=0;
 
-document.getElementById("sample").innerHTML+="A B C D E";
+listresults=["ABCD","EFGH","IJKLM","OPQRST","UVWXYZ"];
 
 searchv2();
+
 myFunction();
 function myFunction() {                   //Creates button with default text
   var x = document.createElement("INPUT");
   x.setAttribute("id","button");
   x.setAttribute("type", "text");
   x.setAttribute("placeholder", "numbers letters");
-  x.setAttribute("value","14 V E R 14  P T 22 M 22 S T 22 C");
+  x.setAttribute("value","1 2 3 4 5 6 7 8 9 10 11 12 13");//"G R 8 9 10");//"14 V E R 14  P T 22 M 22 S T 22 C");
   x.setAttribute("size","30");
   document.body.appendChild(x);
   //document.getElementById("parse").innerHTML="parsing"+x;
@@ -61,15 +78,14 @@ function parse(x){
   parsed=tmp.split(" ");//button.value.split(" ");
   len=parsed.length;
   setpatterncriteria();
-// debug not needed  
-//for(i=0;i<len;i++)document.getElementById("wordlist").innerHTML+="parsed "+i+" is "+isNaN(parsed[i])+"<br>";
 
 //show wordlist sample
-  for(i=124360;i<124370;i++)if(words[i]==="GRANDEUR")document.getElementById("sample").innerHTML="word "+i+" is "+words[i]+"<br>";
-document.getElementById("sample").innerHTML+="Last word at "+words.length+ "is "+words[words.length-1];
-document.getElementById("parse").innerHTML="<br>parsing button value= "+button.value+"<br>"; 
+//  for(i=124360;i<124380;i++)if(words[i]==="GRANDEUR")document.getElementById("sample").innerHTML="word "+i+" is "+words[i]+"<br>";
+//  document.getElementById("sample").innerHTML+="Last word at "+words.length+ "is "+words[words.length-1];
+  document.getElementById("parse").innerHTML="<br>parsing button value= "+button.value+"<br><br>"; 
 //do search
-searchv2();
+  searchv2();
+
 }
 
 function setpatterncriteria(){ //Extract digraph and duplicate positions in pattern for use in word search.
@@ -87,7 +103,7 @@ function setpatterncriteria(){ //Extract digraph and duplicate positions in patt
 function searchv2()
 {
  resultfound=0;
-  // search for patterns where each number implies specific letter
+   // search for patterns where each number implies specific letter
    // as in "12 C 7 9 14 9 12" implies the 12 and 9 must be the same letter in their places
    // single 14 is wild and C is in location 1
    // fetch each letter/number and see if it is known. If known is it the same as previous?
@@ -98,13 +114,20 @@ test="14 V E R 14  P T 22 M 22 S T 22 C";//OVEROPTIMISTIC//"1 2  A N  D E  U 2";
 
 //tmp=test.replace(/  /g,' ');// remove double spaces console.log("Replace of test",test," is ",tmp);
 
-//["GRANDEUR","OVEROPTIMISTIC","OVEROPTIMISTIC","MONOPSONISTIC"];//
+
 cmp=[];//parsetest;//
 //console.log("Start Words is ",words.length,"entries", "Pattern is ",parsed);
 processed=0;
+document.getElementById("ol_list").innerHTML="";//clear >26 list whatever found
+  listresults=[""];
   for(l=0;l<words.length;l++)
     {  
-     if(resultfound>=20){document.getElementById("wordlist").innerHTML+="<br>Found display limit is 20<br>";return;}
+     if(resultfound>=26){
+      list();
+      document.getElementById("wordlist").innerHTML+="<br>Found display limit is 26<br>";
+      return;//exit after found limit reached
+     }
+
 // console.log("Word ",l," is ",wordt[l]);
 
     if(words[l].length===parsed.length)
@@ -127,11 +150,12 @@ processed=0;
 
 // here check that words[l].substring for 'n' is not equal to words[l].subs for 'm'
 // i.e. if cmp[i]===cmp[j] and parsed[i]!=parsed[j] word is not found
-         for(n=0;n<parsed.length;n++)for(m=n+1;m<parsed.length;m++)if(words[l].substring(m,m+1)===cmp[n] && parsed[m]!=parsed[n]) found=false;
+         for(n=0;n<parsed.length;n++)for(m=n+1;m<parsed.length;m++)if(words[l].substring(m,m+1)===cmp[n] && parsed[m]!=parsed[n])found=false;
 
          if(found){
            if(resultfound%2===1)document.getElementById("wordlist").innerHTML+="........."+words[l]+"<br>";
              else document.getElementById("wordlist").innerHTML+="<nbsp><nbsp><nbsp>"+words[l];
+           listresults[resultfound]=words[l];
            //console.log("word found=",words[l]);
            //console.log("cmp",cmp);
            resultfound++;
@@ -139,7 +163,40 @@ processed=0;
       }
    }
 // console.log("Processed ",processed, " result found ",resultfound);
+      list();
+
 }
+
+function list(){
+// generate ordered and unordered lists of <style> columns
+document.getElementById("ol_list").innerHTML="";
+ll=listresults.length;
+//console.log("listresults.length",ll," results ",listresults);
+//for(l=0;l<ll;l++)document.getElementById("ol_list").innerHTML+="<br>"+listresults[l];
+
+//create an <ol> as desired...
+thisol=document.createElement("ol");
+document.getElementById("ol_list").appendChild(thisol);
+for(i=0;i<ll;i++)
+  {
+  li=document.createElement("li");
+  li.innerText=listresults[i];
+  document.getElementById("ol_list").appendChild(li);
+  thisol.appendChild(li);
+ }
+
+//create a <ul> as desired...
+  thisul=document.createElement("ul");
+  document.getElementById("ol_list").appendChild(thisul);
+for(i=0;i<ll;i++)
+  {
+  li=document.createElement("li");
+  li.innerText=listresults[i];
+  document.getElementById("ol_list").appendChild(li);
+  thisul.appendChild(li);
+  }
+}
+
 </script>
 
 </body>
