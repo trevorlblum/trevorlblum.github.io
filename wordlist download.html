@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<!-- Creates a file OVERSET.txt with 100 contents of wordlist.txt (Actually OVERSET.txt) via words var
+
+Download link - defaults to null which means clicking it does nothing as no file download link has been assigned (yet) -->
+<!-- Note the use of the download attribute! It tells the browser to download the file, and what the default file name should be -->
+<head>
+  <title>Download from Server</title>
+</head><body>
+<h2>Download URL from Server Source=wordlist.txt target wordlist.txt <br>
+<a id="downloadLink" href=null download="wordlist.txt">Download (all) wordlist to wordlist.txt</a>
+</h2>
+</body>
+
+<script type="text/javascript" src="wordlist.txt"></script>
+
+<script>
+extractscreen="<br>";
+for(i=0;i<50;i++)extractscreen+=words[i]+"<br>";
+extract="";
+for(i=0;i<words.length;i++)extract+=words[i]+"\n";
+
+document.body.innerHTML+="extract length (bytes) "+extractscreen.length+" for 50 line entry extract. "+" wordlist is "+words.length+" lines"+extractscreen;
+// A global variable should be defined to hold the URL for the file to be downloaded
+// This is good practice as if many links are being generated or the link is being regularly updated, you don't want to be creating new variables every time, wasting memory
+var textFileUrl = null;
+
+// Function for generating a text file URL containing given text
+function generateTextFileUrl(txt) {
+    let fileData = new Blob([txt], {type: 'text/plain'});
+
+    // If a file has been previously generated, revoke the existing URL
+    if (textFileUrl !== null) {
+        window.URL.revokeObjectURL(textFile);
+    }
+
+    textFileUrl = window.URL.createObjectURL(fileData);
+
+    // Returns a reference to the global variable holding the URL
+    // Again, this is better than generating and returning the URL itself from the function as it will eat memory if the file contents are large or regularly changing
+    return textFileUrl;
+};
+
+// Generate the file download URL and assign it to the link
+// Wait until the page has loaded! Otherwise the download link element will not exist
+window.addEventListener("load", function(){
+    document.getElementById('downloadLink').href = generateTextFileUrl(extract);
+});
+</script>
+</html>
