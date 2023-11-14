@@ -153,8 +153,8 @@ document.getElementById("ol_list").innerHTML="";//clear >26 list whatever found
          for(n=0;n<parsed.length;n++)for(m=n+1;m<parsed.length;m++)if(words[l].substring(m,m+1)===cmp[n] && parsed[m]!=parsed[n])found=false;
 
          if(found){
-           if(resultfound%2===1)document.getElementById("wordlist").innerHTML+="........."+words[l]+"<br>";
-             else document.getElementById("wordlist").innerHTML+="<nbsp><nbsp><nbsp>"+words[l];
+//           if(resultfound%2===1)document.getElementById("wordlist").innerHTML+="........."+words[l]+"<br>";
+//             else document.getElementById("wordlist").innerHTML+="<nbsp><nbsp><nbsp>"+words[l];
            listresults[resultfound]=words[l];
            //console.log("word found=",words[l]);
            //console.log("cmp",cmp);
@@ -169,8 +169,10 @@ document.getElementById("ol_list").innerHTML="";//clear >26 list whatever found
 
 function list(){
 // generate ordered and unordered lists of <style> columns
+
 document.getElementById("ol_list").innerHTML="";
 ll=listresults.length;
+
 //console.log("listresults.length",ll," results ",listresults);
 //for(l=0;l<ll;l++)document.getElementById("ol_list").innerHTML+="<br>"+listresults[l];
 
@@ -185,6 +187,7 @@ for(i=0;i<ll;i++)
   thisol.appendChild(li);
  }
 
+/*
 //create a <ul> as desired...
   thisul=document.createElement("ul");
   document.getElementById("ol_list").appendChild(thisul);
@@ -195,6 +198,7 @@ for(i=0;i<ll;i++)
   document.getElementById("ol_list").appendChild(li);
   thisul.appendChild(li);
   }
+*/
 }
 
 </script>
