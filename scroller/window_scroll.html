@@ -30,7 +30,7 @@ button {
 <div id="5" onmousemove="scrollWin()"</div>
 <div id="6" onmousemove="scrollWin()"</div>
 
-<img id="1" src="rainbow_fish.png" width="200" onclick=doco("rainbow_fish.png")>
+<img id="1" src="questions.jpg" width="200" onclick=doco("questions.jpg")>
 <img id="2" src="Iliacme_socal_millipede.png" width="200" onclick=doco("Iliacme_socal_millipede.png")>
 <img id="3" src="Rho_Ophiuci_JWST.png" width="200" onclick=doco("Rho_Ophiuci_JWST.png")>
 <img id="4" src="20190614_141440.png" width="200" onclick=doco("20190614_141440.png")>
@@ -40,7 +40,7 @@ button {
 <br>
 
 <script>
-imagelist='<img id="1" src="rainbow_fish.png" width="200" onclick=doco("rainbow_fish.png")>'
+imagelist='<img id="1" src="questions.jpg" width="200" onclick=doco("questions.jpg")>'
 +' <img id="2" src="Iliacme_socal_millipede.png" width="200" onclick=doco("Iliacme_socal_millipede.png")><img id="3" src="Rho_Ophiuci_JWST.png" width="200" onclick=doco("Rho_Ophiuci_JWST.png")><img id="4" src="20190614_141440.png" width="200" onclick=doco("20190614_141440.png")><img id="5" src="20190614_141409.png" width="200" onclick=doco("20190614_141409.png")><img id="6" src="20210101_140326.png" width="200" onclick=doco("20210101_140326.png")>';
 
 
@@ -50,7 +50,7 @@ lastx=0;
 lasty=0;
 moveok=true;
 function scrollWin() {
-if(moveok)window.scrollTo(mouseX*2-200, 10);  //only scroll when in series
+if(moveok)window.scrollTo(mouseX-200, 10);  //only scroll when in series
 }
 function scrollM() {
   window.scrollTo(0,10); //position expanded image and inhibit moves
