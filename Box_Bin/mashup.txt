@@ -114,7 +114,7 @@ const textdata=[
 '8|0|6|9|6|GPS MicroView  and serial USB|unknown.jpg',
 '8|9|6|9|6|2 x NXT3224T024_011 Nextion displays LCD08977 touch Overlay|nextion 3224.png',
 '8|18|6|9|6|Arduino DueMilanove with NRF24l01|nrf24l01.png',
-'8|27|6|9|6|Arduino UNO NRF24l01 RCV+Leds|nrf24l01.png',
+'8|27|6|9|6|Arduino UNO NRF24l01 RCV+Leds|nrf24l01.png,Arduino_UNO.png',
 '8|0|12|9|6|Pan/Tilt servo|unknown.jpg',
 '8|9|12|9|6|4 channel 5v Relay module, 5v relay board|unknown.jpg',
 '8|18|12|9|6|Arduino Dual Stepper motor Shield|unknown.jpg',
