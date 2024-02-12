@@ -1,0 +1,11 @@
+To update box_bin data in mashup.txt, cd to /users/trevorblum/documents/Box_Bin folder.
+
+Then modify the Box_Bin_Contents.csv file and add any new images to images folder.
+
+cd to mashup and run mashup.pde which will create a new mashup in cd ..
+
+Copy ../mashup.txt and the ../images file to trevorblum.name/Box_Bin and trevorblum.github.io/Box_Bin.
+
+Finally run Github desktop and test that trevorblum.name/box_bin queries show the expected changes.
+
+The last change made 7/2/2024 was to add an Arduino_UNO.png image to box 8 Arduino UNO line 115 which previously had only NRF24l01.png 
