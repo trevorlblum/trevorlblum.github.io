@@ -1,6 +1,6 @@
 const textdata=[ 
 'BOX|BIN X|BIN Y |W|L|Contents|Image - updated 8/3/2024',
-'1|0|0|6|6|BOX 1 - RGB LED assembly|RGB.jpg|https://trevorblum.name/details/RGB.pdf',
+'1|0|0|6|6|BOX 1 - RGB LED assembly|RGB.jpg|https://trevorblum.name/details/RGB.jpg',
 '1|6|0|24|6|Buttons|Buttons.jpg',
 '1|6|0|24|6|Prototype board and connectors|Proto.jpg',
 '1|6|0|24|6|Resistor Packs|resistors.jpg',
