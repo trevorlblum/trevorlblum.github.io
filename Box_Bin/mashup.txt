@@ -331,7 +331,7 @@ const textdata=[
 '25|0|5|5|5|ESP-01 APTEST|ESP01v0.jpg',
 '25|5|5|5|10|Arduino NANO, SSD1301 demo, LIBTEST|Arduino Nano.png',
 '25|5|15|5|10|ESP-01 Edimax, USB-TTL FT232RL|USB Serial.JPG',
-'25|5|25|5|5|10GHZ radar sensor, Magpie MCU|10GHZradar.png',
+'25|5|25|5|5|10GHZ radar sensor, Magpie MCU|10GHZradar.png|https://wiki.dfrobot.com/MicroWave_Sensor_SKU__SEN0192',
 '25|10|0|5|5|ESP32-CAM|ESPCAM.png',
 '25|10|10|10|10|TinyS2|TinyS2.png',
 '25|20|10|10|5|8channel 24MHz Logic analyser for Pulseview SW|Logic Analyser.png',
