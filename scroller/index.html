@@ -15,8 +15,8 @@ into "Rho" "Ophiuci" "JWST" as three separate entities, stuffing up the <img nam
 
 <style>
 body {
-  width: 1920px;
-  height: 1280px;
+  width: window.screen.width-200;
+  height: window.screen.height-200;
 }
 button {
   position: fixed;
@@ -26,41 +26,37 @@ button {
 <body>
 
 
-
-<div id="0" onmousemove="scrollWin()"</div>
-<div id="1" onmousemove="scrollWin()"</div>
-<div id="2" onmousemove="scrollWin()"</div>
-<div id="3" onmousemove="scrollWin()"</div>
-<div id="4" onmousemove="scrollWin()"</div>
-<div id="5" onmousemove="scrollWin()"</div>
-<div id="6" onmousemove="scrollWin()"</div>
-<div id="7" onmousemove="scrollWin()"</div>
+<div id="d0" onmousemove="scrollWin()"</div>
 
 
-<img id="1" src="questions.jpg" width="400" onclick=doco("questions.jpg")>
-<img id="2" src="Iliacme_socal_millipede.png" width="400" onclick=doco("Iliacme_socal_millipede.png")>
-<img id="3" src="Rho_Ophiuci_JWST.png" width="400" onclick=doco("Rho_Ophiuci_JWST.png")>
-<img id="4" src="20190614_141440.png" width="400" onclick=doco("20190614_141440.png")>
-<img id="5" src="20190614_141409.png" width="400" onclick=doco("20190614_141409.png")>
-<img id="6" src="20210101_140326.png" width="400" onclick=doco("20210101_140326.png")>
-<img id="7" src="20200505_160612.png" width="400" onclick=doco("20200505_160612.png")>
-<img id="8" src="20201212_144456.png" width="400" onclick=doco("20201212_144456.png")>
-<img id="9" src="BT_loves_LP.png" width="400" onclick=doco("BT_loves_LP.png")>
+<img id="i0" src="rainbow_fish.png" width="300" onclick=doco("rainbow_fish.png")>
+<img id="i1" src="questions.jpg" width="300" onclick=doco("questions.jpg")>
+<img id="i2" src="Iliacme_socal_millipede.png" width="300" onclick=doco("Iliacme_socal_millipede.png")>
+<img id="i3" src="Rho_Ophiuci_JWST.png" width="300" onclick=doco("Rho_Ophiuci_JWST.png")>
+<img id="i4" src="20190614_141440.png" width="300" onclick=doco("20190614_141440.png")>
+<img id="i5" src="20190614_141409.png" width="300" onclick=doco("20190614_141409.png")>
+<img id="i6" src="20210101_140326.png" width="300" onclick=doco("20210101_140326.png")>
+<img id="i7" src="20200505_160612.png" width="300" onclick=doco("20200505_160612.png")>
+<img id="i8" src="20201212_144456.png" width="300" onclick=doco("20201212_144456.png")>
+<img id="i9" src="BT_loves_LP.png" width="300" onclick=doco("BT_loves_LP.png")>
 
 <br>
 
 <script>
-imagelist='<img id="1" src="questions.jpg" width="400" onclick=doco("questions.jpg")>'
-+' <img id="2" src="Iliacme_socal_millipede.png" width="400" onclick=doco("Iliacme_socal_millipede.png")><img id="3" src="Rho_Ophiuci_JWST.png" width="400" onclick=doco("Rho_Ophiuci_JWST.png")><img id="4" src="20190614_141440.png" width="400" onclick=doco("20190614_141440.png")><img id="5" src="20190614_141409.png" width="400" onclick=doco("20190614_141409.png")><img id="6" src="20210101_140326.png" width="400" onclick=doco("20210101_140326.png")><img id="7" src="20200505_160612.png" width="400" onclick=doco("20200505_160612.png")><img id="8" src="20201212_144456.png" width="400" onclick=doco("20201212_144456.png")><img id="9" src="BT_loves_LP.png" width="400" onclick=doco("BT_loves_LP.png")>';
+imagelist='<img id="i0" src="rainbow_fish.png" width="300" onclick=doco("rainbow_fish.png")>'
++'<img id="i1" src="questions.jpg" width="300" onclick=doco("questions.jpg")>'
++' <img id="i2" src="Iliacme_socal_millipede.png" width="300" onclick=doco("Iliacme_socal_millipede.png")><img id="i3" src="Rho_Ophiuci_JWST.png" width="300" onclick=doco("Rho_Ophiuci_JWST.png")><img id="i4" src="20190614_141440.png" width="300" onclick=doco("20190614_141440.png")><img id="i5" src="20190614_141409.png" width="300" onclick=doco("20190614_141409.png")><img id="i6" src="20210101_140326.png" width="300" onclick=doco("20210101_140326.png")><img id="i7" src="20200505_160612.png" width="300" onclick=doco("20200505_160612.png")><img id="i8" src="20201212_144456.png" width="300" onclick=doco("20201212_144456.png")><img id="i9" src="BT_loves_LP.png" width="300" onclick=doco("BT_loves_LP.png")>';
 
 mouseX=0;
 mouseY=0;
 lastx=0;
 lasty=0;
 moveok=true;
+
 function scrollWin() {
-if(moveok)window.scrollTo(mouseX-200, 10);  //only scroll when in series
+if(moveok)window.scrollTo(mouseX-400, 10);  //only scroll when in series
 }
+
 function scrollM() {
   window.scrollTo(0,10); //position expanded image and inhibit moves
   moveok=false;
@@ -72,14 +68,14 @@ mouseY=event.clientY;
 });
 
 function doco(){   //doco primes image to expand and remembers where click came from
-document.getElementById("0").innerHTML='<img id="0" src="'+arguments[0]+'" width="1280px" onclick=roco("'+arguments[0]+'")>';
+document.getElementById("d0").innerHTML='<img id="i0" src="'+arguments[0]+'" width="1280px" onclick=roco("'+arguments[0]+'")>';
 lastx=mouseX;
 lasty=mouseY;
 scrollM();    // expanded image now at screen left
 }
 
 function roco(){    //roco restores image list and clicked position in series
-document.getElementById("0").innerHTML=imagelist+'<img id="0" src="'+arguments[0]+'" width="400" onclick=doco("'+arguments[0]+'")>';
+document.getElementById("d0").innerHTML=imagelist+'<img id="i0" src="'+arguments[0]+'" width="300" onclick=doco("'+arguments[0]+'")>';
 window.scrollTo(lastx,10);
 moveok=true;                   //restore moves within series
 }
