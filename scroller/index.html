@@ -75,7 +75,7 @@ scrollM();    // expanded image now at screen left
 }
 
 function roco(){    //roco restores image list and clicked position in series
-document.getElementById("d0").innerHTML=imagelist+'<img id="i0" src="'+arguments[0]+'" width="300" onclick=doco("'+arguments[0]+'")>';
+document.getElementById("d0").innerHTML=imagelist+'<img id="i0" src="'+arguments[0]+'" width="300" style="border:5px solid black" onclick=doco("'+arguments[0]+'")>';
 window.scrollTo(lastx,10);
 moveok=true;                   //restore moves within series
 }
