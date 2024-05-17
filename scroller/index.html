@@ -1,5 +1,10 @@
 <!DOCTYPE html>
 <!--- 
+17/5/2024 trying bigger thumbnails for mobile viewing
+16/5/2024 added extra images. On mobile, the scolling and image on-click display is not right, but on PC is fine
+Possibly due to magic 1280px in doco routine. Changed screen width and height to 1920/1280
+Would like onclick images to be better screen fit ( window.screen.height/window.screen.width)
+
 13/8/2023 like it better with smaller thumbnails (200, not 500).
 11/8/2023 imagelist as innerHTML works OK. Needs a bit of tidying but useable.
 10/8/2023 passing arguments works. Using innerHTML needs some thought to position images in-line and not overwrite initial display.
@@ -10,8 +15,8 @@ into "Rho" "Ophiuci" "JWST" as three separate entities, stuffing up the <img nam
 
 <style>
 body {
-  width: 5000px;
-  height: 7500px;
+  width: 1920px;
+  height: 1280px;
 }
 button {
   position: fixed;
@@ -29,20 +34,24 @@ button {
 <div id="4" onmousemove="scrollWin()"</div>
 <div id="5" onmousemove="scrollWin()"</div>
 <div id="6" onmousemove="scrollWin()"</div>
+<div id="7" onmousemove="scrollWin()"</div>
 
-<img id="1" src="questions.jpg" width="200" onclick=doco("questions.jpg")>
-<img id="2" src="Iliacme_socal_millipede.png" width="200" onclick=doco("Iliacme_socal_millipede.png")>
-<img id="3" src="Rho_Ophiuci_JWST.png" width="200" onclick=doco("Rho_Ophiuci_JWST.png")>
-<img id="4" src="20190614_141440.png" width="200" onclick=doco("20190614_141440.png")>
-<img id="5" src="20190614_141409.png" width="200" onclick=doco("20190614_141409.png")>
-<img id="6" src="20210101_140326.png" width="200" onclick=doco("20210101_140326.png")>
+
+<img id="1" src="questions.jpg" width="400" onclick=doco("questions.jpg")>
+<img id="2" src="Iliacme_socal_millipede.png" width="400" onclick=doco("Iliacme_socal_millipede.png")>
+<img id="3" src="Rho_Ophiuci_JWST.png" width="400" onclick=doco("Rho_Ophiuci_JWST.png")>
+<img id="4" src="20190614_141440.png" width="400" onclick=doco("20190614_141440.png")>
+<img id="5" src="20190614_141409.png" width="400" onclick=doco("20190614_141409.png")>
+<img id="6" src="20210101_140326.png" width="400" onclick=doco("20210101_140326.png")>
+<img id="7" src="20200505_160612.png" width="400" onclick=doco("20200505_160612.png")>
+<img id="8" src="20201212_144456.png" width="400" onclick=doco("20201212_144456.png")>
+<img id="9" src="BT_loves_LP.png" width="400" onclick=doco("BT_loves_LP.png")>
 
 <br>
 
 <script>
-imagelist='<img id="1" src="questions.jpg" width="200" onclick=doco("questions.jpg")>'
-+' <img id="2" src="Iliacme_socal_millipede.png" width="200" onclick=doco("Iliacme_socal_millipede.png")><img id="3" src="Rho_Ophiuci_JWST.png" width="200" onclick=doco("Rho_Ophiuci_JWST.png")><img id="4" src="20190614_141440.png" width="200" onclick=doco("20190614_141440.png")><img id="5" src="20190614_141409.png" width="200" onclick=doco("20190614_141409.png")><img id="6" src="20210101_140326.png" width="200" onclick=doco("20210101_140326.png")>';
-
+imagelist='<img id="1" src="questions.jpg" width="400" onclick=doco("questions.jpg")>'
++' <img id="2" src="Iliacme_socal_millipede.png" width="400" onclick=doco("Iliacme_socal_millipede.png")><img id="3" src="Rho_Ophiuci_JWST.png" width="400" onclick=doco("Rho_Ophiuci_JWST.png")><img id="4" src="20190614_141440.png" width="400" onclick=doco("20190614_141440.png")><img id="5" src="20190614_141409.png" width="400" onclick=doco("20190614_141409.png")><img id="6" src="20210101_140326.png" width="400" onclick=doco("20210101_140326.png")><img id="7" src="20200505_160612.png" width="400" onclick=doco("20200505_160612.png")><img id="8" src="20201212_144456.png" width="400" onclick=doco("20201212_144456.png")><img id="9" src="BT_loves_LP.png" width="400" onclick=doco("BT_loves_LP.png")>';
 
 mouseX=0;
 mouseY=0;
@@ -70,7 +79,7 @@ scrollM();    // expanded image now at screen left
 }
 
 function roco(){    //roco restores image list and clicked position in series
-document.getElementById("0").innerHTML=imagelist+'<img id="0" src="'+arguments[0]+'" width="200" onclick=doco("'+arguments[0]+'")>';
+document.getElementById("0").innerHTML=imagelist+'<img id="0" src="'+arguments[0]+'" width="400" onclick=doco("'+arguments[0]+'")>';
 window.scrollTo(lastx,10);
 moveok=true;                   //restore moves within series
 }
