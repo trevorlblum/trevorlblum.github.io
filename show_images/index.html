@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<!-- 19/5/2024 WIP changes to investigate selection for general image gallery om mobile
+     28/6/2023 Useful sketch shows images in simple arrays
+     could put scan of str image names in holding var instead of explicit display in clickfunc
+     13/6/2023 remnants of early sketch for Box_Bin
+     1/6/2023 sketch to show boxbin images from boxbin.csv file 
+     3/6/2023 images s innerHTML fail on spaces in names unless double quote enclosed.
+     3/6/2023 clickfunc2 shows images in a rows
+
+     2/6/2023 image array seems to be answer to 'tiling' images
+     2/6/2023 cannot get image array to accept onclick
+     need to now input and implement query then stack image results in imagenames for display
+-->
+
+<html>
+<head>
+<style type="text/css">
+.abs 
+{
+   position: absolute;
+   top: 0px;
+   right: 300px;
+}
+.pic
+{
+
+}
+</style>
+
+<h3>BoxBin image in piccie<br></h3>
+<img id="piccie" onclick="clickfunc()"> 
+
+<br><br>
+
+<img id="picc" class="pic"
+      onclick="clickfunc()"
+      src="images/rainbow fish.png"
+      alt=" not found"
+      width="300px" height="300px">
+
+<script language="Javascript" >
+var images="images/"
+var imagenames=[images+"1.65MHz utrasonic.png",images+"10 led bargraph.png",images+"5mm Yellow.png",images+"8 segment LED.png",images+"10GHZradar.png",images+"16MHZ crystal.jpg",images+"4298 motor driver.png",images+"7805 regulator.png",images+"RGB.jpg",images+"lm358.png",images+"MOV_Varistor_10D431K.png",images+"NCV sensor with relay.png",images+"solid_state_relay_5v.png",images+"Varistor MOV-10D431K 275volt.png",images+"Arduino_UNO.png",images+"Radaxa Rock.png",images+"Raspberry Pi 5.png"];
+
+ 
+const str = "BOX|BIN X|BIN Y |W|L|Contents|Image \
+1|0|0|6|6|BOX 1 - RGB LED assembly|RGB.jpg \
+1|6|0|24|6|Buttons|Buttons.jpg \
+1|6|0|24|6|Prototype board and connectors|Proto.jpg \
+1|6|0|24|6|Resistor Packs|resistors.jpg \
+1|6|0|24|6|32MHZ Crystals and 22pF caps|16MHZ crystal.jpg \
+1|6|0|24|6|Female-Female Jumper leads|Female-Female Jumpers.jpg \
+1|30|0|6|6|Ni-Mh 3.6 500mah 7.2V 1400mah|NI MH battery.jpg \
+1|0|6|6|6|empty|Empty.png \
+1|6|6|6|6|Maxoffsky Arduino Music assembly and 256MB SD Card|unknown.jpg \
+1|12|6|6|6|ATTiny and Power Assembly|attiny85.png \
+1|18|6|6|6|Geared Mini Motor|geared mini motor.jpg \
+1|24|6|12|6|Arduino DUE with Microphone and LED array|Arduino_Due.jpg \
+1|0|12|6|6|Infrared Transmit and Receive Module|unknown.jpg \
+1|6|12|6|6|TIP35 AND TIP36 power transistors and audio amp|TIP35.png \
+1|12|12|6|6|NTC thermistor and LDR Assembly|NTC Thermistor.jpg \
+1|18|12|6|6|12V Solenoid|solenoid.jpg \
+1|24|12|12|6|Nokia LCD module and driver IC|unknown.jpg \
+33|32|13|8|13|Raspberry pi 5 heatsink 8GB ram|Raspberry Pi 5.png \
+33|32|13|8|13|Radaxa Rock Pi 4 SE, Debian 11??|Radaxa Rock.png";
+
+
+document.write("<h2><br>string base unscanned <br></h2>");
+
+document.write(str+"<br>");
+
+document.write("<h2><br>string description section scan<br></h2>");
+words=str.split("|");
+//scan for every 6 items includes leading box number (1) 
+for(i=5;i<words.length;i+=6)document.write(words[i]+" , image is - "+words[i+1]+"<br>");
+
+document.write("<h2><br>Images with trailing Box number  (1) removed <br></h2>");
+//now scan for 6 items then show without trailing box number
+for(i=5;i<words.length;i+=6)document.write(words[i]+words[i+1].substring(0,words[i+1].length-2)+"<br>");
+
+document.getElementById("piccie").height=250;
+document.getElementById("piccie").src=images+"/"+words[12].substring(0,words[12].length-2);
+document.getElementById("picc").src=images+"/"+words[18].substring(0,words[18].length-2);
+
+function clickfunc(){
+var source;
+document.write("<h2>......clickfunc invoked............</h2> <img src='images/clickedon.png' width='300px' height='300px' alt='image not found'>");
+document.body.innerHTML='<br>This is innerHTML of bargraph<br> <img id="piccie" src="images/10 led bargraph.png" onclick="clickfunc()" width="100px">' ;
+for(i=0;i<imagenames.length;i++){
+  var id="piccie"+i;
+  source="\""+ imagenames[i] +"\"";   // surrounding quotes avoids breakup on spaces
+  document.body.innerHTML+="<img id=" + id + " src="+source+ " onclick=clickfunc2("+i+")"+' width="100px">' ;
+  }
+document.body.innerHTML+="<br>";
+}
+
+function clickfunc2(k){
+  document.body.innerHTML+=" <img id=\"blowup" +k+ '" src="'+imagenames[k] +'" onclick="clickfunc()" width="300px">';
+}
+
+</script>
+
+</head>
+<body>
+<img class="abs" src=images+"Empty.png" height="200" width="300" alt="images absolute">
+</body>
+</html>
