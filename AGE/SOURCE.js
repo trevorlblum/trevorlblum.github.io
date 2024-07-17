@@ -1,5 +1,8 @@
 //SOURCE.js replaces all javascript code previously in .html body
 //generateTextFileUrl(data);
+
+// 16/7/2024 function check_nclick still failing to show redX
+
 const canvas=document.getElementById('canvas');
 const context=canvas.getContext('2d');
 context.fillStyle='blue';
@@ -10,6 +13,7 @@ var english=efreq.split(",");
 var solutiontext="";
 chartfreqs();
 showmatrix();
+aclick_from_r=0;
 
 function loaded(){
 //document.getElementById("index").innerHTML+="<br>body loaded";
@@ -86,6 +90,7 @@ function chartfreqs(){                                            //display freq
 var textnums="";
 var textalphs="";
 var c=clues.split(",");
+
 calcfreqs();
 context.lineWidth=2;
 context.beginPath();context.moveTo(5,255-5*freq[0]);
@@ -121,6 +126,7 @@ context.stroke();
 showclues();
 }
 
+
 function nclick(){                                                //click on number in row - replace image with alpha choice
  //replace==0 means no previous 'a' click, so clear the target and its 'a'
     var tmp=(document.getElementById('n'+arguments[0]).src);      //tmp is full url   
@@ -146,7 +152,7 @@ function nclick(){                                                //click on num
   }
   replace=0;
   nclick_to=arguments[0]-1; //set destination on replacement
-  check_nclick(nclick_to);
+//  check_nclick();
   checkfinished();
   }
 
@@ -253,26 +259,33 @@ function clearanswer(){
 }
 
 function check_nclick(){              //check if nclick(num) and aclick(alfa) match answer
+
+source=aclick_from_r;
+dest=1+nclick_to;
+
+  //clear nclick image
+//    if(document.getElementById('n'+(dest)).src=="images/wrongX.png"){
+//      document.getElementById('n'+(dest)).src="images/A_Z.pngs/"+source+".png";
+//     }
 // aclick 20 nclick 15
-//window.alert("aclick_from_r "+aclick_from_r+" nclick_to "+nclick_to); // number of choice, alpha of choice
+//window.alert("source=  "+source+" dest= "+dest); // number of choice, alpha of choice
 
 // does replace match answer at [2*alfanum]
 ans=answer.split(",");
 
-//from 16 answer_to 16
-//window.alert("answer from "+(1+nclick_to) +" answer_to "+ans[2*aclick_from_r-1]);
+//from 19 answer_to 21 ie should be 21, is 19 which should show redX
+window.alert("answer from "+(dest) +" answer_to "+ans[2*source-1]);
 
-if((1+nclick_to)!=ans[2*aclick_from_r-1]){
-    document.getElementById('n'+(nclick_to+1)).src="images/wrongX.png";//replace select line element by wrongX
-  // window.alert("Mismatch");
-  //clear aclick image
-    if(document.getElementById('a'+(nclick_from)).src=="images/wrongX.png"){
-      document.getElementById('a'+(nclick_from)).src="images/A_Z.pngs/"+aclick_from+".png";
-      }
-      else document.getElementById('a'+(nclick_from)).src="images/A_Z.pngs/"+nclick_from+".png";
+if(dest!=ans[2*source-1]){
+    window.alert("Mismatch dest= "+dest+" answer_dest= "+ans[2*source-1]);
+    document.getElementById('n'+(dest)).src="images/wrongX.png"; // src replaced, onclick unchanged
+
+
+    }
+//    else document.getElementById('a'+(nclick_from)).src="images/A_Z.pngs/"+nclick_from+".png";
 
 // need to show original number in matrix not alpha substitute when errored.    
- }
+
 }
 
 
