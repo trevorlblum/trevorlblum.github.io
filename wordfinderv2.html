@@ -1,18 +1,11 @@
 <!DOCTYPE html>
 <html>
-<!--- 20/10/2023 adding ul/ol list routine requires search to create 
-      equivalent to ["word1","word2"] Array in listresults. Done
-      Modified list() to show all responses in Ul/Ol div
-      17/10/2023 removed draft prompts and added double display in multiple answers.
-      Failed to create <ul><li> sets using DOM.
-      11/10/2023 Added same number different letter discrimination. Seems to work well
-      10/10/2023 Need to check that each number is unique. Fahrenheitt should not have
-      been retrieved with different numbers in the last two places.
-      So letter in word[x] for 'n' must equal other letter in word[y] for 'n'
-      8/10/2023 now needs tidyup to remove old search code still needed for screen display
+<!--- 21/7/2024 dropdown created and filled. Now skips ol/ul display. BTW set limit to 100.
+      19/7/2024 add routine like li create to populate drop-down Done 21/7
+      With <option>...</option> word brackets
+      17/7/2024 failed to make found list scrollable
       NOTE: cmp=parsetest makes cmp the same location, etc. as parsetest but is not the same as
       for(i=0;i<parsetest;i++)cmp[i]=parsetest[i];
-      7/10/2023 test on inbuilts and short file works fine but big file does not find word. Fixed, see 8/10
       5/10/2023 pattern has to have all known letters in place eg.(... 5 ... 5 ... has to be ...Z...Z...).
       Remove double spaces in pattern uses 'A B C  D E  F  G'.replace(/  /g,' '))
      -->
@@ -22,8 +15,8 @@
 </head>
 <style>
 .divs { border:1px inset black; grid-area:menu; width:300px; }
-.divs2 { border:1px inset black; width:400px; }
-.divs3 { border:1px inset black; width:500px; }
+.divs2 { border:1px inset black; width:400px; max-height: 300px overflow-y;}
+.divs3 { border:1px inset black; width:500px; max-height: 300px overflow-y;}
 
 ul {
  columns:3;
@@ -43,6 +36,10 @@ ol {
 <div id="parse" <br> <br></div>
 <div class="divs2" id="wordlist" <br>wordlist div <br></div>
 <div class="divs3" id="ol_list" <br> ol_list results <br> </div>
+<div id="dropdown" >
+<select name="results" id="ddlist" size="10">
+  </select>
+</div>
 
 
 <p>Click the button to create a selection Pattern.</p>
@@ -51,7 +48,7 @@ ol {
 
 <script type="text/javascript" src="wordlist.txt"></script>
 <script>
-
+var scroll_limit=100;
 PatternDup=[0,0]; PatternDigraph=[0,0];parsed="";
 WordDup=[0,0];PDigraph=0;
 
@@ -118,13 +115,13 @@ test="14 V E R 14  P T 22 M 22 S T 22 C";//OVEROPTIMISTIC//"1 2  A N  D E  U 2";
 cmp=[];//parsetest;//
 //console.log("Start Words is ",words.length,"entries", "Pattern is ",parsed);
 processed=0;
-document.getElementById("ol_list").innerHTML="";//clear >26 list whatever found
+document.getElementById("ol_list").innerHTML="";//clear >scroll_limit list whatever found
   listresults=[""];
   for(l=0;l<words.length;l++)
     {  
-     if(resultfound>=26){
+     if(resultfound>=scroll_limit){
       list();
-      document.getElementById("wordlist").innerHTML+="<br>Found display limit is 26<br>";
+      document.getElementById("wordlist").innerHTML+="<br>Found display limit is "+scroll_limit+"<br>";
       return;//exit after found limit reached
      }
 
@@ -176,6 +173,16 @@ ll=listresults.length;
 //console.log("listresults.length",ll," results ",listresults);
 //for(l=0;l<ll;l++)document.getElementById("ol_list").innerHTML+="<br>"+listresults[l];
 
+//create drop-down elements
+//<div id="ddlist" class="dropdown-content"></div>
+
+document.getElementById("ddlist").innerHTML="";
+for(i=0;i<ll;i++)
+  {
+  document.getElementById("ddlist").innerHTML+="<option>"+listresults[i]+"</option>";
+ }
+
+/*
 //create an <ol> as desired...
 thisol=document.createElement("ol");
 document.getElementById("ol_list").appendChild(thisol);
@@ -186,7 +193,7 @@ for(i=0;i<ll;i++)
   document.getElementById("ol_list").appendChild(li);
   thisol.appendChild(li);
  }
-
+*/
 /*
 //create a <ul> as desired...
   thisul=document.createElement("ul");
