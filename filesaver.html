@@ -5,9 +5,9 @@
 <p id="demo"></p>
 
 <script>
-var FileSaver=require('file-saver');
-var blob=new Blob(["Hello world and anything else"],{type:"text/plain;charset=utf-8"});
-FileSaver.saveAs(blob, "hello_world.txt");
+    var data = new FormData();
+    data.append("upfile", new Blob(["CONTENT"], {type: "text/plain"}));
+    fetch("SERVER.SCRIPT", { method: "POST", body: data }); 
 </script>
 
 </body>
