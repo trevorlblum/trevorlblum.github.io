@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<!-- 31/7/2024 copied sections of load_save.html -->
+<html>
+<head>
+</head>
+<body>
+----------------
+----------------
+<div id='streamsave'>
+<!--streamsave trial-->
+<a class="simple">Download Multi-line Text File (Blob)</a>
+<textarea></textarea>
+<button class="save-file">Save File</button>
+</div>
+<!--end of streamsave trial-->
+
+<script type="text/javascript">
+
+//streamsave trial
+streamsave();
+
+function streamsave(){
+const link=document.querySelector('a.simple');
+const saveBtn = document.querySelector('button.save-file');
+let name = 'Monty';
+saveBtn.addEventListener('click', async function(){
+
+  let textArea = document.querySelector("textarea");
+  var taBlob = new Blob([textArea.value], {type: 'text/plain'});
+    const pickerOptions = {
+    suggestedName: `${name.toLowerCase()}.txt`,
+    types: [
+      {
+        description: 'Simple Text File',
+        accept: {
+          'text/plain': ['.txt'],
+        },
+      },
+    ],
+  };
+
+  const fileHandle = await window.showSaveFilePicker(pickerOptions);
+  const writableFileStream = await fileHandle.createWritable();
+  await writableFileStream.write(taBlob);
+  await writableFileStream.close();
+});
+}
+</script>
+</div>
+</body>
+</html>
+//end of streamsave trial
