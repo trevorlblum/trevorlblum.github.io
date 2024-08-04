@@ -8,15 +8,15 @@
       for(i=0;i<parsetest;i++)cmp[i]=parsetest[i];
       5/10/2023 pattern has to have all known letters in place eg.(... 5 ... 5 ... has to be ...Z...Z...).
       Remove double spaces in pattern uses 'A B C  D E  F  G'.replace(/  /g,' '))
-     -->
+-->
 
 <head>
   <title>Wordfinder</title>
-</head>
+
 <style>
 .divs { border:1px inset black; grid-area:menu; width:300px; }
 .divs2 { border:1px inset black; width:400px; max-height: 300px overflow-y;}
-.divs3 { border:1px inset black; width:500px; max-height: 300px overflow-y;}
+.divs3 { border:1px inset black; width:400px; max-height: 300px overflow-y;}
 
 ul {
  columns:3;
@@ -29,13 +29,13 @@ ol {
 -moz-columns:2;
 }
 </style>
-
+</head>
 
 <body>
-<div id="sample" <br> <br></div>
-<div id="parse" <br> <br></div>
-<div class="divs2" id="wordlist" <br>wordlist div <br></div>
-<div class="divs3" id="ol_list" <br> ol_list results <br> </div>
+<div id="sample"> <br> <br></div>
+<div id="parse"> <br> <br></div>
+<div class="divs2" id="wordlist"> <br>wordlist div <br></div>
+<div class="divs3" id="ol_list"> <br> ol_list results <br> </div>
 <div id="dropdown" >
 <select name="results" id="ddlist" size="10">
   </select>
@@ -46,6 +46,7 @@ ol {
 
 <button onclick="parse()">Try it</button>
 
+</body>
 <script type="text/javascript" src="wordlist.txt"></script>
 <script>
 var scroll_limit=100;
@@ -62,7 +63,7 @@ function myFunction() {                   //Creates button with default text
   x.setAttribute("id","button");
   x.setAttribute("type", "text");
   x.setAttribute("placeholder", "numbers letters");
-  x.setAttribute("value","1 2 3 4 5 6 7 8 9 10 11 12 13");//"G R 8 9 10");//"14 V E R 14  P T 22 M 22 S T 22 C");
+  x.setAttribute("value","1 2 3 4 5 6 7 8 9 10 11 12 13 14 15");
   x.setAttribute("size","30");
   document.body.appendChild(x);
   //document.getElementById("parse").innerHTML="parsing"+x;
@@ -209,6 +210,4 @@ for(i=0;i<ll;i++)
 }
 
 </script>
-
-</body>
 </html>
