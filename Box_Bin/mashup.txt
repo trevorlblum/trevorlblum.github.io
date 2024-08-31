@@ -397,7 +397,7 @@ const textdata=[
 '32|0|0|25|15|1K, 10k,50k,100k pots|Mini potentiometer.png',
 '32|0|0|25|15|Adafruit USB C-F inline breakouts P4396A 2off|USB C socket breakout.png',
 '32|0|0|25|15|USB plug Solder PP0790 4off, USB PCB sockets 3off|USB C male breakout.png',
-'32|0|0|25|15|LM358 Opamp 4off, Sparkfun LM358 breakout 2off, LMC64 2off,NE555 3off|lm358 Opamp breakout.png,lm358.png,2_stage_op_amp.png|https://trevorblum.name/Box_Bin/details/NCV_sensor_with_relay.png',
+'32|0|0|25|15|LM358 Opamp 4off, Sparkfun LM358 breakout 2off, LMC64 2off,NE555 3off|lm358 Opamp breakout.png,lm358.png,2_stage_op_amp.png,https://trevorblum.name/Box_Bin/details/NCV_sensor_with_relay.png',
 '32|0|0|25|15|4 channel Level shifter 20ff |4 Channel level shifter.png',
 '32|0|0|25|15|OPA2134PA Opamps 2off|OPA2134.png',
 '32|0|0|25|15|3watt 365nm CREE leds 2off|Cree 3Watt 365nm led.png',
