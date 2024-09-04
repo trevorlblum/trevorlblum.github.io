@@ -1,5 +1,5 @@
-const textdata=[    // - updated 8/3/2024
-'BOX|BIN X|BIN Y |W|L|Contents|Image',
+const textdata=[ 
+'BOX|BIN X|BIN Y |W|L|Contents|Image - updated 8/3/2024',
 '1|0|0|6|6|BOX 1 - RGB LED assembly|RGB.jpg|https://trevorblum.name/details/RGB.html',
 '1|6|0|24|6|Buttons|Buttons.jpg',
 '1|6|0|24|6|Prototype board and connectors|Proto.jpg',
@@ -75,7 +75,7 @@ const textdata=[    // - updated 8/3/2024
 '4|18|13|9|7|INA126 preamp and Electret mic|electret.png',
 '4|27|13|9|7|Push button mini switches and board|unknown.jpg',
 '4|0|19|6|6|.1uF 1kv, 1uF 250v,.1uF 1.5kv,.1uF 1kv caps,4x1n4004 diodes|1N4004.png',
-'4|6|19|6|6|1n4007 diodes|1N4007.png',
+'4|6|19|6|6|1n4007 diodes|1N4007.jpg',
 '4|12|19|6|6|BC547/557, BC639/640, 7805 regs,ZT2283, 50v500mA darlingtons, fine pins|transistor.png,7805 regulator.png',
 '4|18|19|6|6|bridge rect+25vcap,20,47,100,220uF caps LDR,NTC,Mini electret mic,18mm toroid|electret.png,Bridge rectifier.png',
 '4|24|19|6|6|1.65MHZ Ultrasound atomisers|1.65MHz utrasonic.png',

@@ -1,4 +1,7 @@
-<!--1/7/2023 added title prompts to images. Added hover text to logo image.
+<!-- Make enquiry on Mashup.txt derived from Box-Bin.csv
+   4/9/2024 Finally resolved https versus /imagedir/ problem for images. Added search and expand HTTPS discrimination.
+    8/3/2024 Began add of html link for details of item(s) show link on screen
+    1/7/2023 added title prompts to images. Added hover text to logo image.
     moved input button closer to input rectangle
     Clicked thumbnails now have no width limit. Some images need resize.
     Logo clear removed in parse func.
@@ -115,9 +118,18 @@ if(!searching)
       document.getElementById("namestack").innerHTML+=thisname[6];
 // fill image namestack from boxbin lines
       var thisimage;
-      thisimage=thisname[6].split(","); 
+      thisimage=thisname[6].split(",");
+      thislink=thisname[7].split(",");    // added 8/3/2024 for detail link
+      if(thislink.length>0){
+// show link if it exists
+      } 
 //extract all images for line
-      for(i=0;i<thisimage.length;i++) document.getElementById("namestack").innerHTML+="<img src=\""+imgdir+thisimage[i]+"\" width=\"50\" onclick =\"expand("+l+")\" title=\"Click for larger image\">::";
+      for(i=0;i<thisimage.length;i++){ 
+alert("thisimage[i] ",thisimage[i]);
+document.getElementById("namestack").innerHTML+="<img src=\""+imgdir+thisimage[i]+"\" width=\"50\" onclick =\"expand("+l+")\" title=\"Click for larger imagexxx\">::";
+}
+//else
+//   document.getElementById("namestack").innerHTML+="<img src=\""+thisimage[i]+"\" width=\"50\" onclick =\"expand("+l+")\" title=\"Click for https://\">::";
       }
       document.getElementById("showit").innerHTML+=textdata[l]+"<br>";   
       }
@@ -136,7 +148,11 @@ function expand(line){ // expand small image click to show line and images
 parse=textdata[line].split("|");
 img=parse[6].split(",");
 document.getElementById("result").innerHTML="<h3>Detail for line "+line+" Box "+parse[0]+" : "+textdata[line]+"</h3>";
- for(i=0;i<img.length;i++)document.getElementById("result").innerHTML+="<img src=\""+imgdir+img[i]+"\"  onclick=\"expand("+line+")\">";
+ for(i=0;i<img.length;i++){
+   if(img[i].toUpperCase().indexOf("HTTPS")==-1)document.getElementById("result").innerHTML+="<img src=\""+imgdir+img[i]+"\"  onclick=\"expand("+line+")\">";
+else
+document.getElementById("result").innerHTML+="<img src=\""+img[i]+"\"  onclick=\"expand("+line+")\">";
+}
 }
 
 function search(){ //setup search for input text
@@ -159,7 +175,10 @@ found=true;
       var thisimage;
       thisimage=thisname[6].split(","); 
 //    extract all images for line
-      for(i=0;i<thisimage.length;i++) document.getElementById("namestack").innerHTML+="<img src=\""+imgdir+thisimage[i]+"\" width=\"50\" onclick =\"expand("+l+")\" title=\"Click to see larger image\">:: "; 
+      for(i=0;i<thisimage.length;i++)
+ if(thisimage[i].toUpperCase().indexOf("HTTPS")==-1)document.getElementById("namestack").innerHTML+="<img src=\""+imgdir+thisimage[i]+"\" width=\"50\" onclick =\"expand("+l+")\" title=\"Click to see larger image\">:: ";
+else 
+document.getElementById("namestack").innerHTML+="<img src=\""+thisimage[i]+"\" width=\"50\" onclick =\"expand("+l+")\" title=\"Click to see https:// image\">:: ";
       }
    }
    document.getElementById("namestack").innerHTML+="<h3><br>End of search results<br></h3>";  
