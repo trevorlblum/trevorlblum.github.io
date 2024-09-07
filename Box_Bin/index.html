@@ -1,4 +1,5 @@
 <!-- Make enquiry on Mashup.txt derived from Box-Bin.csv
+   7/9/2024 some https cleanup. Does not search at all ..... anymore.
    4/9/2024 Finally resolved https versus /imagedir/ problem for images. Added search and expand HTTPS discrimination.
     8/3/2024 Began add of html link for details of item(s) show link on screen
     1/7/2023 added title prompts to images. Added hover text to logo image.
@@ -54,22 +55,22 @@
 
 <body>
 
-<h2>Query app for Box_Binned items. <br>Enter case-insensitive search text (e.g. opamp lm741).<br>..... shows all data files. Explicit .png/.jpg/.bmp extension image is shown.<br>Click on search-retrieved images for bin details.</h2><br>
+<h2>Query app for Box_Binned items. <br>Enter case-insensitive search text (e.g. opamp lm741).<br>Explicit .png/.jpg/.bmp extension image is shown.<br>Click on search-retrieved images for bin details.</h2><br>
 
 <div class="myDIV">
   <img id="demo" src="images/logo.png" width="100" ><br>
   </div>
- <div class="hide">"Enter multiword queries in the input box below (..... shows all data)"
+ <div class="hide">"Enter multiword queries in the input box below. empty 'dumps' whole mashup.txt"
 </div>
 
-<input  type="text" id="textin" title="Enter search values eg cap 47 v" value="....." ><br>
+<input  type="text" id="textin" title="Enter search values eg cap 47 v" value="cap 47 v" ><br>
 <button onclick="myFunction()">search for item entry</button>
 
 <p id="result" <br> Query result <br></p>
  
 <p id="namestack" <br>Retrieved images <br></p>
 
-<p id="showit" <br>Data files</p>
+<p id="showit" <br></p>
 
 <script id="textdata" type="text/javascript" src="mashup.txt"></script>
 
@@ -102,7 +103,7 @@ document.getElementById("showit").innerHTML="<br>This is the entry "+imgdir+x+" 
 // process the mashup text
 if(searching) search();
 
-document.getElementById("showit").innerHTML+="<br>This is the text in mashup.txt file <br>";
+//document.getElementById("showit").innerHTML+="<br>This is the text in mashup.txt file <br>";
 
 if(!searching)
 { // retrieves all data set if no search item (ie .....)
@@ -119,14 +120,13 @@ if(!searching)
 // fill image namestack from boxbin lines
       var thisimage;
       thisimage=thisname[6].split(",");
-      thislink=thisname[7].split(",");    // added 8/3/2024 for detail link
+//      thislink=thisname[7].split(",");    // added 8/3/2024 for detail link
       if(thislink.length>0){
 // show link if it exists
       } 
 //extract all images for line
-      for(i=0;i<thisimage.length;i++){ 
-alert("thisimage[i] ",thisimage[i]);
-document.getElementById("namestack").innerHTML+="<img src=\""+imgdir+thisimage[i]+"\" width=\"50\" onclick =\"expand("+l+")\" title=\"Click for larger imagexxx\">::";
+  for(i=0;i<thisimage.length;i++){ 
+    document.getElementById("namestack").innerHTML+="<img src=\""+imgdir+thisimage[i]+"\" width=\"50\" onclick =\"expand("+l+")\" title=\"Click for large images\">::";
 }
 //else
 //   document.getElementById("namestack").innerHTML+="<img src=\""+thisimage[i]+"\" width=\"50\" onclick =\"expand("+l+")\" title=\"Click for https://\">::";
@@ -176,7 +176,7 @@ found=true;
       thisimage=thisname[6].split(","); 
 //    extract all images for line
       for(i=0;i<thisimage.length;i++)
- if(thisimage[i].toUpperCase().indexOf("HTTPS")==-1)document.getElementById("namestack").innerHTML+="<img src=\""+imgdir+thisimage[i]+"\" width=\"50\" onclick =\"expand("+l+")\" title=\"Click to see larger image\">:: ";
+      if(thisimage[i].toUpperCase().indexOf("HTTPS")==-1)document.getElementById("namestack").innerHTML+="<img src=\""+imgdir+thisimage[i]+"\" width=\"50\" onclick =\"expand("+l+")\" title=\"Click to see larger image\">:: ";
 else 
 document.getElementById("namestack").innerHTML+="<img src=\""+thisimage[i]+"\" width=\"50\" onclick =\"expand("+l+")\" title=\"Click to see https:// image\">:: ";
       }
