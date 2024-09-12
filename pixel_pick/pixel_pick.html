@@ -1,37 +1,62 @@
 <!DOCTYPE html>
-<!--10/6/2021 msg fails on ctxcnv reference
-  5/6/2021 base of pixel picker in javascript
+<!-- 
+  12/9/2024 reexamining this for urine test strips
+            Must be run from localhost or .name
+  14/7/2021 added eucdistance function - do not understand RGBA
+  eucdist sees rgbcurrent/rgbsaved as undefined
+
+  4/7/2021 added rgbsaved and rgbcurrent for comparison of clicked vs color @cursor
+  now need some comparison based on euclidian distance between R,G and B components
+  26/6/2021 WIP on mouse cursor marking and retrieval. pick function needs cleanup.
+  26/6/2021 Colour retrieval now correct for rgbw.png and hover (with offset x,y)
+  added debugging to stop color map printout on larger images
+  Resizes the image canvas to the image size.
+  25/6/2021 still not getting colour under cursor. 
+  23/6/2021 fiddled with mouse move/click sample colour - needs verification, looks sus.
+ 
+  This is master copy in localhost webserver docs
+  See pickit.html in github for working get image pixels block
+
+
   sketch to show some images and a canvas for urine test sample colour pick-up from canvas 
   refer to click_hover.html for working version with different images.
+
 -->
 
 <html>
 <body>
-<canvas id="hovered-color" width="500" height="500" style="border:3px solid #d3d3d3;" ></canvas>
-<canvas id="selected-color" width="500" height="500" style="border:3px solid #d3d3d3;"></canvas>
-<canvas id="imgcnv" width="500" height="500" style="border:3px solid #d3d3d3;" ></canvas>
-<p>Get a pixel value from image</p>
-
-<p id="res" onclick="clearres()" >Result goes here</p>
+<canvas id="imgcnv" width="220" height="277" ;" ></canvas>
 <p id="demo" ></p>
-<img id="cnv" src="./7 Colors.png" onclick="myFunction('7 Colors')" width="500" height="500" >
-<img id="Rhino" src="./rhino.png" onclick="myFunction('rhino.png')" width="300" height="227" >
+<p>Get a pixel value from image</p>
+<p id="res" onclick="clearres()" >Result goes here</p>
+<canvas id="dest" width="50" height="50" ;" ></canvas>
+
 
 <script>
+var debugging=false;
+var xoff=10;var yoff=10;
 var cv=document.getElementById("imgcnv");
+var rgbsaved;//saved pixel color
+var rgbcurrent;//pixel under current cursor
+var clickx; var clicky;
+
+
 if(cv.getContext) {   //check if canvas has context
   var ctxcnv=cv.getContext("2d");
   ctxcnv.font="20px Arial";
-  ctxcnv.fillText("7 Colors should be here",10,10);
+  ctxcnv.fillText("imgObj should be here",10,10);
   var imgObj=new Image();
-
   imgObj.onload=function(){
   ctxcnv.drawImage(imgObj,0,0);
   };
-  imgObj.src="./7 Colors.png";
-}
+  imgObj.src="test_Composite.png";//"./7 Colors.png";//"rgbw.png";//"750x750colortest magnified.png";
+  ctxcnv.canvas.width=imgObj.width;
+  ctxcnv.canvas.height=imgObj.height;
+  }
 else { myFunction("BUT CANVAS NO CONTEXT");}
 msg("in script");
+document.getElementById("imgcnv").innerHTML="<canvas id='imgcnv' width='250' height='277' style='border:15px solid #d3d3d3;' ></canvas>";
+
 
 
 for(i=0;i<5;i++){j=i*50;document.getElementById("demo").innerHTML+="<p id='demo" +j+"' onclick=\"myFunction('line id" +j + "')\">" +j +" click this </p>";}
@@ -41,37 +66,100 @@ function myFunction(Z) {
 
 function clearres(){ document.getElementById("res").innerHTML ="Result goes here";}
 
-function msg(Msg){
-  var d=ctxcnv.getImageData(0,0,10,10);
-  document.getElementById("res").innerHTML = "<h2>Message "+Msg+" image data is "+d+"!</h2>";
+function msg(Msg,x,y){
+  //x-=xoff;y-=yoff; //this makes the hover rgb's different to the rgbvcurrent and saved pickups.
+  document.getElementById("res").innerHTML=Msg+" In msg x="+x+" y="+y+" image size "+imgObj.width+"x"+imgObj.height+"<br>";
+  imageData=new ImageData(imgObj.width,imgObj.height);
+  imageData=ctxcnv.getImageData(0,0,imgObj.width,imgObj.height);
 
+  pos=x*4+4*y*imgObj.width;
+  document.getElementById("demo").innerHTML="msg mouse hover x="+x+" y="+y+" R"+imageData.data[pos]+" G"+imageData.data[pos+1]+" B"+imageData.data[pos+2];
+
+if(debugging){
+  var line="start ";var red=0;var green=0;var blue=0; var alpha=0;var pos=0;  
+  for(i=0;i<imgObj.height*4;i+=4){
+     line="line "+i+" ";
+     for(j=0;j<imgObj.width;j++){
+          pos=j*4+i*imgObj.width;
+          red=imageData.data[pos];
+          green=imageData.data[1+pos];
+          blue=imageData.data[2+pos];
+          alpha=imageData.data[3+pos];
+         if(red>green && red>blue) line+="R";
+         if(green>red && green>blue) line+="G";
+         if(blue>red && blue>green) line+="B";
+         if(red>=250&&green>=250&blue>=250)line+="w";
+         if(blue<=10 && green<=10 && red<=10)line+="b";
+   //      line+=alpha;
+        }
+        document.getElementById("res").innerHTML +=line+"<br>";
+    }
+  } //end debugging
 }
-// from color-picker
-var hoveredColor = document.getElementById('hovered-color');
-var selectedColor = document.getElementById('selected-color');
 
-
-function pick(event, destination) {
-  var x = event.layerX;
-  var y = event.layerY;
+function pick(event, destination) {// not quite at mouse cursor but close...
+  var x = event.x;//layerX;
+  var y = event.y;//layerY;
   var pixel = ctxcnv.getImageData(x, y, 1, 1);
   var data = pixel.data;
-        msg("pick fn");
-	const rgba = `rgba(${data[0]}, ${data[1]}, ${data[2]}, ${data[3] / 255})`;
-	destination.style.background = rgba;
-	destination.textContent = rgba;
-
-	return rgba;
+        msg("pick fn",x,y);
+	const rgbv = `RGBA(${data[0]}, ${data[1]}, ${data[2]}, ${data[3] / 255})`;
+	destination.style.background = rgbv;//show color in patch
+	destination.textContent = rgbv;
+	return rgbv;
 }
 
-imgcnv.addEventListener('mousemove', function(event) {
-        msg("imgcnv hover");
-	pick(event, hoveredColor);
+imgcnv.addEventListener('mousemove', function(event) { // 'follow' mouse with crosshairs
+        var x=event.x;
+        var y=event.y;
+        rgbcurrent=pick(event,dest); 
+        msg("mouseMove rgbvcurrent "+rgbcurrent+" rgbsaved "+rgbsaved+" eucdist "+eucdist(),x,y);
+        ctxcnv.clearRect(0,0,imgObj.width,imgObj.height);
+        ctxcnv.drawImage(imgObj,0,0);
+        var xf=x-xoff,yf=y-yoff;
+        ctxcnv.beginPath();
+        ctxcnv.moveTo(xf+10,yf);
+//draw cross hairs
+       ctxcnv.lineTo(xf-10,yf);ctxcnv.moveTo(xf+10,yf);ctxcnv.stroke();
+       ctxcnv.moveTo(xf,yf-10);ctxcnv.lineTo(xf,yf+10);ctxcnv.stroke();
+//draw click cross hairs
+        ctxcnv.moveTo(clickx+20,clicky);ctxcnv.stroke();
+        ctxcnv.lineTo(clickx-20,clicky);ctxcnv.stroke();
+        ctxcnv.moveTo(clickx,clicky-20);ctxcnv.stroke();
+        ctxcnv.lineTo(clickx,clicky+20);ctxcnv.stroke();
 });
-imgcnv.addEventListener('click', function(event) {
-        msg("imgcnv click");
-	pick(event, selectedColor);
+
+imgcnv.addEventListener('click', function(event) {//draw cross hairs
+        var x=event.x;
+        var y=event.y;
+        rgbsaved=pick(event,dest); 
+        msg("imgcnv click ",x,y);
+        ctxcnv.clearRect(0,0,imgObj.width,imgObj.height);
+        ctxcnv.drawImage(imgObj,0,0);
+        var xf=x-xoff,yf=y-yoff;
+        clickx=xf;clicky=yf;
+        ctxcnv.beginPath();
+        ctxcnv.moveTo(xf+20,yf);
+//draw larger cross hairs
+        ctxcnv.lineTo(xf-20,yf);ctxcnv.moveTo(xf,yf-20);
+        ctxcnv.lineTo(xf,yf+20);ctxcnv.stroke();
+//	rgbsaved=pick(event, dest);
+//rgbsaved pixel for compare
 });
+
+//does not seem to be ok.13/7/2021 cannot see rgbcurrent.data or rgb saved
+function eucdist(){ //compute euclidean distance between strip and color panel
+ var distance=0.0;
+//var pr=rgbcurrent.data[0];
+//var pg=rgbcurrent.data[1];
+//var pb=rgbcurrent.data[2];
+//var rr=rgbsaved.data[0];
+//var rg=rgbsaved.data[1];
+//var rb=rgbsaved.data[2];
+//var distance=123;
+//distance=Math.sqrt((rr-pr)*(rr-pr)+(rg-pg)*(rg-pg)+(rb-pb)*(rb-pb));
+return distance;
+}
 
 </script>
 

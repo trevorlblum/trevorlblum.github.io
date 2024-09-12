@@ -1,0 +1,94 @@
+<!-- 14/7/2021 reviwed for clues for pixel_pick comparison issues
+  19/6/2021 localhost version with values dump to page after get values clicked.
+  22/6/2021 added major component color map as easier to identify.
+  should be able to compare against processing "showscreencolours.pde" app for detailed colours.
+-->
+<!DOCTYPE html>
+<html>
+<body>
+<p id="all" >place for responses</p>
+<img id="clearimg" src="clear.jpg" alt="blank" width="40" height="40">
+<img id="rhinoimg" src="rhino.jpg" alt="blank" width="40" height="40">
+
+<p>Image to use: click to copy, hover to clear canvas below </p>
+<img id="screamimg" src="rgbw.png" alt="The Scream" onclick="myCanvas()" onmouseover="clearX()" width="60" height="70">
+
+<p><button onclick="clearX()">Button clears</button></p>
+<p><button onclick="valuesX()">get values</button></p>
+<p>Canvas to fill:</p>
+
+<canvas id="Canvas1" onmouseover="myCanvas1()" width="250" height="300" style="border:1px solid #d3d3d3;">
+Your browser does not support the HTML canvas tag.</canvas>
+<canvas id="Canvas2" onmouseover="myCanvas2()" width="300" height="227" style="border:1px solid #d3d3d3;">
+Your browser does not support the HTML canvas tag.</canvas>
+
+
+<script>
+var All=document.getElementById("all").innerHTML="clear image :";
+var c = document.getElementById("Canvas1");
+var ctx = c.getContext("2d");
+ctx.font = "12px Arial";
+ctx.fillText("Click image or hover here for image copy",10,70);
+var cx = document.getElementById("Canvas2");
+var ctxx = cx.getContext("2d");
+ctxx.fillText("Click image or hover here for image copy",10,70);
+
+
+function myCanvas1() {
+  var All=document.getElementById("all").innerHTML="in Canvas1";
+  var img = document.getElementById("screamimg");
+  ctx.drawImage(img,10,10);
+}
+function myCanvas2() {
+  var All=document.getElementById("all").innerHTML="in Canvas2";
+  var img = document.getElementById("rhinoimg");
+  ctxx.drawImage(img,10,10);
+}
+function clearX(){
+  var All=document.getElementById("all").innerHTML="in clear";
+  var img = document.getElementById("clearimg");
+  ctx.drawImage(img,10,10);
+  ctx.font = "25px Arial";
+  ctx.fillText("cleared ",10,50);
+  ctxx.drawImage(img,10,10);
+}
+
+function valuesX(){
+//this needs a revisit to get just the 50x50 pixels for comparisons
+ var All=document.getElementById("all").innerHTML="in valuesX <br>";
+ var imgData=ctx.getImageData(10,10,50,50);  //image section of 50x50 pixels from 100,150
+  ctx.putImageData(imgData,150,150); //puts 50x50 section to canvas1
+  ctxx.putImageData(imgData,75,120);//puts 50x50 section to canvas2
+  document.getElementById("all").innerHTML=screamimg.src+"<br>";//title the dump 
+  var lf=" ";
+  var pos=0;
+//color at x,y p=y*(width*4)+x*4. imageData.data[p],Green=imageData.data[p+1], blue=imageData.data[p+2]
+  for(x=0;x<50*4;x+=4){
+    lf="<br><br>";
+    for( y=0;y<50;y++){
+//imgDatax=ctxx.getImageData(x,y,1,1);
+      pos=y*4+x*50;
+//    output dominant colour map instead of full color components.
+      All=document.getElementById("all").innerHTML+=abbrev(imgData.data[pos],imgData.data[pos+1],imgData.data[pos+2],imgData.data[pos+3])+lf;
+      lf="";
+//    output full RGBA color components
+//    All=document.getElementById("all").innerHTML+="Data "+x+","+y+":-"+imgData.data[pos] +":"+imgData.data[pos+1]+":"+imgData.data[pos+2]  +":"+imgData.data[pos+3]+"::"+lf;
+      lf=" ";
+      }
+   }
+}
+
+function abbrev(r,g,b,a){
+//produce "R","G","B" in place of three rgb components where R,G or B is dominant in pixel
+var c="X"; // catch undecidables as X
+if(r>g&&r>b)c="R";
+if(g>r&&g>b)c="G";
+if(b>r&&b>g)c="B";
+if(b<10&&g<10&&r<10)c="b";
+if(b>250&&g>250&&r>250)c="w";
+return c;
+}
+</script>
+
+</body>
+</html>
