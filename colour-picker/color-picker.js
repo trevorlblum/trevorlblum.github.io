@@ -1,3 +1,5 @@
+//gives error "menus.create requires an id for non-persistent scripts"
+// but still works as in screen shot.
 
 
 const img = new Image();
