@@ -25,6 +25,7 @@
 
 <html>
 <body>
+<title>pixel_pick for test strips</title>
 <canvas id="imgcnv" width="220" height="277" ;" ></canvas>
 <p id="demo" ></p>
 <p>Get a pixel value from image</p>
@@ -49,7 +50,7 @@ if(cv.getContext) {   //check if canvas has context
   imgObj.onload=function(){
   ctxcnv.drawImage(imgObj,0,0);
   };
-  imgObj.src="test_Composite.png";//"./7 Colors.png";//"rgbw.png";//"750x750colortest magnified.png";
+  imgObj.src="test_Composite.png";;
   ctxcnv.canvas.width=imgObj.width;
   ctxcnv.canvas.height=imgObj.height;
   }
