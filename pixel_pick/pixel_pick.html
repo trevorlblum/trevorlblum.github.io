@@ -2,6 +2,10 @@
 <!-- 
   12/9/2024 reexamining this for urine test strips
             Must be run from localhost or .name
+            Firefox is OK, but Chrome and Safari fail
+            All browsers 'hesitate' before loading images
+            Only Firefox gets to show cursor and drop it on image
+ 
   14/7/2021 added eucdistance function - do not understand RGBA
   eucdist sees rgbcurrent/rgbsaved as undefined
 
@@ -110,7 +114,9 @@ function pick(event, destination) {// not quite at mouse cursor but close...
 	return rgbv;
 }
 
-imgcnv.addEventListener('mousemove', function(event) { // 'follow' mouse with crosshairs
+//Chrome says this is not a function. Firefox is OK with it.
+const element=document.getElementById("imgcnv"); // works with Firefox
+element.addEventListener('mousemove', function(event) { // 'follow' mouse with crosshairs
         var x=event.x;
         var y=event.y;
         rgbcurrent=pick(event,dest); 
