@@ -1,5 +1,10 @@
 <!DOCTYPE html>
-<!-- 
+<!--   This is master copy in localhost webserver docs
+  13/9/2024 Finally unpacked current and save colours for eucdist. This needs to average patches, not single pixels.
+            looking at menu.create id error. Now runs in firefox,chrome,safari.
+            rgbsaved seems to be in conflict with move and click function listeners.
+            Opera does two-step first load without images but no console error.
+
   12/9/2024 reexamining this for urine test strips
             Must be run from localhost or .name
             Firefox is OK, but Chrome and Safari fail
@@ -18,7 +23,7 @@
   25/6/2021 still not getting colour under cursor. 
   23/6/2021 fiddled with mouse move/click sample colour - needs verification, looks sus.
  
-  This is master copy in localhost webserver docs
+
   See pickit.html in github for working get image pixels block
 
 
@@ -38,6 +43,8 @@
 
 
 <script>
+
+
 var debugging=false;
 var xoff=10;var yoff=10;
 var cv=document.getElementById("imgcnv");
@@ -59,12 +66,51 @@ if(cv.getContext) {   //check if canvas has context
   ctxcnv.canvas.height=imgObj.height;
   }
 else { myFunction("BUT CANVAS NO CONTEXT");}
-msg("in script",0,0);
+//msg("in script",0,0);
 document.getElementById("imgcnv").innerHTML="<canvas id='imgcnv' width='250' height='277' style='border:15px solid #d3d3d3;' ></canvas>";
 
-
-
 for(i=0;i<5;i++){j=i*50;document.getElementById("demo").innerHTML+="<p id='demo" +j+"' onclick=\"myFunction('line id" +j + "')\">" +j +" click this </p>";}
+//Chrome says imgcnv is not a function. Firefox is OK with it. OK with element as const.
+const element=document.getElementById("imgcnv"); // works with Firefox
+element.addEventListener('mousemove', function(event) { // 'follow' mouse with crosshairs
+        var x=event.x;
+        var y=event.y;
+        rgbcurrent=pick(event,dest); 
+        msg("mouseMove rgbcurrent="+rgbcurrent+" rgbsaved="+rgbsaved+" eucdist "+eucdist(),x,y);
+        ctxcnv.clearRect(0,0,imgObj.width,imgObj.height);
+        ctxcnv.drawImage(imgObj,0,0);
+        var xf=x-xoff,yf=y-yoff;
+        ctxcnv.beginPath();
+        ctxcnv.moveTo(xf+10,yf);
+//draw cross hairs
+       ctxcnv.lineTo(xf-10,yf);ctxcnv.moveTo(xf+10,yf);ctxcnv.stroke();
+       ctxcnv.moveTo(xf,yf-10);ctxcnv.lineTo(xf,yf+10);ctxcnv.stroke();
+//draw click cross hairs
+        ctxcnv.moveTo(clickx+20,clicky);ctxcnv.stroke();
+        ctxcnv.lineTo(clickx-20,clicky);ctxcnv.stroke();
+        ctxcnv.moveTo(clickx,clicky-20);ctxcnv.stroke();
+        ctxcnv.lineTo(clickx,clicky+20);ctxcnv.stroke();
+});
+const element2=document.getElementById("imgcnv");
+element2.addEventListener('click', function(event) {//draw cross hairs
+        var x=event.x;
+        var y=event.y;
+        rgbsaved=pick(event,dest); 
+        msg("imgcnv click ",x,y);
+        ctxcnv.clearRect(0,0,imgObj.width,imgObj.height);
+        ctxcnv.drawImage(imgObj,0,0);
+        var xf=x-xoff,yf=y-yoff;
+        clickx=xf;clicky=yf;
+        ctxcnv.beginPath();
+        ctxcnv.moveTo(xf+20,yf);
+//draw larger cross hairs
+        ctxcnv.lineTo(xf-20,yf);ctxcnv.moveTo(xf,yf-20);
+        ctxcnv.lineTo(xf,yf+20);ctxcnv.stroke();
+//	rgbsaved=pick(event, dest);
+//   alert("rgbsaved="+rgbsaved);
+//rgbsaved pixel for compare
+});
+
 
 function myFunction(Z) {
   document.getElementById("res").innerHTML = "<h2>YOU CLICKED "+Z+"!</h2>";}
@@ -114,57 +160,22 @@ function pick(event, destination) {// not quite at mouse cursor but close...
 	return rgbv;
 }
 
-//Chrome says this is not a function. Firefox is OK with it.
-const element=document.getElementById("imgcnv"); // works with Firefox
-element.addEventListener('mousemove', function(event) { // 'follow' mouse with crosshairs
-        var x=event.x;
-        var y=event.y;
-        rgbcurrent=pick(event,dest); 
-        msg("mouseMove rgbvcurrent "+rgbcurrent+" rgbsaved "+rgbsaved+" eucdist "+eucdist(),x,y);
-        ctxcnv.clearRect(0,0,imgObj.width,imgObj.height);
-        ctxcnv.drawImage(imgObj,0,0);
-        var xf=x-xoff,yf=y-yoff;
-        ctxcnv.beginPath();
-        ctxcnv.moveTo(xf+10,yf);
-//draw cross hairs
-       ctxcnv.lineTo(xf-10,yf);ctxcnv.moveTo(xf+10,yf);ctxcnv.stroke();
-       ctxcnv.moveTo(xf,yf-10);ctxcnv.lineTo(xf,yf+10);ctxcnv.stroke();
-//draw click cross hairs
-        ctxcnv.moveTo(clickx+20,clicky);ctxcnv.stroke();
-        ctxcnv.lineTo(clickx-20,clicky);ctxcnv.stroke();
-        ctxcnv.moveTo(clickx,clicky-20);ctxcnv.stroke();
-        ctxcnv.lineTo(clickx,clicky+20);ctxcnv.stroke();
-});
 
-imgcnv.addEventListener('click', function(event) {//draw cross hairs
-        var x=event.x;
-        var y=event.y;
-        rgbsaved=pick(event,dest); 
-        msg("imgcnv click ",x,y);
-        ctxcnv.clearRect(0,0,imgObj.width,imgObj.height);
-        ctxcnv.drawImage(imgObj,0,0);
-        var xf=x-xoff,yf=y-yoff;
-        clickx=xf;clicky=yf;
-        ctxcnv.beginPath();
-        ctxcnv.moveTo(xf+20,yf);
-//draw larger cross hairs
-        ctxcnv.lineTo(xf-20,yf);ctxcnv.moveTo(xf,yf-20);
-        ctxcnv.lineTo(xf,yf+20);ctxcnv.stroke();
-//	rgbsaved=pick(event, dest);
-//rgbsaved pixel for compare
-});
-
-//does not seem to be ok.13/7/2021 cannot see rgbcurrent.data or rgb saved
+//sees saved and current red.green.blue values
 function eucdist(){ //compute euclidean distance between strip and color panel
+// alert("rgbsaved in eucdist ="+rgbsaved);
  var distance=0.0;
-//var pr=rgbcurrent.data[0];
-//var pg=rgbcurrent.data[1];
-//var pb=rgbcurrent.data[2];
-//var rr=rgbsaved.data[0];
-//var rg=rgbsaved.data[1];
-//var rb=rgbsaved.data[2];
-//var distance=123;
-//distance=Math.sqrt((rr-pr)*(rr-pr)+(rg-pg)*(rg-pg)+(rb-pb)*(rb-pb));
+ var rgbc=rgbcurrent.substring(5,rgbcurrent.length-1).split(",");
+ var rgbs=rgbsaved.substring(5,rgbsaved.length-1).split(",");
+ var pr=rgbc[0];
+ var pg=rgbc[1];
+ var pb=rgbc[2];
+ var rr=rgbs[0];
+ var rg=rgbs[1];
+ var rb=rgbs[2];
+ var distance=123;
+// alert("pick colours "+pr+";"+pg+";"+pb+";"+rr+";"+rg+";"+rb);
+ distance=Math.sqrt((rr-pr)*(rr-pr)+(rg-pg)*(rg-pg)+(rb-pb)*(rb-pb));
 return distance;
 }
 
