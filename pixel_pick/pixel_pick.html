@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <!--   This is master copy in localhost webserver docs
+  14/9/2024 scrapped eucdist for r,g,b abs difference. Needs patch averages to work reliably.
   13/9/2024 Finally unpacked current and save colours for eucdist. This needs to average patches, not single pixels.
             looking at menu.create id error. Now runs in firefox,chrome,safari.
             rgbsaved seems to be in conflict with move and click function listeners.
@@ -48,7 +49,7 @@
 var debugging=false;
 var xoff=10;var yoff=10;
 var cv=document.getElementById("imgcnv");
-var rgbsaved;//saved pixel color
+var rgbsaved="RGBA(0,0,0)";//saved pixel color
 var rgbcurrent;//pixel under current cursor
 var clickx; var clicky;
 
@@ -174,9 +175,17 @@ function eucdist(){ //compute euclidean distance between strip and color panel
  var rg=rgbs[1];
  var rb=rgbs[2];
  var distance=123;
+ closeto=Boolean(true);
+ delta=10;
+ for(i=0;i<2;i++){
+   if(Math.abs(rgbc[i]-rgbs[i])>delta){
+     closeto=false;
+//     alert("difference is not closeto",rgbc[i]-rgbs[i]);
+   }
+  }
 // alert("pick colours "+pr+";"+pg+";"+pb+";"+rr+";"+rg+";"+rb);
- distance=Math.sqrt((rr-pr)*(rr-pr)+(rg-pg)*(rg-pg)+(rb-pb)*(rb-pb));
-return distance;
+// distance=Math.sqrt((rr-pr)*(rr-pr)+(rg-pg)*(rg-pg)+(rb-pb)*(rb-pb));
+return closeto;
 }
 
 </script>
