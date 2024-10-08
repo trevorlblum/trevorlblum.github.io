@@ -1,0 +1,38 @@
+<!--- 
+8/8/2024 initial sketch for book boxes. Uses javascript var as text file.
+Not too good because it cannot take simple texts as Google creates them.
+-->
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+    <title>BOOKLIST Draft 0.0</title>
+
+    <style>
+      .color-cell {
+        color: white;
+        text-align: center;
+      }
+      th {
+        width: 150px;
+      }
+    </style>
+  </head>
+  <p id="listp" <H4><br>Click on image for details<br></H4> </p>
+  <body>
+
+ <script id="booklist" type="text/javascript" src="../books_delim.txt"></script>
+
+<img src="../books on shelf 2024-10-07.jpg" width="600px" onclick="show_lines()">
+
+<script >
+  function show_lines(){
+   for(line=0;line<box1.length;line++){
+     document.getElementById("listp").innerHTML+=line+": "+box1[line]+"<br>";
+   }
+ }
+</script>
+
+  </body>
+</html>
+
