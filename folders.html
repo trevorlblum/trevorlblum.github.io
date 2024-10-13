@@ -1,0 +1,25 @@
+<!--- 
+list files in directory
+-->
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>File Listing Table</title>
+</head>
+
+<body>
+
+<script>
+const fs=require('fs');
+const path=require('path');
+const fullpath=path.join(__dirname,'/');
+fullpath="../sketch_0.0";
+fs.readdir(fullpath,(error,files)=>{
+if(error)console.log(error);
+files,forEach(file=>console.log(file));
+})
+</script>
+</body>
+
+</html>
