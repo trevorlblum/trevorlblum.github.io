@@ -1,0 +1,42 @@
+<!DOCTYPE HTML> 
+<html>
+<!--- 
+17/10/2024 looking at using loadjs to rewrite box .html but reload page gives problems
+           idea was to obviate multiple boxn.htmls with inpage rewrite
+17/10/2024 possible html form for texts of boxes, with exit on image click
+using multilinestring as var name in .txt backquoted files
+-->
+<head>
+<title>simple image segmenter with grid</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"
+</head>
+
+<body>
+<img src="box1.jpg" width="400px" onclick="window.close()"></img>
+<p id="text" onclick="window.close()" >Click on image to return<br><br></p>
+</body>
+<script id="text" type="text/javascript" src="box1.txt"></script>
+
+<script>
+//loadjs();//add src=box2 to head <script> //does rewrite to header but page reload is problem
+
+textblock=document.getElementById("text").innerHTML;
+parsed="";
+
+parsed=multilinestring.split('\n');
+for(i=0;i<parsed.length;i++){
+  document.getElementById("text").innerHTML+=parsed[i]+"<br>";
+}
+
+function loadjs () {
+  // (B1) CREATE NEW <SCRIPT> TAG
+  var js = document.createElement("script");
+  js.textContent = 'id="text" type="text/javascript" src="box2.txt" ';//`function demo () { alert("It works!"); }`;
+ 
+  // (B2) INSERT <SCRIPT> TAG TO <HEAD>
+  document.head.appendChild(js);
+  alert("JS Inserted");
+ }
+</script>
+
+</html>

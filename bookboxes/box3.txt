@@ -1,0 +1,23 @@
+multilinestring=`
+e.e, cummings 73 poems
+A CONEY ISLAND OF THE MIND LAWRENCE FERLINGHEITI
+Selected Poems T.S.Eliot
+William Blake Poems and Prophecies
+SUS OGDEN NASH FABER
+ND PAPERBUUR FABER
+PENGUIN MODERN POETS-1 Durrell Jennings Thomas
+Songs of Innocence and of Experience William Blake 
+William Blake. TL SAU
+A.D.Hope SELECTED POEMS
+RIMBAUD A SEASON IN HELL AND THE DRUNKEN BOAT Penguin Modern French
+Prevert Selections from Paroles Lawrence Ferlingetti
+Sick Verse
+Collected Poems by BAUDELAIR
+Stephen Spender CONDER
+LES FLEURS DU MAL CONDER
+SPENDER h
+CHAOS OF THE NIGHT Women's Poetry & Verse of the Second World War
+SOLSTICES LOUIS MACNEICE
+e. e. cummings. SELECTED POEMS CASSELL FABER ROUTLEDGE FABER
+LOUIS MACNEICE THE BURNING PERCH Faber and Faber
+`

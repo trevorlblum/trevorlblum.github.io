@@ -1,0 +1,38 @@
+multilinestring=`Designing with Microprocessors
+The Book of IBM Software 1984 Wells Rochowansky- Mellin BOOK COMPANY 200-3
+Expert System Tom Nagy Ph.D. Dick Gau MBA ASHTON TATE Morrison
+C++ for VB Programmers
+crystal reports. User's Guide
+VARIAN system handbook
+VARIAN computer handbook
+RPG II VARIAN
+RPG II VARIAN
+SCR MANUAL
+ORACLE Call Interface
+ORACLE RDBMS Error Messages and Codes Version 6.0
+ORACLE UNLEASHED Data Warehousing
+ORACLE Pro CC- Precompiler
+SQL Plus 33 ORACLE
+ADVANCED C McGraw-Hill
+DATA BASE MANAGEMENT BROOKER 21875
+PROGRAMMING THE Z80
+Poniatowski HP-UX 10.x SYSTEM ADMINISTRATION
+An Introduction to Berkeley Unix Wang
+OPERATING SYSTEMS DESIGN AND IMPLEMENTATION TANENBAUM
+UNIX SVR4.2 BASIC SYSTEM ADMINISTRATION Unix Press
+UNIX FIELDER AND HUNTER
+OBJECT-ORIENTED MODELING AND DESIGN Prentice-Hall
+THE DESIGN OF THE UNIX OPERATING SYSTEM Prentice-Hall
+Object Oriented Program Design Access and SQL Server Mullin
+Access and SQL Server Developer's handbook SYBEX
+ORACLE How-to Venti Group Press
+XML in Flash QUE
+Microsoft Visual Basic .NET QUE
+PERL AND CGI FOR THE WORLD WIDE WEB
+Programming Perl O'Reilly
+JAVA API Reference .applet & .awt New Riders
+Using C on the UNIX System David A. Curry
+Java 2 J2SE 1.4
+STROUSTRUP C++ PROGRAMMING LANGUAGE
+JAVA IN A NUTSHELL O'Reilly
+PC World Volume 2 number 1 PC Computables`
