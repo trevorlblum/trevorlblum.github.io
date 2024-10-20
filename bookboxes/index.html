@@ -1,6 +1,8 @@
 <!DOCTYPE HTML> 
 <html>
 <!--- 
+19/10/2024 added some tests for eventual query on all_boxes.txt (var is all_boxes )
+
 17/10/2024 using window.open on .html would give a window.close opportunity
            see box1.html compared to box1.txt
 17/10/2024 click on grid NUMBER opens box(NUMBER) in new window
@@ -36,7 +38,7 @@
 <body>
 
 <h1>Grid Elements</h1>
-
+<H2>Showing book boxes catalogue to date(19/10/2024)<H2>
 <p id="textpara" onclick="showtext()" > Click this for mapimage src </p>
 
 <div class="grid" >
@@ -52,16 +54,36 @@
   <div class="grid-item" onclick="itemclick(9)">boxes1-8</div>  
  </div>
 </div>
+<p id="query" onclick="querytext()" > Click here for query </p>
+<p id="query_result">query_result here</p>
+
+<script id="all_boxes" type="text/javascript" src="all_boxes.txt"></script>
 <body>
+
 
 </body>
 
 <script>
 
+function showtext(){
+  document.getElementById("textpara").innerHTML="all-boxes begins with <br>"+all_boxes.substring(0,60);
+  }
+
 function itemclick(item){
   document.getElementById("textpara").innerHTML="Grid item "+item+" Clicked";
   window.open('box'+item+'.txt');
 }
+
+function querytext(){
+ document.getElementById("query").innerHTML="Enter query here (soon!)";
+ all_boxes_parse=all_boxes.split('\n');
+  for(b=0;b<all_boxes_parse.length;b++){
+   if(all_boxes_parse[b].substring(0,3)=="BOX" ||all_boxes_parse[b].toUpperCase().indexOf("BECKETT")!=-1)document.getElementById("query_result").innerHTML+="<br>On line "+b+":" +all_boxes_parse[b];
+  }
+ document.getElementById("query_result").innerHTML+="<br>All_boxes_parse.length = "+all_boxes_parse.length;
+
+}
+
 </script>
 
 
