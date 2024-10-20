@@ -75,10 +75,10 @@ function itemclick(item){
 }
 
 function querytext(){
- document.getElementById("query").innerHTML="Enter query here (soon!)";
+ document.getElementById("query").innerHTML="Enter query here (soon!)now BOX, Beckett or Computer";
  all_boxes_parse=all_boxes.split('\n');
   for(b=0;b<all_boxes_parse.length;b++){
-   if(all_boxes_parse[b].substring(0,3)=="BOX" ||all_boxes_parse[b].toUpperCase().indexOf("BECKETT")!=-1)document.getElementById("query_result").innerHTML+="<br>On line "+b+":" +all_boxes_parse[b];
+   if(all_boxes_parse[b].substring(0,3)=="BOX" ||all_boxes_parse[b].toUpperCase().indexOf("BECKETT")!=-1 ||all_boxes_parse[b].toUpperCase().indexOf("COMPUTER")!=-1)document.getElementById("query_result").innerHTML+="<br>On line "+b+":" +all_boxes_parse[b];
   }
  document.getElementById("query_result").innerHTML+="<br>All_boxes_parse.length = "+all_boxes_parse.length;
 
