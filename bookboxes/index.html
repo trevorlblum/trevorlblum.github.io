@@ -1,6 +1,18 @@
 <!DOCTYPE HTML> 
 <html>
 <!--- 
+25/10/2024 include image and Justtext WIP.Grid click shows last query
+25/10/2024 include image, respect and ignore OK, Just text yet to show on page.
+           Just text needs a scrollable div for result texts overlaying the include image div.
+           multiple selects(ie AND/OR to do)
+           Also could hide lines with nothing found.
+           AND/OR options need found array of item.length size and appropriate test loops.
+           For example, AND checks all items have line found, OR items any one. 
+25/10/2024 added include image capability 
+23/10/2024 finally got radio selections working - what a failure the web tutorials can be!
+22/10/2024 partially implemented <input> for query items
+22/10/2024 added query options rectangle and start of query entry+options
+21/10/2024 adding query preference buttons Case, AND, OR, NOT (Firefox does not clear on reload)
 19/10/2024 added some tests for eventual query on all_boxes.txt (var is all_boxes )
 
 17/10/2024 using window.open on .html would give a window.close opportunity
@@ -15,6 +27,7 @@
 </head>
 
 <style>
+
 .grid{
  width: 350px;
  border:3px solid black;
@@ -26,20 +39,45 @@
   padding: 10px;
 }
 .grid-item {
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(255, 255,0, 0.9);
   border: 1px solid rgba(0, 0, 0, 0.8);
   padding: 20px;
   font-size: 30px;
   text-align: center;
 }
+.options { 
+position:absolute; top: 460px; left:270px; width: 430px; height:120px; border:3px solid #2196F3; background-color:#f7f7f7;
+}
+.qclick {
+position:absolute; top: 470px; left:10px; width: 250px; height:30px; border:3px solid #2196F3; background-color:#f7f7f7;
+}
+.querytext { 
+position:absolute; top: 550px; left:220px; width: 70%; height:35px; border:3px solid #2196F3; background-color:#f7f7f7;
+}
+.include{
+position:absolute; top: 10px; left:720px; width: 420px; height:420px; border:3px solid black; background-color:#f7f7f7;
+}
+.include2{
+position:absolute; top: 10px; left:720px; width: 420px; height:420px; border:3px solid black; background-color:#f7f7f7;
+}
+.textonly{
+position:absolute; top: 10px; left:1300px; width: 420px; height:820px; border:3px solid black; background-color:#f7f7f7;
+}
+
 </style>
 
 </head>
 <body>
+<ul id="ulist" class="textonly" style="list-style-type:circle">
+ <li>This is an unordered list</li>
+</ul>
+
 
 <h1>Grid Elements</h1>
-<H2>Showing book boxes catalogue to date(19/10/2024)<H2>
+<H2>Showing book boxes catalogue to date(21/10/2024)<H2>
 <p id="textpara" onclick="showtext()" > Click this for mapimage src </p>
+
+<div class="include"  ><img id="include" src="box0.jpg" width=400px onclick="enlarge()"></div>
 
 <div class="grid" >
  <div class="grid-container" >
@@ -54,10 +92,34 @@
   <div class="grid-item" onclick="itemclick(9)">boxes1-8</div>  
  </div>
 </div>
-<p id="query" onclick="querytext()" > Click here for query </p>
-<p id="query_result">query_result here</p>
 
+<label for="qn">queryitems</label>
+<input id="qname" type="text" name="qn" value="Samuel Beckett"><br>
+<div class="qclick" id="query" onclick="querytext()" >Click here for query </div>
+
+<div class="options">
+.......Set your query options here........<br>
+ <input id="respect" type="radio" name="respect" value="respect" checked>
+ <label for="query">Respect Case</label>
+ <input id="ignore" type="radio" name="respect" value="ignore" >
+ <label for="query">Ignore case<br></label>
+ <input id="and" type="radio" name="anditems" value="and">
+ <label for="query">AND items</label>
+ <input id="or" type="radio" name="anditems" value="or" checked>
+ <label for="query">OR items</label>
+ <input id="not" type="radio" name="anditems" value="not" >
+ <label for="query">NOT items<br></label>
+ <input id="include" type="radio" name="include" value="include">
+ <label for="query">Include image</label>
+ <input id="button7" type="radio" name="include" value="just" checked>
+ <label for="query">Just text</label>
+
+</div>
+
+<p id="thequery" ><br></p>
+<p id="query_result"> </p>
 <script id="all_boxes" type="text/javascript" src="all_boxes.txt"></script>
+
 <body>
 
 
@@ -70,20 +132,86 @@ function showtext(){
   }
 
 function itemclick(item){
+  showtxt=false; if(document.getElementsByName("include")[1].checked)showtxt=true;
+  document.getElementById("ulist").innerHTML="<li>text</li>";
   document.getElementById("textpara").innerHTML="Grid item "+item+" Clicked";
-  window.open('box'+item+'.txt');
+//  window.open('box'+item+'.txt');
+  document.getElementById("include").width=600;
+  document.getElementById("include").src="box"+item+".jpg";
+  if(showtxt){
+    document.getElementById("ulist").innerHTML="<li>text</li>";
+    q=document.getElementById("query_result").innerHTML.split("\n");
+    l=q.length;
+    document.getElementById("include").height=800;
+    for(i=0;i<l;i++) document.getElementById("ulist").innerHTML+="<li>"+q[i]+"</li>";
+  }
 }
 
 function querytext(){
- document.getElementById("query").innerHTML="Enter query here (soon!)now BOX, Beckett or Computer";
- all_boxes_parse=all_boxes.split('\n');
-  for(b=0;b<all_boxes_parse.length;b++){
-   if(all_boxes_parse[b].substring(0,3)=="BOX" ||all_boxes_parse[b].toUpperCase().indexOf("BECKETT")!=-1 ||all_boxes_parse[b].toUpperCase().indexOf("COMPUTER")!=-1)document.getElementById("query_result").innerHTML+="<br>On line "+b+":" +all_boxes_parse[b];
-  }
- document.getElementById("query_result").innerHTML+="<br>All_boxes_parse.length = "+all_boxes_parse.length;
+ boxnum=0;
+ found=false;
+ foundinbox=false;
+ respectcase=false; if(document.getElementsByName("respect")[0].checked)respectcase=true;
+ ignorecase=false; if(document.getElementsByName("respect")[1].checked)ignorecase=true;
+ anditems=false;
+//alert("Respect Case "+respectcase+" Ignore Case "+ignorecase);
+  anditems=false; if(document.getElementsByName("anditems")[0].checked)anditems=true;
+  oritems=false;  if(document.getElementsByName("anditems")[1].checked)oritems=true;
+  notitems=false; if(document.getElementsByName("anditems")[2].checked)notitems=true;
+  includeimage=false;  if(document.getElementsByName("include")[0].checked)includeimage=true;
 
+//  alert("ANDitems "+anditems+" ORitems "+oritems+" NOTitems "+notitems+" IncludeImage "+includeimage);
+
+ thisquery=document.getElementById("qname").value;
+ queryitems=thisquery.split(" ");
+ document.getElementById("query_result").innerHTML="";
+//OR items
+ all_boxes_parse=all_boxes.split('\n');
+ document.getElementById("include").src="box"+boxnum+".jpg";
+if(respectcase){
+for(b=0;b<all_boxes_parse.length;b++){
+ if(all_boxes_parse[b].substring(0,3)=="BOX")boxnum+=1;
+ for(s=0;s<queryitems.length;s++){
+   if(all_boxes_parse[b].substring(0,3)=="BOX" ||all_boxes_parse[b].indexOf(queryitems[s])!=-1){
+    document.getElementById("query_result").innerHTML+="<br>On line "+b+":" +all_boxes_parse[b];
+    document.getElementById("include").width=60;
+    found=true;
+    if(!foundinbox&&found&&all_boxes_parse[b].substring(0,3)!="BOX"&&includeimage){
+       document.getElementById("include").src="box"+boxnum+".jpg";
+//alert("boxnum="+document.getElementById("include").src.substring(document.getElementById("include").src.length-8));
+       foundinbox=true;
+       found=false;
+      }
+   }
+  }
+ }
+}
+//ignore case
+ if(!respectcase){
+  for(b=0;b<all_boxes_parse.length;b++){
+  if(all_boxes_parse[b].substring(0,3)=="BOX")boxnum+=1;
+   for(s=0;s<queryitems.length;s++){
+    if(all_boxes_parse[b].substring(0,3).toUpperCase()=="BOX" ||all_boxes_parse[b].toUpperCase().indexOf(queryitems[s].toUpperCase())!=-1){
+    document.getElementById("query_result").innerHTML+="<br>On line "+b+":" +all_boxes_parse[b];
+    document.getElementById("include").width=60;
+    found=true;
+    if(!foundinbox&&found&&all_boxes_parse[b].substring(0,3)!="BOX"&&includeimage){
+       document.getElementById("include").src="box"+boxnum+".jpg";
+//alert("boxnum="+document.getElementById("include").src.substring(document.getElementById("include").src.length-8));
+       foundinbox=true;
+       found=false;    
+    }
+   }
+  }
+ }
+}
+document.getElementById("query_result").innerHTML+="<br>All_boxes_parse.length = "+all_boxes_parse.length;
+//itemclick(0);
 }
 
+function enlarge(){
+document.getElementById("include").width=400;
+}
 </script>
 
 

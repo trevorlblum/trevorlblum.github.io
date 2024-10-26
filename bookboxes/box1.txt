@@ -1,4 +1,5 @@
-multilinestring=`VECTOR ANALYSIS
+multilinestring=`
+VECTOR ANALYSIS
 J.P.Donleavy The Saddest Summer of Samuel S
 FOOTLIGHTS COURTNEY HOPE
 THE DARK TOWER LOUIS MCNIECE

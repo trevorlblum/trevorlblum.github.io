@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>List Files in a Directory javaScript</title>
+</head>
+
+<body>
+
+  <input type="file" id="fileInput" multiple>
+  <p id="list" >List appears here </p>
+  <script>
+    const fileInput = document.getElementById('fileInput');
+
+    fileInput.addEventListener('change', (event) => {
+      const fileList = event.target.files;
+
+      for (const file of fileList) {
+        // Process each file here
+ //       alert(file.name);
+        document.getElementById("list").innerHTML+="<br>"+file.name;
+      }
+    });
+  </script>
+</body>
+
+</html>
