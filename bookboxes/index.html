@@ -1,6 +1,7 @@
 <!DOCTYPE HTML> 
 <html>
 <!--- 
+26/10/2024 include image now fails. Justtext seems fine but needs toshow in text div.
 25/10/2024 include image and Justtext WIP.Grid click shows last query
 25/10/2024 include image, respect and ignore OK, Just text yet to show on page.
            Just text needs a scrollable div for result texts overlaying the include image div.
@@ -29,12 +30,12 @@
 <style>
 
 .grid{
- width: 350px;
+ width: 520px;
  border:3px solid black;
 }
 .grid-container {
   display: grid;
-  grid-template-columns: 100px 100px 100px;
+  grid-template-columns: 100px 100px 100px 100px 100px;
   background-color: #2196F3;
   padding: 10px;
 }
@@ -46,10 +47,10 @@
   text-align: center;
 }
 .options { 
-position:absolute; top: 460px; left:270px; width: 430px; height:120px; border:3px solid #2196F3; background-color:#f7f7f7;
+position:absolute; top: 570px; left:270px; width: 430px; height:120px; border:3px solid #2196F3; background-color:#f7f7f7;
 }
 .qclick {
-position:absolute; top: 470px; left:10px; width: 250px; height:30px; border:3px solid #2196F3; background-color:#f7f7f7;
+position:absolute; top: 650px; left:10px; width: 250px; height:30px; border:3px solid #2196F3; background-color:#f7f7f7;
 }
 .querytext { 
 position:absolute; top: 550px; left:220px; width: 70%; height:35px; border:3px solid #2196F3; background-color:#f7f7f7;
@@ -63,7 +64,9 @@ position:absolute; top: 10px; left:720px; width: 420px; height:420px; border:3px
 .textonly{
 position:absolute; top: 10px; left:1300px; width: 420px; height:820px; border:3px solid black; background-color:#f7f7f7;
 }
-
+.qinput{
+position:absolute; top: 580px; left:20px; width: 200px; height:60px; border:3px solid #2196F3; background-color:#f7f7f7;
+}
 </style>
 
 </head>
@@ -77,24 +80,16 @@ position:absolute; top: 10px; left:1300px; width: 420px; height:820px; border:3p
 <H2>Showing book boxes catalogue to date(21/10/2024)<H2>
 <p id="textpara" onclick="showtext()" > Click this for mapimage src </p>
 
-<div class="include"  ><img id="include" src="box0.jpg" width=400px onclick="enlarge()"></div>
+<div class="include"  ><img id="include" src="box0.jpg" width=400px height=400px onclick="enlarge(400)"></div>
 
 <div class="grid" >
- <div class="grid-container" >
-  <div class="grid-item" onclick="itemclick(1)">box1 </div>
-  <div class="grid-item" onclick="itemclick(2)">box2</div>
-  <div class="grid-item" onclick="itemclick(3)">box3</div>  
-  <div class="grid-item" onclick="itemclick(4)">box4</div>
-  <div class="grid-item" onclick="itemclick(5)">box5</div>
-  <div class="grid-item" onclick="itemclick(6)">box6</div>  
-  <div class="grid-item" onclick="itemclick(7)">box7</div>
-  <div class="grid-item" onclick="itemclick(8)">box8</div>
-  <div class="grid-item" onclick="itemclick(9)">boxes1-8</div>  
- </div>
+ <div class="grid-container" id="grid-container" >
+   </div>
 </div>
-
+<div class="qinput">
 <label for="qn">queryitems</label>
 <input id="qname" type="text" name="qn" value="Samuel Beckett"><br>
+</div>
 <div class="qclick" id="query" onclick="querytext()" >Click here for query </div>
 
 <div class="options">
@@ -127,6 +122,14 @@ position:absolute; top: 10px; left:1300px; width: 420px; height:820px; border:3p
 
 <script>
 
+Build_grid(100,100,5,5);
+
+function Build_grid(cellwidth,cellheight,xcellcount,ycellcount){
+//function to dynamically build grid to accomodate new boxes
+  for(b=1;b<ycellcount*xcellcount+1;b++){
+  document.getElementById("grid-container").innerHTML+='<div class=\"grid-item\" onclick=\"itemclick('+b+')">box'+b+"</div>";
+  }
+}
 function showtext(){
   document.getElementById("textpara").innerHTML="all-boxes begins with <br>"+all_boxes.substring(0,5)+"<br>"+all_boxes.substring(6,21)+"<br>"+all_boxes.substring(22,66);
   }
@@ -136,18 +139,21 @@ function itemclick(item){
   document.getElementById("ulist").innerHTML="<li>text</li>";
   document.getElementById("textpara").innerHTML="Grid item "+item+" Clicked";
 //  window.open('box'+item+'.txt');
-  document.getElementById("include").width=600;
+  document.getElementById("include").width=400;
+  document.getElementById("include").height=400;
+
   document.getElementById("include").src="box"+item+".jpg";
   if(showtxt){
     document.getElementById("ulist").innerHTML="<li>text</li>";
     q=document.getElementById("query_result").innerHTML.split("\n");
     l=q.length;
-    document.getElementById("include").height=800;
+//    document.getElementById("include").height=60;
     for(i=0;i<l;i++) document.getElementById("ulist").innerHTML+="<li>"+q[i]+"</li>";
   }
 }
 
 function querytext(){
+document.getElementById("include").height=60;
  boxnum=0;
  found=false;
  foundinbox=false;
@@ -167,10 +173,12 @@ function querytext(){
  document.getElementById("query_result").innerHTML="";
 //OR items
  all_boxes_parse=all_boxes.split('\n');
- document.getElementById("include").src="box"+boxnum+".jpg";
+
+//respect case
 if(respectcase){
 for(b=0;b<all_boxes_parse.length;b++){
  if(all_boxes_parse[b].substring(0,3)=="BOX")boxnum+=1;
+// alert("testing boxnum "+boxnum);
  for(s=0;s<queryitems.length;s++){
    if(all_boxes_parse[b].substring(0,3)=="BOX" ||all_boxes_parse[b].indexOf(queryitems[s])!=-1){
     document.getElementById("query_result").innerHTML+="<br>On line "+b+":" +all_boxes_parse[b];
@@ -178,6 +186,8 @@ for(b=0;b<all_boxes_parse.length;b++){
     found=true;
     if(!foundinbox&&found&&all_boxes_parse[b].substring(0,3)!="BOX"&&includeimage){
        document.getElementById("include").src="box"+boxnum+".jpg";
+//    alert("found respect BOX= "+boxnum);
+
 //alert("boxnum="+document.getElementById("include").src.substring(document.getElementById("include").src.length-8));
        foundinbox=true;
        found=false;
@@ -186,6 +196,7 @@ for(b=0;b<all_boxes_parse.length;b++){
   }
  }
 }
+
 //ignore case
  if(!respectcase){
   for(b=0;b<all_boxes_parse.length;b++){
@@ -209,8 +220,10 @@ document.getElementById("query_result").innerHTML+="<br>All_boxes_parse.length =
 //itemclick(0);
 }
 
-function enlarge(){
-document.getElementById("include").width=400;
+function enlarge(size){
+document.getElementById("include").width=size;
+document.getElementById("include").height=size;
+
 }
 </script>
 
