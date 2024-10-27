@@ -1,6 +1,7 @@
 <!DOCTYPE HTML> 
 <html>
 <!--- 
+27/10/2024 Looking good. Need to stop grid resizing when images inserted - padding issues. 
 26/10/2024 include image now fails. Justtext seems fine but needs toshow in text div.
 25/10/2024 include image and Justtext WIP.Grid click shows last query
 25/10/2024 include image, respect and ignore OK, Just text yet to show on page.
@@ -47,7 +48,7 @@
   text-align: center;
 }
 .options { 
-position:absolute; top: 570px; left:270px; width: 430px; height:120px; border:3px solid #2196F3; background-color:#f7f7f7;
+position:absolute; top: 590px; left:270px; width: 430px; height:120px; border:3px solid #2196F3; background-color:#f7f7f7;
 }
 .qclick {
 position:absolute; top: 650px; left:10px; width: 250px; height:30px; border:3px solid #2196F3; background-color:#f7f7f7;
@@ -123,13 +124,21 @@ position:absolute; top: 580px; left:20px; width: 200px; height:60px; border:3px 
 <script>
 
 Build_grid(100,100,5,5);
-
+//clear_grid(100,100,5,5);
 function Build_grid(cellwidth,cellheight,xcellcount,ycellcount){
 //function to dynamically build grid to accomodate new boxes
   for(b=1;b<ycellcount*xcellcount+1;b++){
-  document.getElementById("grid-container").innerHTML+='<div class=\"grid-item\" onclick=\"itemclick('+b+')">box'+b+"</div>";
+   document.getElementById("grid-container").innerHTML+="<div class=\"grid-item\"  id=\"grid-item"+b+"\" onclick=\"itemclick("+b+")\">box"+b+" </div>";
   }
 }
+function clear_grid(cellwidth,cellheight,xcellcount,ycellcount){
+//function to dynamically build grid to accomodate new boxes
+  document.getElementById("grid-container").innerHTML="";
+  for(b=1;b<ycellcount*xcellcount+1;b++){
+   document.getElementById("grid-container").innerHTML+="<div class=\"grid-item\"  id=\"grid-item"+b+"\" onclick=\"itemclick("+b+")\">box"+b+" </div>";
+  }
+}
+
 function showtext(){
   document.getElementById("textpara").innerHTML="all-boxes begins with <br>"+all_boxes.substring(0,5)+"<br>"+all_boxes.substring(6,21)+"<br>"+all_boxes.substring(22,66);
   }
@@ -153,6 +162,7 @@ function itemclick(item){
 }
 
 function querytext(){
+clear_grid(100,100,5,5);
 document.getElementById("include").height=60;
  boxnum=0;
  found=false;
@@ -184,9 +194,10 @@ for(b=0;b<all_boxes_parse.length;b++){
     document.getElementById("query_result").innerHTML+="<br>On line "+b+":" +all_boxes_parse[b];
     document.getElementById("include").width=60;
     found=true;
+    if(all_boxes_parse[b].substring(0,3).toUpperCase()!="BOX")gridimage(boxnum);
     if(!foundinbox&&found&&all_boxes_parse[b].substring(0,3)!="BOX"&&includeimage){
        document.getElementById("include").src="box"+boxnum+".jpg";
-//    alert("found respect BOX= "+boxnum);
+    alert("found respect BOX= "+boxnum);
 
 //alert("boxnum="+document.getElementById("include").src.substring(document.getElementById("include").src.length-8));
        foundinbox=true;
@@ -203,9 +214,10 @@ for(b=0;b<all_boxes_parse.length;b++){
   if(all_boxes_parse[b].substring(0,3)=="BOX")boxnum+=1;
    for(s=0;s<queryitems.length;s++){
     if(all_boxes_parse[b].substring(0,3).toUpperCase()=="BOX" ||all_boxes_parse[b].toUpperCase().indexOf(queryitems[s].toUpperCase())!=-1){
-    document.getElementById("query_result").innerHTML+="<br>On line "+b+":" +all_boxes_parse[b];
+    document.getElementById("query_result").innerHTML+="<br>On line "+b+":" +all_boxes_parse[b];   
     document.getElementById("include").width=60;
     found=true;
+    if(all_boxes_parse[b].substring(0,3).toUpperCase()!="BOX")gridimage(boxnum);
     if(!foundinbox&&found&&all_boxes_parse[b].substring(0,3)!="BOX"&&includeimage){
        document.getElementById("include").src="box"+boxnum+".jpg";
 //alert("boxnum="+document.getElementById("include").src.substring(document.getElementById("include").src.length-8));
@@ -218,6 +230,12 @@ for(b=0;b<all_boxes_parse.length;b++){
 }
 document.getElementById("query_result").innerHTML+="<br>All_boxes_parse.length = "+all_boxes_parse.length;
 //itemclick(0);
+}
+
+function gridimage(boxnum){
+// replace each grid box text with box image if line found
+//alert("grid-item1" +document.getElementById("grid-item"+boxnum).innerHTML);
+document.getElementById("grid-item"+boxnum).innerHTML="<img src=\"box"+boxnum+".jpg\""+" height=\"50\">";
 }
 
 function enlarge(size){
