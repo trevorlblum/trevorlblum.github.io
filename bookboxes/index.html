@@ -1,6 +1,8 @@
 <!DOCTYPE HTML> 
 <html>
 <!--- 
+28/10/2024 Errors in boxes fixed. Click on query result images should show that box txt only 
+           had to extract extract box texts from all_boxes.txt for itemclick 
 27/10/2024 Looking good. Need to stop grid resizing when images inserted - padding issues. 
 26/10/2024 include image now fails. Justtext seems fine but needs toshow in text div.
 25/10/2024 include image and Justtext WIP.Grid click shows last query
@@ -140,24 +142,30 @@ function clear_grid(cellwidth,cellheight,xcellcount,ycellcount){
 }
 
 function showtext(){
-  document.getElementById("textpara").innerHTML="all-boxes begins with <br>"+all_boxes.substring(0,5)+"<br>"+all_boxes.substring(6,21)+"<br>"+all_boxes.substring(22,66);
+  document.getElementById("textpara").innerHTML="all_boxes begins with <br>"+all_boxes.substring(0,5)+"<br>"+all_boxes.substring(6,21)+"<br>"+all_boxes.substring(22,66);
+document.getElementById("textpara").innerHTML+="<br>single_box(box2.txt) begins with <br>"+multilinestring.substring(0,5)+"<br>"+multilinestring.substring(6,21)+"<br>"+multilinestring.substring(22,66);
+
   }
 
 function itemclick(item){
+thisbox=0;
   showtxt=false; if(document.getElementsByName("include")[1].checked)showtxt=true;
   document.getElementById("ulist").innerHTML="<li>text</li>";
   document.getElementById("textpara").innerHTML="Grid item "+item+" Clicked";
-//  window.open('box'+item+'.txt');
   document.getElementById("include").width=400;
   document.getElementById("include").height=400;
-
   document.getElementById("include").src="box"+item+".jpg";
   if(showtxt){
     document.getElementById("ulist").innerHTML="<li>text</li>";
-    q=document.getElementById("query_result").innerHTML.split("\n");
-    l=q.length;
-//    document.getElementById("include").height=60;
-    for(i=0;i<l;i++) document.getElementById("ulist").innerHTML+="<li>"+q[i]+"</li>";
+    q=all_boxes.split('\n');
+    for(b=0;b<q.length;b++){
+      if(q[b].substring(0,3)=="BOX"){
+        thisbox=q[b].substring(3,4);
+      }
+        if(thisbox==item){
+         document.getElementById("ulist").innerHTML+="<li>"+q[b]+"</li>";
+       }
+   }
   }
 }
 
