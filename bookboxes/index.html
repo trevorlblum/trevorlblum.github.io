@@ -1,14 +1,225 @@
-<!DOCTYPE html>
-<!--replace index.html with invoked bookboxes -->
+<!DOCTYPE HTML> 
 <html>
-<title> Bookboxes Index </title>
+<!--- 
+29/10/2024 could not get bookboxes.css stylesheet to work
+29/10/2024 redesigned screen layout needs space or swap for include clicked item
+28/10/2024 Errors in boxes fixed. Click on query result images should show that box txt only 
+           had to extract extract box texts from all_boxes.txt for itemclick 
+27/10/2024 Looking good. Need to stop grid resizing when images inserted - padding issues. 
+
+-->
 <head>
-<meta http-equiv="refresh" content="0; url=https://trevorblum.name/bookboxes/" />
+<title>simple image segmenter with grid</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"
+<link rel="stylesheet" href="bookboxes.css">
 </head>
 
+<style>
+
+.grid{
+ width: 520px;
+ border:3px solid black;
+}
+.grid-container {
+  display: grid;
+  grid-template-columns: 100px 100px 100px 100px 100px;
+  background-color: #2196F3;
+  padding: 10px;
+}
+.grid-item {
+  background-color: rgba(255, 255,0, 0.9);
+  border: 1px solid rgba(0, 0, 0, 0.8);
+  padding: 20px;
+  font-size: 30px;
+  text-align: center;
+}
+.include{
+position:absolute; top: 600px; left:720px; width: 420px; height:420px; border:3px solid black; background-color:#f7f7f7;
+}
+.options { 
+position:absolute; top: 690px; left:10px; width: 430px; height:100px; border:3px solid #2196F3; background-color:#f7f7f7;
+}
+.qclick {
+position:absolute; top: 650px; left:10px; width: 250px; height:30px; border:3px solid #2196F3; background-color:#f7f7f7;
+}
+.querytext { 
+position:absolute; top: 550px; left:220px; width: 70%; height:35px; border:3px solid #2196F3; background-color:#f7f7f7;
+}
+.textonly{
+position:absolute; top: 10px; left:1250px; width: 550px; height:900px; border:3px solid black; background-color:#f7f7f7;
+}
+.qinput{
+position:absolute; top: 580px; left:20px; width: 200px; height:60px; border:3px solid #2196F3; background-color:#f7f7f7;
+}
+.query_result{
+position:absolute; top: 10px; left:600px; width: 620px; height:200px;  font-size: 20px; background-color:#f7f7f7;
+}
+
+</style>
+
+</head>
 <body>
-<h4>redirect to github bookboxes<br><br</h4>>
+<ul id="ulist" class="textonly" max_value="10" style="list-style-type:circle">
+ <li>Clicked Box Text </li>
+</ul>
+
+
+<h1>Grid Elements</h1>
+<H2>Showing book boxes catalogue to date(30/10/2024)<H2>
+<p id="textpara" onclick="showtext()" > Click this for mapimage src </p>
+
+<div class="grid" >
+ <div class="grid-container" id="grid-container" >
+   </div>
+</div>
+<div class="qinput">
+<label for="qn">queryitems</label>
+<input id="qname" type="text" name="qn" value="Samuel Beckett"><br>
+</div>
+<div class="qclick" id="query" onclick="querytext()" >Click here for query </div>
+<div class="include"  ><img id="include" src="box0.jpg" width=400px height=400px onclick="enlarge(400)"></div>
+<div class="options">
+.......Set your query options here........<br>
+ <input id="respect" type="radio" name="respect" value="respect" checked>
+ <label for="query">Respect Case</label>
+ <input id="ignore" type="radio" name="respect" value="ignore" >
+ <label for="query">Ignore case<br></label>
+ <input id="and" type="radio" name="anditems" value="and">
+ <label for="query">AND items</label>
+ <input id="or" type="radio" name="anditems" value="or" checked>
+ <label for="query">OR items</label>
+ <input id="not" type="radio" name="anditems" value="not" >
+ <label for="query">NOT items<br></label>
+</div>
+
+<p id="thequery" ><br></p>
+<div class="query_result"> <p id="query_result"> query result goes here</p></div>
+<script id="all_boxes" type="text/javascript" src="all_boxes.txt"></script>
+
+<body>
+
 
 </body>
+
+<script>
+
+Build_grid(100,100,5,5);
+//clear_grid(100,100,5,5);
+function Build_grid(cellwidth,cellheight,xcellcount,ycellcount){
+//function to dynamically build grid to accomodate new boxes
+  for(b=1;b<ycellcount*xcellcount+1;b++){
+   document.getElementById("grid-container").innerHTML+="<div class=\"grid-item\"  id=\"grid-item"+b+"\" onclick=\"itemclick("+b+")\">box"+b+" </div>";
+  }
+}
+function clear_grid(cellwidth,cellheight,xcellcount,ycellcount){
+//function to dynamically build grid to accomodate new boxes
+  document.getElementById("grid-container").innerHTML="";
+  for(b=1;b<ycellcount*xcellcount+1;b++){
+   document.getElementById("grid-container").innerHTML+="<div class=\"grid-item\"  id=\"grid-item"+b+"\" onclick=\"itemclick("+b+")\">box"+b+" </div>";
+  }
+}
+
+function showtext(){
+  document.getElementById("textpara").innerHTML="all_boxes begins with <br>"+all_boxes.substring(0,5)+"<br>"+all_boxes.substring(6,21)+"<br>"+all_boxes.substring(22,66);
+document.getElementById("textpara").innerHTML+="<br>single_box(box2.txt) begins with <br>"+multilinestring.substring(0,5)+"<br>"+multilinestring.substring(6,21)+"<br>"+multilinestring.substring(22,66);
+
+  }
+
+function itemclick(item){
+thisbox=0;
+  showtxt=true
+  document.getElementById("ulist").innerHTML="<li>Box contents</li>";
+  document.getElementById("textpara").innerHTML="Grid item "+item+" Clicked";
+  document.getElementById("include").width=400;
+  document.getElementById("include").height=400;
+  document.getElementById("include").src="box"+item+".jpg";
+  if(showtxt){
+    document.getElementById("ulist").innerHTML="<li>Box Contents for BOX "+item+"</li>";
+    q=all_boxes.split('\n');
+    for(b=0;b<q.length;b++){
+      if(q[b].substring(0,3)=="BOX"){
+        thisbox=q[b].substring(3,4);
+      }
+        if(thisbox==item){
+         document.getElementById("ulist").innerHTML+="<li>"+q[b]+"</li>";
+       }
+   }
+  }
+}
+
+function querytext(){
+clear_grid(100,100,5,5);
+ boxnum=0;
+ found=false;
+ foundinbox=false;
+ respectcase=false; if(document.getElementsByName("respect")[0].checked)respectcase=true;
+ ignorecase=false; if(document.getElementsByName("respect")[1].checked)ignorecase=true;
+ anditems=false;
+//alert("Respect Case "+respectcase+" Ignore Case "+ignorecase);
+  anditems=false; if(document.getElementsByName("anditems")[0].checked)anditems=true;
+  oritems=false;  if(document.getElementsByName("anditems")[1].checked)oritems=true;
+  notitems=false; if(document.getElementsByName("anditems")[2].checked)notitems=true;
+
+ thisquery=document.getElementById("qname").value;
+ queryitems=thisquery.split(" ");
+ document.getElementById("query_result").innerHTML="";
+//OR items
+ all_boxes_parse=all_boxes.split('\n');
+
+//respect case
+if(respectcase){
+for(b=0;b<all_boxes_parse.length;b++){
+ if(all_boxes_parse[b].substring(0,3)=="BOX")boxnum+=1;
+// alert("testing boxnum "+boxnum);
+ for(s=0;s<queryitems.length;s++){
+   if(all_boxes_parse[b].indexOf(queryitems[s])!=-1){
+    document.getElementById("query_result").innerHTML+="<br> BOX "+boxnum+" line "+b+":" +all_boxes_parse[b];
+    found=true;
+    if(all_boxes_parse[b].substring(0,3).toUpperCase()!="BOX")gridimage(boxnum);
+    if(!foundinbox&&found&&all_boxes_parse[b].substring(0,3)!="BOX"){
+//    alert("found respect BOX= "+boxnum);
+
+       foundinbox=true;
+       found=false;
+      }
+   }
+  }
+ }
+}
+
+//ignore case
+ if(!respectcase){
+  for(b=0;b<all_boxes_parse.length;b++){
+  if(all_boxes_parse[b].substring(0,3)=="BOX")boxnum+=1;
+   for(s=0;s<queryitems.length;s++){
+    if(all_boxes_parse[b].toUpperCase().indexOf(queryitems[s].toUpperCase())!=-1){
+    document.getElementById("query_result").innerHTML+="<br> BOX "+boxnum+" line "+b+":" +all_boxes_parse[b];   
+    found=true;
+    if(all_boxes_parse[b].substring(0,3).toUpperCase()!="BOX")gridimage(boxnum);
+    if(!foundinbox&&found&&all_boxes_parse[b].substring(0,3)!="BOX"){
+       foundinbox=true;
+       found=false;    
+    }
+   }
+  }
+ }
+}
+document.getElementById("query_result").innerHTML+="<br>All_boxes_parse.length = "+all_boxes_parse.length;
+//itemclick(0);
+}
+
+function gridimage(boxnum){
+// replace each grid box text with box image if line found
+//alert("grid-item1" +document.getElementById("grid-item"+boxnum).innerHTML);
+document.getElementById("grid-item"+boxnum).innerHTML="<img src=\"box"+boxnum+".jpg\""+" height=\"50\">";
+}
+
+function enlarge(size){
+document.getElementById("include").width=size;
+document.getElementById("include").height=size;
+
+}
+</script>
+
 
 </html>
