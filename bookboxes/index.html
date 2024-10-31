@@ -1,6 +1,7 @@
 <!DOCTYPE HTML> 
 <html>
 <!--- 
+31/10/2024 in trouble with enlarge w/h ratio to get true image-item ratio
 29/10/2024 fix box0 image - currently not present
 29/10/2024 could not get bookboxes.css stylesheet to work
 29/10/2024 redesigned screen layout needs space or swap for include clicked item
@@ -35,7 +36,7 @@
   text-align: center;
 }
 .include{
-position:absolute; top: 600px; left:720px; width: 420px; height:420px; border:3px solid black; background-color:#f7f7f7;
+position:absolute; top: 600px; left:620px; width: 420px; height=420px; border:3px solid black; background-color:#f7f7f7;
 }
 .options { 
 position:absolute; top: 690px; left:10px; width: 430px; height:100px; border:3px solid #2196F3; background-color:#f7f7f7;
@@ -216,9 +217,16 @@ document.getElementById("grid-item"+boxnum).innerHTML="<img src=\"box"+boxnum+".
 }
 
 function enlarge(size){
+//w and h need to be the grid-item image sizes, not "include" sizes
+w=document.getElementById("include").width;
+h=document.getElementById("include").height;
+ratio=w/h;
+document.getElementById("include").width=w*2;
+document.getElementById("include").height=h*2/ratio;
+if(h>1000 || w>1000){
 document.getElementById("include").width=size;
-document.getElementById("include").height=size;
-
+document.getElementById("include").height=size/ratio;
+}
 }
 </script>
 
