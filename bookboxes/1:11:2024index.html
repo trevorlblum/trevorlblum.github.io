@@ -1,19 +1,63 @@
 <!DOCTYPE HTML> 
 <html>
 <!--- 
-2/11/2024 using external bookboxes.css
 1/11/2024  Got gridclick text <ol> working via intermediate text construct.
+<link rel="stylesheet" href="bookboxes.css"> not present
 31/10/2024 in trouble with enlarge w/h ratio to get true image-item ratio
 29/10/2024 fix box0 image - currently not present
+29/10/2024 could not get bookboxes.css stylesheet to work
+
 -->
 <head>
 <title>Bookboxes Catalogue Search</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"
-
 </head>
 
+<style>
+
+.grid{
+ width: 520px;
+ border:3px solid black;
+}
+.grid-container {
+  display: grid;
+  grid-template-columns: 100px 100px 100px 100px 100px;
+  background-color: #2196F3;
+  padding: 10px;
+}
+.grid-item {
+  background-color: rgba(255, 255,0, 0.9);
+  border: 1px solid rgba(0, 0, 0, 0.8);
+  padding: 20px;
+  font-size: 30px;
+  text-align: center;
+}
+.include{
+position:absolute; top: 600px; left:420px; width: 45%; height: 50%; background-color:#f7f7f7;
+}
+.options { 
+position:absolute; top: 690px; left:10px; width: 430px; height:100px; border:3px solid #2196F3; background-color:#f7f7f7;
+}
+.qclick {
+position:absolute; top: 650px; left:10px; width: 250px; height:30px; border:3px solid #2196F3; background-color:#f7f7f7;
+}
+.querytext { 
+position:absolute; top: 550px; left:220px; width: 70%; height:35px; border:3px solid #2196F3; background-color:#f7f7f7;
+}
+.textonly{
+position:absolute; top: 10px; left:1250px; width: 550px; height:900px; border:3px solid black; background-color:#f7f7f7;font-size: 18px;
+}
+.qinput{
+position:absolute; top: 580px; left:20px; width: 200px; height:60px; border:3px solid #2196F3; background-color:#f7f7f7;
+}
+.query_result{
+position:absolute; top: 10px; left:600px; width: 620px; height:200px;  font-size: 20px; background-color:#f7f7f7;
+}
+
+</style>
+
+</head>
 <body>
-<link rel="stylesheet" href="bookboxes.css">
 <H2>Showing book boxes catalogue to date(2/11/2024)<H2>
 <p id="textpara" onclick="showtext()" > Click here to identify source</p>
 
@@ -21,9 +65,10 @@
 
 <div class="grid" >
  <div class="grid-container" id="grid-container" >
+   </div>
 </div>
 <div class="qinput">
-<label for="qn">queryitems ( space separated ) Click enlarges image</label>
+<label for="qn">queryitems</label>
 <input id="qname" type="text" name="qn" value="Samuel Beckett" style="font-size: 30px"><br>
 </div>
 <div class="qclick" id="query" onclick="querytext()" >Click here for query </div>
@@ -79,7 +124,7 @@ function itemclick(item){
 thisbox=0;
 thistext="";
   showtxt=true;
-//  document.getElementById("textpara").innerHTML="Click enlarges image";
+  document.getElementById("textpara").innerHTML="Grid item "+item+" Clicked";
   document.getElementById("include").width=400;
   document.getElementById("include").height=400;
   document.getElementById("include").src="box"+item+".jpg";
@@ -156,7 +201,7 @@ for(b=0;b<all_boxes_parse.length;b++){
   }
  }
 }
-//document.getElementById("query_result").innerHTML+="<br>All_boxes_parse.length = "+all_boxes_parse.length;
+document.getElementById("query_result").innerHTML+="<br>All_boxes_parse.length = "+all_boxes_parse.length;
 //itemclick(0);
 }
 
