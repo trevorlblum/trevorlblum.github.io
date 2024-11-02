@@ -65,18 +65,19 @@ else
   }
 }
 function clear_grid(cellwidth,cellheight,xcellcount,ycellcount){
-//function to dynamically build grid to accomodate new boxes
+//function to dynamically clear grid to accomodate new boxes
   document.getElementById("grid-container").innerHTML="";
   for(b=1;b<ycellcount*xcellcount+1;b++){
-   document.getElementById("grid-container").innerHTML+="<div class=\"grid-item\"  id=\"grid-item"+b+"\" onclick=\"itemclick("+b+")\">box"+b+" </div>";
+   if(b<=boxlist)document.getElementById("grid-container").innerHTML+="<div class=\"grid-item\"  id=\"grid-item"+b+"\" onclick=\"itemclick("+b+")\">box"+b+" </div>";
+else
+  document.getElementById("grid-container").innerHTML+="<div class=\"grid-item\"  id=\"grid-item"+b+"\" onclick=\"itemclick("+9+")\">n/a</div>";
   }
 }
 
 function showtext(){
   document.getElementById("textpara").innerHTML="all_boxes begins with <br>"+all_boxes.substring(0,5)+"<br>"+all_boxes.substring(6,21)+"<br>"+all_boxes.substring(22,66);
 document.getElementById("textpara").innerHTML+="<br>single_box(box2.txt) begins with <br>"+multilinestring.substring(0,5)+"<br>"+multilinestring.substring(6,21)+"<br>"+multilinestring.substring(22,66);
-
-  }
+}
 
 function itemclick(item){
 thisbox=0;
@@ -103,7 +104,8 @@ thistext="";
 }
 
 function querytext(){
-clear_grid(100,100,5,5);
+ clear_grid(100,100,5,5);
+//alert("before query");
  boxnum=0;
  found=false;
  foundinbox=false;
@@ -120,7 +122,6 @@ clear_grid(100,100,5,5);
  document.getElementById("query_result").innerHTML="";
 //OR items
  all_boxes_parse=all_boxes.split('\n');
-boxlist=0;//count of available boxes for fade of unavailable items
 
 //respect case
 if(respectcase){
@@ -159,7 +160,7 @@ for(b=0;b<all_boxes_parse.length;b++){
   }
  }
 }
-
+//window.alert("Pause after query");
 //document.getElementById("query_result").innerHTML+="<br>All_boxes_parse.length = "+all_boxes_parse.length;
 //itemclick(0);
 }
