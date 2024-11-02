@@ -1,7 +1,7 @@
 <!DOCTYPE HTML> 
 <html>
 <!--- 
-2/11/2024 using external bookboxes.css
+2/11/2024 using external bookboxes.css. Looking at grid fade for no box in all-boxes.
 1/11/2024  Got gridclick text <ol> working via intermediate text construct.
 31/10/2024 in trouble with enlarge w/h ratio to get true image-item ratio
 29/10/2024 fix box0 image - currently not present
@@ -52,13 +52,16 @@
 </body>
 
 <script>
-
+gridcount=5*5;
+boxlist=8;
 Build_grid(100,100,5,5);
 //clear_grid(100,100,5,5);
 function Build_grid(cellwidth,cellheight,xcellcount,ycellcount){
 //function to dynamically build grid to accomodate new boxes
   for(b=1;b<ycellcount*xcellcount+1;b++){
-   document.getElementById("grid-container").innerHTML+="<div class=\"grid-item\"  id=\"grid-item"+b+"\" onclick=\"itemclick("+b+")\">box"+b+" </div>";
+   if(b<=boxlist)document.getElementById("grid-container").innerHTML+="<div class=\"grid-item\"  id=\"grid-item"+b+"\" onclick=\"itemclick("+b+")\">box"+b+" </div>";
+else
+  document.getElementById("grid-container").innerHTML+="<div class=\"grid-item\"  id=\"grid-item"+b+"\" onclick=\"itemclick("+9+")\">n/a</div>";
   }
 }
 function clear_grid(cellwidth,cellheight,xcellcount,ycellcount){
@@ -117,6 +120,7 @@ clear_grid(100,100,5,5);
  document.getElementById("query_result").innerHTML="";
 //OR items
  all_boxes_parse=all_boxes.split('\n');
+boxlist=0;//count of available boxes for fade of unavailable items
 
 //respect case
 if(respectcase){
@@ -130,7 +134,6 @@ for(b=0;b<all_boxes_parse.length;b++){
     if(all_boxes_parse[b].substring(0,3).toUpperCase()!="BOX")gridimage(boxnum);
     if(!foundinbox&&found&&all_boxes_parse[b].substring(0,3)!="BOX"){
 //    alert("found respect BOX= "+boxnum);
-
        foundinbox=true;
        found=false;
       }
@@ -156,6 +159,7 @@ for(b=0;b<all_boxes_parse.length;b++){
   }
  }
 }
+
 //document.getElementById("query_result").innerHTML+="<br>All_boxes_parse.length = "+all_boxes_parse.length;
 //itemclick(0);
 }
@@ -178,6 +182,8 @@ document.getElementById("include").width=size;
 document.getElementById("include").height=size/ratio;
 }
 }
+
+
 </script>
 
 
