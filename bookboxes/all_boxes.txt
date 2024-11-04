@@ -1,25 +1,25 @@
 all_boxes=`
 BOX1
-VECTOR ANALYSIS
-J.P.Donleavy The Saddest Summer of Samuel S
-FOOTLIGHTS COURTNEY HOPE
-THE DARK TOWER LOUIS MCNIECE
-DE SADE CROSLAND NEVILLE SPEARNIN EUGENIE DE FRANVAL
-(Horizontal)SOURCES OF AUSTRALIAN HISTORY  CLARE
-(Horizontal)BRAVE NEW WORLD  Revisited ALDOUS HUXLEY
-Evelyn Gatliff THE SAVOY STORIES Transcribed from Gilbert and Sullivan Operas
-Doctor Zhivago Boris Pasternak
-HEMINGWAY A FAREWELL TO ARMS
-MH BATES MID BETTER EYESIGHT WITHOUT GLASSES
-Agatha Chistie Elephants Can Remember
-Agatha Christie Cat Among the Pigеons
-TENNYSON SELECTED POEMS
-THOMSON LIVING VERSE JACARANDA
-A.D.HOPE ANGUS AND HOUGHTON
-(Horizontal)THE GOLDENTREASURY OF LONGER POEMS DENT
-FLAUBERT THREE TALES
-(Inverted)JAMES JOYCE DUBLINERS
-(Horizontal)ULYSSES JAMES JOYCE BODLEY HEAD
+e.e, cummings 73 poems
+A CONEY ISLAND OF THE MIND LAWRENCE FERLINGHEITI
+Selected Poems T.S.Eliot
+William Blake Poems and Prophecies
+PENGUIN MODERN POETS-1 Durrell Jennings Thomas
+Songs of Innocence and of Experience William Blake 
+William Blake. TL BLUM
+A.D.Hope SELECTED POEMS
+RIMBAUD A SEASON IN HELL AND THE DRUNKEN BOAT Penguin Modern French
+Prevert Selections from Paroles Lawrence Ferlingetti
+Sick Verse
+Collected Poems by BAUDELAIR LES FLEURS DU MAL CONDER Cassell
+Collected Poems by Stephen Spender SPENDER Faber and Faber 
+CHAOS OF THE NIGHT Women's Poetry & Verse of the Second World War
+SOLSTICES LOUIS MACNEICE FABER
+e. e. cummings. SELECTED POEMS CASSELL FABER ROUTLEDGE FABER
+LOUIS MACNEICE THE BURNING PERCH Faber and Faber
+Miltons Poetical Works ROUTLEDGE
+The Burning Perch Loius McNeice Faber and Faber
+
 
 BOX2
 SONG OF THE PEN A.B."BANJO" PATTERSON 1901-1941
