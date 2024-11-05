@@ -1,6 +1,7 @@
 <!DOCTYPE HTML> 
 <html>
 <!--- 
+5/11/2024 Removed NOT option - shows every line not containing - USELESS!
 3/11/2024 fixed box8.txt and all_boxes.txt for failed box8 retrieval (UPPER/LOWER issue)
 2/11/2024 using external bookboxes.css. Looking at grid fade for no box in all-boxes.
 1/11/2024  Got gridclick text <ol> working via intermediate text construct.
@@ -15,7 +16,7 @@
 
 <body>
 <link rel="stylesheet" href="bookboxes.css">
-<H2>Showing book boxes catalogue to date(2/11/2024)<H2>
+<H2>Showing book boxes catalogue to date(5/11/2024)<H2>
 <p id="textpara" onclick="showtext()" > Click here to identify source</p>
 
 <div id="list" class="textonly" > </div>
@@ -35,12 +36,10 @@
  <label for="query">Respect Case</label>
  <input id="ignore" type="radio" name="respect" value="ignore" >
  <label for="query">Ignore case<br></label>
- <input id="and" type="radio" name="anditems" value="and">
+ <input id="and" type="radio" name="items" value="and">
  <label for="query">AND items</label>
- <input id="or" type="radio" name="anditems" value="or" checked>
+ <input id="or" type="radio" name="items" value="or" checked>
  <label for="query">OR items</label>
- <input id="not" type="radio" name="anditems" value="not" >
- <label for="query">NOT items<br></label>
 </div>
 
 <p id="thequery" ><br></p>
@@ -114,13 +113,11 @@ function querytext(){
  ignorecase=false; if(document.getElementsByName("respect")[1].checked)ignorecase=true;
  anditems=false;
 //alert("Respect Case "+respectcase+" Ignore Case "+ignorecase);
-  anditems=false; if(document.getElementsByName("anditems")[0].checked)anditems=true;
-  oritems=false;  if(document.getElementsByName("anditems")[1].checked)oritems=true;
-  notitems=false; if(document.getElementsByName("anditems")[2].checked)notitems=true;
-
- thisquery=document.getElementById("qname").value;
- queryitems=thisquery.split(" ");
- document.getElementById("query_result").innerHTML="";
+  anditems=false; if(document.getElementsByName("items")[0].checked)anditems=true;
+  oritems=false;  if(document.getElementsByName("items")[1].checked)oritems=true;
+  thisquery=document.getElementById("qname").value;
+  queryitems=thisquery.split(" ");
+  document.getElementById("query_result").innerHTML="";
 //OR items
  all_boxes_parse=all_boxes.split('\n');
 
@@ -161,6 +158,7 @@ for(b=0;b<all_boxes_parse.length;b++){
   }
  }
 }
+
 //window.alert("Pause after query");
 //document.getElementById("query_result").innerHTML+="<br>All_boxes_parse.length = "+all_boxes_parse.length;
 //itemclick(0);

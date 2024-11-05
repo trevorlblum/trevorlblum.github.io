@@ -1,6 +1,6 @@
 all_boxes=`
 BOX1
-e.e, cummings 73 poems
+e.e. cummings 73 poems
 A CONEY ISLAND OF THE MIND LAWRENCE FERLINGHEITI
 Selected Poems T.S.Eliot
 William Blake Poems and Prophecies
