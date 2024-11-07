@@ -1,4 +1,5 @@
 <!-- Make enquiry on Mashup.txt derived from Box-Bin.csv
+   7/11/2024 looking at including BOX number (item[0]) in search
    7/9/2024 some https cleanup. Does not search at all ..... anymore.
    4/9/2024 Finally resolved https versus /imagedir/ problem for images. Added search and expand HTTPS discrimination.
     8/3/2024 Began add of html link for details of item(s) show link on screen
@@ -165,7 +166,7 @@ found=true;
     var thisname;thisname=textdata[l].split("|");
     for(w=0;w<words.length;w++){
 //      if(l<10)console.log("Search term "+words[w]);
-      if(thisname[5].toUpperCase().indexOf(words[w].toUpperCase())===-1)found=false; 
+      if((thisname[0]+thisname[5]).toUpperCase().indexOf(words[w].toUpperCase())===-1)found=false; 
      }     
       if(found===true)
       {
