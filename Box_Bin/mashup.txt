@@ -415,5 +415,5 @@ const textdata=[
 'BOX33|32|13|8|13|Radaxa Rock Pi 4 SE, Debian 11??|Radaxa Rock.png',
 'BOX34|0|0|8|13|GPS Altitude, Audio Amp with Bone conduction transducers|unknown.jpg',
 'BOX34|0|13|8|13|Stepper motor, Quadrature generator, Dual Motor drive amp|unknown.jpg',
-'BOX34|8|13|8|13|ISP Arduino Programmers, DuinoISP cable|usb-atmel-avr-programmer.jpg,Arduino ISP Programmer board.jpg,https://trevorblum.name/Box_Bin/details/USBAsp_AVR  Programmer.pdf',
+'BOX34|8|13|8|13|ISP Arduino Programmers, DuinoISP cable|usb-atmel-avr-programmer.jpg,Arduino ISP Programmer board.jpg,https://trevorblum.name/Box_Bin/details/USBAsp_AVR_Programmer.pdf',
 'BOX35|0|0|16|16|Drawers, various. Last box again|unknown.jpg'];
