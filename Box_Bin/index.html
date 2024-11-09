@@ -1,5 +1,7 @@
 <!-- Make enquiry on Mashup.txt derived from Box-Bin.csv
-   7/11/2024 looking at including BOX number (item[0]) in search
+   9/11/2024 added click on link to last item in result line - Should check if pdf and should handle multiple items
+   7/11/2024 included BOX number (item[0]) in search
+   7/11/2024 trouble with details.pdf's not showing from https:// ref - examples lm358 and box34
    7/9/2024 some https cleanup. Does not search at all ..... anymore.
    4/9/2024 Finally resolved https versus /imagedir/ problem for images. Added search and expand HTTPS discrimination.
     8/3/2024 Began add of html link for details of item(s) show link on screen
@@ -163,14 +165,18 @@ found=true;
   { 
     found=true;
     var words=textin.value.split(" ");
-    var thisname;thisname=textdata[l].split("|");
+    var thisname;
+    thisname=textdata[l].split("|");//thisname= | separated items in line
     for(w=0;w<words.length;w++){
 //      if(l<10)console.log("Search term "+words[w]);
       if((thisname[0]+thisname[5]).toUpperCase().indexOf(words[w].toUpperCase())===-1)found=false; 
      }     
       if(found===true)
       {
-//    item [6] is image name(s) for line
+//    thisname [6] is image name(s) for line. If thisname has 7 entries they are details https link to doco(e.g. pdf)
+
+      document.getElementById("result").innerHTML="Detail item in line <a href=\""+ thisname[thisname.length-1]+"\">click this </a>";
+
       document.getElementById("namestack").innerHTML+=thisname[6];
 //    fill image namestack from boxbin lines
       var thisimage;
@@ -184,6 +190,7 @@ document.getElementById("namestack").innerHTML+="<img src=\""+thisimage[i]+"\" w
    }
    document.getElementById("namestack").innerHTML+="<h3><br>End of search results<br></h3>";  
 }
+
 </script>
 
 </body>
