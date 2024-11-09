@@ -1,4 +1,5 @@
 <!-- Make enquiry on Mashup.txt derived from Box-Bin.csv via Processing mashup.pde
+   9/11/2024 multiple reslts clear the .PDF link. Should show on line click also
    9/11/2024 added click on link to last item in result line - checks if pdf and should be extended to handle multiple items
    7/11/2024 included BOX number (item[0]) in search
    7/11/2024 trouble with details.pdf's not showing from https:// ref - examples lm358 and box34
@@ -43,6 +44,8 @@
 <html>
 <div id="div1" div1 </div>
 <head>
+<title>Box_Bin Catalogue Search 9/11/2024 </title>
+
 <style>
 
  .hide {
@@ -58,7 +61,7 @@
 
 <body>
 
-<h2>Query app for Box_Binned items. <br>Enter case-insensitive search text (e.g. opamp lm741).<br>Explicit .png/.jpg/.bmp extension image is shown.<br>Click on search-retrieved images for bin details.</h2><br>
+<h2>Box_Bin Catalogue Search 9/11/2024. <br>Enter case-insensitive search text (e.g. opamp lm741).<br>Explicit .png/.jpg/.bmp extension image is shown.<br>Click on search-retrieved images for bin details.</h2><br>
 
 <div class="myDIV">
   <img id="demo" src="images/logo.png" width="100" ><br>
@@ -66,8 +69,8 @@
  <div class="hide">"Enter multiword queries in the input box below. empty 'dumps' whole mashup.txt"
 </div>
 
-<input  type="text" id="textin" title="Enter search values eg cap 47 v" value="cap 47 v"  style="font-size: 30px">><br>
-<button onclick="myFunction()">search for item entry</button>
+<input  type="text" id="textin" title="Enter search values eg cap 47 v" value="cap 47 v"  style="font-size: 30px"><br>
+<button onclick="myFunction()" style="font-size: 30px">search for item entry </button>
 
 <p id="result" <br> Query result <br></p>
  
@@ -155,6 +158,8 @@ document.getElementById("result").innerHTML="<h3>Detail for line "+line+" Box "+
    if(img[i].toUpperCase().indexOf("HTTPS")==-1)document.getElementById("result").innerHTML+="<img src=\""+imgdir+img[i]+"\"  onclick=\"expand("+line+")\">";
 else
 document.getElementById("result").innerHTML+="<img src=\""+img[i]+"\"  onclick=\"expand("+line+")\">";
+//needs to invoke link if last item is .PDF
+  if(parse[parse.length-1].toUpperCase().indexOf(".PDF")!=-1) document.getElementById("result").innerHTML="Detail item in line <a href=\""+ parse[parse.length-1]+"\">click this </a>";
 }
 }
 
