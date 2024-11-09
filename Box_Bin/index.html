@@ -1,5 +1,5 @@
-<!-- Make enquiry on Mashup.txt derived from Box-Bin.csv
-   9/11/2024 added click on link to last item in result line - Should check if pdf and should handle multiple items
+<!-- Make enquiry on Mashup.txt derived from Box-Bin.csv via Processing mashup.pde
+   9/11/2024 added click on link to last item in result line - checks if pdf and should be extended to handle multiple items
    7/11/2024 included BOX number (item[0]) in search
    7/11/2024 trouble with details.pdf's not showing from https:// ref - examples lm358 and box34
    7/9/2024 some https cleanup. Does not search at all ..... anymore.
@@ -175,7 +175,7 @@ found=true;
       {
 //    thisname [6] is image name(s) for line. If thisname has 7 entries they are details https link to doco(e.g. pdf)
 
-      document.getElementById("result").innerHTML="Detail item in line <a href=\""+ thisname[thisname.length-1]+"\">click this </a>";
+      if(thisname[thisname.length-1].toUpperCase().indexOf(".PDF")!=-1)document.getElementById("result").innerHTML="Detail item in line <a href=\""+ thisname[thisname.length-1]+"\">click this </a>";
 
       document.getElementById("namestack").innerHTML+=thisname[6];
 //    fill image namestack from boxbin lines
