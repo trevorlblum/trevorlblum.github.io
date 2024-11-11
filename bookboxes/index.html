@@ -1,6 +1,8 @@
 <!DOCTYPE HTML> 
 <html>
 <!--- 
+11/11/2024 for all items search, don't parse the query so that it acts as a single string, not delimited words.
+11/11/2024 added reject identical result lines for multiple items in line
 5/11/2024 Removed NOT option - shows every line not containing - USELESS!
 3/11/2024 fixed box8.txt and all_boxes.txt for failed box8 retrieval (UPPER/LOWER issue)
 2/11/2024 using external bookboxes.css. Looking at grid fade for no box in all-boxes.
@@ -54,6 +56,7 @@
 <script>
 gridcount=5*5;
 boxlist=8;
+last_query_result="";
 Build_grid(100,100,5,5);
 //clear_grid(100,100,5,5);
 function Build_grid(cellwidth,cellheight,xcellcount,ycellcount){
@@ -63,6 +66,8 @@ function Build_grid(cellwidth,cellheight,xcellcount,ycellcount){
 else
   document.getElementById("grid-container").innerHTML+="<div class=\"grid-item\"  id=\"grid-item"+b+"\" onclick=\"itemclick("+9+")\">n/a</div>";
   }
+ all_boxes_parse=all_boxes.split('\n'); // parse into lines before query invoked
+
 }
 function clear_grid(cellwidth,cellheight,xcellcount,ycellcount){
 //function to dynamically clear grid to accomodate new boxes
@@ -111,31 +116,33 @@ function querytext(){
  foundinbox=false;
  respectcase=false; if(document.getElementsByName("respect")[0].checked)respectcase=true;
  ignorecase=false; if(document.getElementsByName("respect")[1].checked)ignorecase=true;
- anditems=false;
-//alert("Respect Case "+respectcase+" Ignore Case "+ignorecase);
-  anditems=false; if(document.getElementsByName("items")[0].checked)anditems=true;
-  oritems=false;  if(document.getElementsByName("items")[1].checked)oritems=true;
-  thisquery=document.getElementById("qname").value;
-  queryitems=thisquery.split(" ");
-  document.getElementById("query_result").innerHTML="";
-//OR items
- all_boxes_parse=all_boxes.split('\n');
+ anditems=false; if(document.getElementsByName("items")[0].checked)anditems=true;
+ oritems=false;  if(document.getElementsByName("items")[1].checked)oritems=true;
+ thisquery=document.getElementById("qname").value;
+ queryitems=thisquery.split(" ");
+ document.getElementById("query_result").innerHTML="";
+last_query_result="";
+
+//OR items ???
 
 //respect case
 if(respectcase){
-for(b=0;b<all_boxes_parse.length;b++){
+for(b=0;b<all_boxes_parse.length;b++){                //scan every line in all_boxes
  if(all_boxes_parse[b].substring(0,3)=="BOX")boxnum+=1;
-// alert("testing boxnum "+boxnum);
- for(s=0;s<queryitems.length;s++){
-   if(all_boxes_parse[b].indexOf(queryitems[s])!=-1){
-    document.getElementById("query_result").innerHTML+="<br> BOX "+boxnum+" line "+b+":" +all_boxes_parse[b];
+ for(s=0;s<queryitems.length;s++){                     //compare with every query word
+   if(anditems){queryitems=[""];queryitems[0]=thisquery;}  // fails query accepts all lines regardless
+   if(all_boxes_parse[b].indexOf(queryitems[s])!=-1){  // item[s] found in line[b]
+   if(last_query_result!=all_boxes_parse[b])           //don't show the same line multiple times
+    document.getElementById("query_result").innerHTML+="<br> BOX "+boxnum+" line "+b+":" +all_boxes_parse[b]; //add unique line to query_result
     found=true;
-    if(all_boxes_parse[b].substring(0,3).toUpperCase()!="BOX")gridimage(boxnum);
+// alert("found - queryitems "+queryitems[s]+" length "+queryitems.length+" This query "+thisquery);
+    if(all_boxes_parse[b].substring(0,3).toUpperCase()!="BOX")gridimage(boxnum); //show thumbnail of box in grid if found
     if(!foundinbox&&found&&all_boxes_parse[b].substring(0,3)!="BOX"){
-//    alert("found respect BOX= "+boxnum);
        foundinbox=true;
        found=false;
       }
+     last_query_result=all_boxes_parse[b];//clear unique line caveat
+     found=false;
    }
   }
  }
@@ -146,14 +153,19 @@ for(b=0;b<all_boxes_parse.length;b++){
   for(b=0;b<all_boxes_parse.length;b++){
   if(all_boxes_parse[b].substring(0,3)=="BOX")boxnum+=1;
    for(s=0;s<queryitems.length;s++){
+    if(anditems){queryitems=[""];queryitems[0]=thisquery.toUpperCase();}  // fails query accepts all lines regardless
     if(all_boxes_parse[b].toUpperCase().indexOf(queryitems[s].toUpperCase())!=-1){
+    if(last_query_result!=all_boxes_parse[b])
     document.getElementById("query_result").innerHTML+="<br> BOX "+boxnum+" line "+b+":" +all_boxes_parse[b];   
     found=true;
+//    alert("found - queryitems "+queryitems[s]+" length "+queryitems.length+" This query "+queryitems);
     if(all_boxes_parse[b].substring(0,3).toUpperCase()!="BOX")gridimage(boxnum);
     if(!foundinbox&&found&&all_boxes_parse[b].substring(0,3)!="BOX"){
        foundinbox=true;
        found=false;    
     }
+    last_query_result=all_boxes_parse[b];//clear unique line caveat
+    found=false;
    }
   }
  }
