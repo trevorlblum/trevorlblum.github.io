@@ -1,0 +1,45 @@
+Install rshell if it does not exist:
+    pip3 install rshell.
+Find your device (ie a pico just plugged in without pressin the BOOTSEL button:
+    ls /dev/cu*
+     /dev/cu.usbmodem24431 is how the pico appears on my Mac mini
+
+I get a quick REPL access using screen:
+    screen /dev/cu.usbmodem24431
+
+This gives me a REPL window to try python commands.
+>>> print("hello via screen")
+hello via screen
+>>> from machine import Pin
+>>> dir(Pin)
+['__class__', '__name__', 'value', 'ALT', 'ALT_GPCK', 'ALT_I2C', 'ALT_PIO0', 'ALT_PIO1', 'ALT_PWM', 'ALT_SIO', 'ALT_SPI', 'ALT_UART', 'ALT_USB', 'IN', 'IRQ_FALLING', 'IRQ_RISING', 'OPEN_DRAIN', 'OUT', 'PULL_DOWN', 'PULL_UP', '__bases__', '__dict__', 'board', 'cpu', 'high', 'init', 'irq', 'low', 'off', 'on', 'toggle']
+>>> help(Pin)
+  off -- <function>
+  on -- <function>
+  toggle -- <function>
+  irq -- <function>
+  board -- <class 'board'>
+  cpu -- <class 'cpu'>
+  IN -- 0
+  OUT -- 1
+  OPEN_DRAIN -- 2
+  ALT -- 3
+  PULL_UP -- 1
+  PULL_DOWN -- 2
+  IRQ_RISING -- 8
+  IRQ_FALLING -- 4
+  ALT_SPI -- 1
+  ALT_UART -- 2
+  ALT_I2C -- 3
+  ALT_PWM -- 4
+  ALT_SIO -- 5
+  ALT_PIO0 -- 6
+  ALT_PIO1 -- 7
+  ALT_GPCK -- 9
+  ALT_USB -- 10
+>>> and by the way, to exit the screen, type ctl/a ctl/k and respond y to the message
+Really kill this window [y/n]? 
+And you will be returned to the terminal CLI:
+    MacMini1:~ trevorblum$ 
+
+
