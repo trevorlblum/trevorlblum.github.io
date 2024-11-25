@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<!-- 19/11/2024 selection matching works now shows redX on mismatch
+  Some anomalies on clear after error. Need to show wrongX in matrix when errored.
+  This sourced version use the common SOURCE.js code block to save html file duplication space    
+
+  11/11/2022 help button shows alphas. onclick clears answers 
+  10/11/2022 aclick (line 244) changed to avoid set clues or dark (already selected) - needs monitoring for side effects
+  10/11/2022 added HELP button for debug progress checking on answer - shows with <pre> text property needs images like clue lines
+-->
+
+<html>
+<title> AGE_1730</title>
+<h3>Codeword Puzzle 'assistant' by Trevor (V2). Acknowledgements -  
+<a href="https://www.snodger.com.au"> Snodger Media </a><br>Your starting clue is - or clues are - set in the number line above and matrix below.</h3>
+<div class='buttons' align='left' >
+<img src='images/showplot.png' onclick='chartfreqs()' >
+<img src='images/showmatrix.png' onclick='showmatrix()' >
+<img src='images/moreclues.png' onclick='moreclues()' >
+<img src='images/help.png' onclick='showanswer()'>
+</div>
+
+<div class='welldone'>
+    <img src='images/notdone.png' onclick='moreclues()' >
+</div>
+
+</h2>
+<head>
+<link href="file.html" rel="import" />
+<style>
+ .buttons { 
+        left: 15px;
+        top: 100px;
+        width:400px;
+        background-color: #afafaf; 
+      }
+.index {
+        right: 150px;
+        top: 100px;
+        width:400px;
+      }
+ .matrix{
+      left: 200px;
+      width:500px;
+      top:450px;
+     }
+ .solved{
+      left: 400px;
+      width:500px;
+      top:20px;
+    }
+ .div1{
+    position:Absolute;
+    top:55px;
+    }
+ .clues{
+    position:fixed;
+    top: 20px;
+    }
+ .rectangle{
+    width:460px;height:460px;background:#eeeeff;
+   }
+ .welldone{
+    width:660px;height:10px;background:#ffffff;
+}
+
+</style>
+<embed id="Embed" width="850" height='800'  align="right" type="text/html" src="../wordfinderv2.html" >
+<div class="index" id="index" position="absolute" top="10px" align='right'>
+
+</div>
+<div id='solved' </div>
+<div id='clues'></div>
+<div id='header'></div>
+<div id='welldone'></div>
+<div id='div_answer'></div>
+<canvas id='canvas' height='250'; width='780' style="border:3px solid black;" > </canvas>
+<div id='div1' align='left'></div>
+<div id='matrix' </div>
+
+
+<script type="text/javascript" src="AGE_1730.txt"></script>
+<script type="text/javascript" src="SOURCE.js"></script>
+
+</head>
+<body onload="loaded()">
+
+
+</body>
+</html> 
