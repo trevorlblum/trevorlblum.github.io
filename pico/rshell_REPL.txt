@@ -1,13 +1,14 @@
-Install rshell if it does not exist:
+In a terminal CLI. Install rshell if it does not exist:
+
     pip3 install rshell.
-Find your device (ie a pico just plugged in without pressin the BOOTSEL button:
+Find your device (ie a pico just plugged in without pressing the BOOTSEL button:
     ls /dev/cu*
      /dev/cu.usbmodem24431 is how the pico appears on my Mac mini
 
 I get a quick REPL access using screen:
     screen /dev/cu.usbmodem24431
 
-This gives me a REPL window to try python commands.
+This gives me a REPL window to try micropython modules or look at module docos.
 >>> print("hello via screen")
 hello via screen
 >>> from machine import Pin
@@ -37,9 +38,15 @@ hello via screen
   ALT_PIO1 -- 7
   ALT_GPCK -- 9
   ALT_USB -- 10
->>> and by the way, to exit the screen, type ctl/a ctl/k and respond y to the message
-Really kill this window [y/n]? 
+>>> 
+
+entering CTL/D at this prompt does a soft boot on the pico
+         CTL/C interrupts a running program.
+These are the same escapes used by any REPL including Thonny.
+
+And by the way, to exit the MAC screen utility, type ctl/a ctl/k and respond y to the message "Really kill this window [y/n]?" 
 And you will be returned to the terminal CLI:
-    MacMini1:~ trevorblum$ 
+
+MacMini1:~ trevorblum$ 
 
 
