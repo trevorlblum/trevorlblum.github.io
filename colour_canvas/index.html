@@ -21,8 +21,6 @@ and not fixed by localhost server. Some mods BTW fail to display canvases in Chr
 <head>
 	<!-- Load plotly.js into the DOM -->
 	<script src='plotly.js'></script>
-        <script src="cie_rgb_converter.js"></script>
-
 </head>
 
 <body >
@@ -100,7 +98,7 @@ const ctx2 = canvas2.getContext("2d");
 //ctx2.fillStyle="orange";
 //ctx2.fillRect(0,0,50,850);
 img2=new Image();
-img2.src="mid_strip.png";//"one_strip.png";//"one_strip_max.png";//+"<br>".  
+img2.src="one_strip.png";//"one_strip_max.png";//"mid_strip.png";//+"<br>".  
 ctx2.drawImage(img2, 0, 0);
 
 //const canvas3 = document.getElementById("canvas3");//canvas3 shows reference image
