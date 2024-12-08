@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <!-- 
 Attempt to disentangle load/refresh issue
+On .name mouse drag from test location brings up canvas3 but not canvas2
+pick and drop work but pickcolour is black
+same on localhost...
 -->
 <html
-><title> Coloured canvas desktop V0 </title>
+><title> Coloured canvas loadtrial </title>
 <head>
 	<!-- Load plotly.js into the DOM -->
 	<script src='plotly.js'></script>
@@ -84,7 +87,8 @@ var pickcolour;
 
 const canvas2 = document.getElementById("canvas2");//canvas2 shows picked colour for drag/drop
 canvas2.addEventListener("click", (event) => pick(event, selectedColor));
-const canvas3=document.getElementById("canvas3");
+const canvas3=document.getElementById("canvas3");//canvas3 shows reference image
+const ctx3 = canvas3.getContext("2d");
 canvas3.addEventListener("drop", (event) => {
   // prevent default action (open as a link for some elements)
   event.preventDefault();
@@ -99,21 +103,18 @@ const ctx2 = canvas2.getContext("2d");
 //ctx2.fillStyle="orange";
 //ctx2.fillRect(0,0,50,850);
 img2=new Image();
-img2.src="one_strip.png";//"one_strip_max.png";//"mid_strip.png";//+"<br>".  
+img2.src="mid_strip.png";//"one_strip.png";//"one_strip_max.png";//+"<br>".  
 ctx2.drawImage(img2, 0, 0);
 
-//const canvas3 = document.getElementById("canvas3");//canvas3 shows reference image
-const ctx3 = canvas3.getContext("2d");
-//ctx3.fillStyle="yellow";
-//ctx3.fillRect(0,0,650,850);
 img=new Image();
 img.src="reference.png";
 ctx3.drawImage(img, 0, 0);
+ctx2.drawImage(img2, 0, 0);
 //draw diagvalues at tlc positions
 //for(i=0;i<diagvalues.length;i++)ctx3.fillText(diagvalues[i],tlc[i*2],tlc[i*2+1]);//put diags on canvas3
 compare();//show strip/ref colour diffs
 
- 
+
 // =====================end of javascript mainline code================================
 
 function allowDrop(ev) {
