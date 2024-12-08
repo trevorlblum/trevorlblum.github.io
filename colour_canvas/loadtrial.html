@@ -1,20 +1,6 @@
 <!DOCTYPE html>
 <!-- 
-7/12/2024 tlc and postioning need work.
-6/12/2024 diagvalues a proper mess but working.
-6/12/2024 pick and drop working ok now need to do scan/compare etc.
-          had to change pickcolour to get drag/drop correct, now pickcolour.data as for dropcolour
-          Math.sqrt in lsq now all ok.
-28/11/2024 downloaded plotly.js as local file to javascript folder. Added test plot
-27/11/2024 pick and drop working. Now do perceptual compare across reference strip.
-26/11/2024 Puzzle on startup, canvas2 and 3 do not display on load, only on refresh/reload
-and not fixed by localhost server. Some mods BTW fail to display canvases in Chrome or Safari on refresh. Removed plotly but no change to this behaviour.
-25/11/2024 modified for testing bigger colour patch, repositioned. fixed reference position
-10/9/2024 sets pickcolour from mouseY pos.
-9/9/2024 pick with press , drop with release. Mousemove event in canvas commented out.
-8/9/2024 Dragging and dropping to canvas3. Mouse drop coords relative to canvas3 coords.
-27/8/2024 trouble getting text color to change. Forced document.getElementById("notes").style.color='#03f7ff';
-27/8/2024 added canvas crosshair cursor on mouse move/press and concatenated readout to 'notes'
+Attempt to disentangle load/refresh issue
 -->
 <html
 ><title> Coloured canvas desktop V0 </title>
@@ -35,11 +21,18 @@ and not fixed by localhost server. Some mods BTW fail to display canvases in Chr
 
 <p id="notes"></p> 
 <style>
+.testzone{
+        top:100px;
+        left:800px;
+        width: 200px;
+        height: 200px;
+        margin-bottom: 20px;
+        background: yellow;
+        position: absolute;
+}
 .diagzone {
         width: 800px;
         height: 200px;
-        top:100px;
-        left:100px;
         margin-bottom: 20px;
         background: yellow;
 }
@@ -51,12 +44,17 @@ and not fixed by localhost server. Some mods BTW fail to display canvases in Chr
   padding: 10px;
 }
 </style>
-<div class="diagzone" id="diagzone"></div>
-<div class="dropzone" id="dropzone"></div>
+<div class="testzone" id="testzone">
+<img id="patch" src="patch.png" width=200px onclick="clicked()">
+</div>
+<div class="diagzone" id="diagzone">
+</div>
+</div>
+<div class="dropzone" id="dropzone">
+</div>
 
 </body>
 <script>
-
 document.getElementById("diagzone").innerHTML="//diagnostic values";
 document.getElementById("dropzone").innerHTML="//dropzone";
 
@@ -77,6 +75,8 @@ tlc=[140,35,140,125,140,200,140,295,137,380,140,450,140,545,140,630,130,720,130,
 
 //plotit();
 const shownotes=true;
+const hoveredColor = document.getElementById("hovered-color");
+const selectedColor = document.getElementById("selected-color");//
 
 var rgbColor;
 var dropcolour;
@@ -113,8 +113,7 @@ ctx3.drawImage(img, 0, 0);
 //for(i=0;i<diagvalues.length;i++)ctx3.fillText(diagvalues[i],tlc[i*2],tlc[i*2+1]);//put diags on canvas3
 compare();//show strip/ref colour diffs
 
-const hoveredColor = document.getElementById("hovered-color");
-const selectedColor = document.getElementById("selected-color");// 
+ 
 // =====================end of javascript mainline code================================
 
 function allowDrop(ev) {
