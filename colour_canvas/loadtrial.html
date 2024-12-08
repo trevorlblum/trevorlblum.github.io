@@ -6,13 +6,13 @@ pick and drop work but pickcolour is black
 same on localhost...
 -->
 <html
-><title> Coloured canvas loadtrial </title>
+><title> Coloured canvas xxx loadtrial </title>
 <head>
 	<!-- Load plotly.js into the DOM -->
 	<script src='plotly.js'></script>
 </head>
 
-<body >
+<body onload="loaded()" id="body">
 
 <h4>May fail on load, try a refresh if no images on screen<br></H4>
 <canvas id="canvas2" width="50px" height="875px" draggable="true"></canvas>
@@ -204,6 +204,10 @@ for(t=0;t<10;t++){  //ten tests
 //       for(i=0;i<diagvalues.length;i++)ctx3.fillText(diagvalues[i],tlc[i*2],tlc[i*2+1]);
     }
  }
+}
+function loaded(){
+alert("Loaded");
+//document.getElementById("body").innerHTML+="<br><h4>Loaded</H4>";
 }
 function plotit(){
   TESTER=document.getElementById("plotly");
