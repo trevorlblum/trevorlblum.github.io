@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<!-- Possible clue - drawImage out of canvas size gives no error and shows no image.
+
+Attempt to disentangle load/refresh issue
+On .name mouse drag from test location brings up canvas3 but not canvas2
+pick and drop work but pickcolour is black
+same on localhost...
+-->
+<html
+><title> Cut-down trial </title>
+<head>
+	<!-- Load plotly.js into the DOM -->
+	<script src='plotly.js'></script>
+</head>
+
+<body onload="loaded()" id="body" >
+<H4> try fail load issue investigation </H4>
+<img id="image" src="strip2.png">
+
+<canvas id="canvas2"  width="240px" height="875px" draggable="true"></canvas>
+
+</body>
+<script>
+const ctx=canvas2.getContext("2d");
+imag=new Image();
+imag.src="mid_strip.png";
+ctx.drawImage(imag,200,0); //must be within size of canvas but gives no error
+
+
+
+function loaded(){
+//alert("loaded");
+//document.getElementById("body").innerHTML+="<br>loaded";
+}
+</script>
+</html>
