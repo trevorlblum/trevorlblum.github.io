@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <!-- 
+10/12/2024 Finally solved the on-load redraw/reload canvas issue with a loaded() function
 7/12/2024 tlc and postioning need work.
 6/12/2024 diagvalues a proper mess but working.
 6/12/2024 pick and drop working ok now need to do scan/compare etc.
@@ -21,11 +22,12 @@ and not fixed by localhost server. Some mods BTW fail to display canvases in Chr
 <head>
 	<!-- Load plotly.js into the DOM -->
 	<script src='plotly.js'></script>
+        <body onload="loaded()" id="body"></body>
 </head>
 
 <body >
 
-<h4>May fail on load, try a refresh if no images on screen<br></H4>
+<h4>Displaying mid-strip comparison 10/12/2024<br></H4>
 <canvas id="canvas2" width="50px" height="875px" draggable="true"></canvas>
 <canvas id="canvas3" width="780px" height="880px" ondrop="dropit(event)" ondragover="allowDrop(event)"></canvas>
 <div id="plotly" style="width:600px;height:250px;"></div>
@@ -204,6 +206,15 @@ for(t=0;t<10;t++){  //ten tests
     }
  }
 }
+function loaded(){ //script draws fail if not loaded. ctx2 and ctx3 need explixit draws
+//alert("Loaded");
+isloaded=true;
+ctx2.drawImage(img2, 0, 0);
+ctx3.drawImage(img, 0, 0);
+compare();
+//document.getElementById("body").innerHTML+="<br><h4>Loaded</H4>";
+}
+
 function plotit(){
   TESTER=document.getElementById("plotly");
   Plotly.newPlot(TESTER,[{
