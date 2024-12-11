@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <!-- 
+11/12/2024 tagmatch now working with compare to give test minima
 10/12/2024 Finally solved the on-load redraw/reload canvas issue with a loaded() function
 7/12/2024 tlc and postioning need work.
 6/12/2024 diagvalues a proper mess but working.
@@ -39,7 +40,7 @@ and not fixed by localhost server. Some mods BTW fail to display canvases in Chr
 <style>
 .diagzone {
         width: 800px;
-        height: 200px;
+        height: 400px;
         top:100px;
         left:100px;
         margin-bottom: 20px;
@@ -56,8 +57,16 @@ and not fixed by localhost server. Some mods BTW fail to display canvases in Chr
 <div class="diagzone" id="diagzone"></div>
 <div class="dropzone" id="dropzone"></div>
 
-</body>
+</body id="body">
 <script>
+matches=[];
+for(t=0;t<10;t++){
+   matches[t]=[];
+       for(r=0;r<8;r++)matches[t][r]=t+r*8;
+}
+//document.getElementById("body").innerHTML+=matches;
+minmatch=[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0];
+
 document.getElementById("diagzone").innerHTML="//diagnostic values";
 document.getElementById("dropzone").innerHTML="//dropzone";
 
@@ -82,6 +91,8 @@ const shownotes=true;
 var rgbColor;
 var dropcolour;
 var pickcolour;
+const hoveredColor = document.getElementById("hovered-color");
+const selectedColor = document.getElementById("selected-color");// 
 
 const canvas2 = document.getElementById("canvas2");//canvas2 shows picked colour for drag/drop
 canvas2.addEventListener("click", (event) => pick(event, selectedColor));
@@ -100,7 +111,7 @@ const ctx2 = canvas2.getContext("2d");
 //ctx2.fillStyle="orange";
 //ctx2.fillRect(0,0,50,850);
 img2=new Image();
-img2.src="one_strip.png";//"one_strip_max.png";//"mid_strip.png";//+"<br>".  
+img2.src="mid_strip.png";//"one_strip.png";//"one_strip_max.png";//+"<br>".  
 ctx2.drawImage(img2, 0, 0);
 
 //const canvas3 = document.getElementById("canvas3");//canvas3 shows reference image
@@ -112,10 +123,9 @@ img.src="reference.png";
 ctx3.drawImage(img, 0, 0);
 //draw diagvalues at tlc positions
 //for(i=0;i<diagvalues.length;i++)ctx3.fillText(diagvalues[i],tlc[i*2],tlc[i*2+1]);//put diags on canvas3
-compare();//show strip/ref colour diffs
+//compare();//show strip/ref colour diffs now in loaded()
+//tagmatch();
 
-const hoveredColor = document.getElementById("hovered-color");
-const selectedColor = document.getElementById("selected-color");// 
 // =====================end of javascript mainline code================================
 
 function allowDrop(ev) {
@@ -184,10 +194,11 @@ function lsq( c1, c2){
 }
 
 function compare(){  //do compare of strip colours to reference colours
+
 for(t=0;t<10;t++){  //ten tests
 //   alert("compare "+t+" "+tlc[t*2+1]);
    strip_data=ctx2.getImageData(30,tlc[t*2+1],10,10);
-   for(r=1;r<8;r++){ //seven refs
+   for(r=0;r<7;r++){ //seven refs
        ref_data=ctx3.getImageData(80+r*79,tlc[t*2+1]+20,1,1);
        red=ref_data.data[0];
        green=ref_data.data[1];
@@ -197,21 +208,25 @@ for(t=0;t<10;t++){  //ten tests
        ctx3.fillRect(60+r*79,tlc[t*2+1]-20,40,15); //show ref colour pickup
        //alert("comparing "+t+r+" "+strip_data.data[0]+" "+ref_data.data[0]); 
        diff=lsq(strip_data,ref_data);
+       matches[t][r]=diff;  // used by tagmatch which picks minimum value in test [t]
        ctx3.fillStyle='rgb(255,255,255)';
        ctx3.fillText(parseInt(diff),65+r*79,tlc[t*2+1]-10);
        //alert("Compare lsq "+int(diff)+" "+60+" "+r*79+" "+tlc[t*2]-40)
-       document.getElementById("diagzone").innerHTML=diagvalues;
 
-//       for(i=0;i<diagvalues.length;i++)ctx3.fillText(diagvalues[i],tlc[i*2],tlc[i*2+1]);
+       for(i=0;i<diagvalues.length;i++)ctx3.fillText(diagvalues[i],tlc[i*2],tlc[i*2+1]);
     }
  }
+//       document.getElementById("dropzone").innerHTML+="<H4>Strip legend</H4><br>"+diagvalues;
+
 }
-function loaded(){ //script draws fail if not loaded. ctx2 and ctx3 need explixit draws
+
+function loaded(){ //script draws fail if not loaded. ctx2 and ctx3 need explicit draws
 //alert("Loaded");
 isloaded=true;
 ctx2.drawImage(img2, 0, 0);
 ctx3.drawImage(img, 0, 0);
 compare();
+tagmatch()
 //document.getElementById("body").innerHTML+="<br><h4>Loaded</H4>";
 }
 
@@ -222,6 +237,32 @@ function plotit(){
   y:[1,2,4,8,16]}],{
   margin:{t:0}});
 }
+
+function tagmatch(){ //write diagnostic texts for minimal match to file
+document.getElementById("diagzone").innerHTML+="<br><H4>diagnosis</H4>";
+thismatch=999;
+thisx=0;
+minmatch=[];
+//alert("Matches 9 6 & 8 6 "+matches[9][6]+" "+matches[8][6]);
+//diagnostic.println("Diagnostic printed "+day()+":"+month()+":"+year()+":"+hour()+":"+minute());
+for(t=0;t<10;t++){
+  minmatch[t]=0;
+  thismatch=999;
+  for(r=0;r<7;r++){
+// matches set in compare
+     if(thismatch>matches[t][r]){
+     thismatch=matches[t][r];
+     thisx=t;
+     minmatch[t]=thismatch;
+   }
+  }
+  document.getElementById("dropzone").innerHTML+="<br>test "+t+" is "+parseInt(minmatch[t]);
+ }
+//  alert("diagnosis invoked "+document.getElementById("diagzone").innerHTML);
+  document.getElementById("diagzone").innerHTML+="<H4>diagnosis_tag "+diagvalues+"</H4>";
+  document.getElementById("diagzone").innerHTML+="<br>let's see something";
+}
+
 </script>
 </html>
 
