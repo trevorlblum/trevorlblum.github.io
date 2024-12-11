@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <!-- 
 11/12/2024 tagmatch now working with compare to give test minima
+           display is one out horizontally and test 5 shows 13 in minima, 18 on screen
 10/12/2024 Finally solved the on-load redraw/reload canvas issue with a loaded() function
 7/12/2024 tlc and postioning need work.
 6/12/2024 diagvalues a proper mess but working.
@@ -47,9 +48,9 @@ and not fixed by localhost server. Some mods BTW fail to display canvases in Chr
         background: yellow;
 }
 .dropzone {
-  width: 200px;
-  height: 20px;
-  background: blueviolet;
+  width: 600px;
+  height: 200px;
+  background: orange;
   margin: 10px;
   padding: 10px;
 }
@@ -70,19 +71,19 @@ minmatch=[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0];
 document.getElementById("dropzone").innerHTML="//dropzone";
 
 //strip legends array is 8 wide by 10 deep
-
-l1="Leucocytes      :0neg:. :. :15trace:70+:125++:500+++:"; 
-l2="Nitrite         :neg:. :. :. :Positive:Positive:Positive:";
-l3="Urobilinogen    :0.2normal:16Normal:. . :33umol/L:66umol/L:131umol/L:";
-l4="Protein         :neg:trace:.:0.3g/L:1++:3+++:>20++++:";
-l5="pH              :5.0:6.0:6.5:7.0:7.5:8.0:8.5:"; l6="Blood           :neg:Trace10:Moderate80:trace:small25:moderate60:large200:";
-l7="Specific Gravity:1.000:1.005:1.010:1.015:1.020:1.025:1.030:";
-l8="Ketone          :neg:.:0.5mmol/L:1.5mmol/L:4mmol/L:8mmol/L:16mmol/L:"
-l9="Bilirubin       :neg:. :. :. :small+:moderate++:large+++:";
+testnames=["Leucocytes","Nitrite","Urobilinogen","Protein","pH","Specific Gravity","Ketone","Bilirubin","Glucose"]
+l1="Leucocytes       :0neg:. :. :15trace:70+:125++:500+++:"; 
+l2="Nitrite          :neg:. :. :. :Positive:Positive:Positive:";
+l3="Urobilinogen     :0.2normal:16Normal:. . :33umol/L:66umol/L:131umol/L:";
+l4="Protein          :neg:trace:.:0.3g/L:1++:3+++:>20++++:";
+l5="pH               :5.0:6.0:6.5:7.0:7.5:8.0:8.5:"; l6="Blood            :neg:Trace10:Moderate80:trace:small25:moderate60:large200:";
+l7="Specific Gravity :1.000:1.005:1.010:1.015:1.020:1.025:1.030:";
+l8="Ketone           :neg:.:0.5mmol/L:1.5mmol/L:4mmol/L:8mmol/L:16mmol/L:"
+l9="Bilirubin        :neg:. :. :. :small+:moderate++:large+++:";
 l10="Glucose         :neg:.:trace5.5mmol/L:14mmol/L:28++mmol/L:55+++mmol/L:>=111++++mmol/L:";
 diagvalues=[l1+"<br>",l2+"<br>",l3+"<br>",l4+"<br>",l5+"<br>",l6+"<br>",l7+"<br>",l8+"<br>",l9+"<br>",l10]+"<br>";
 // top left corners on reference canvas
-tlc=[140,35,140,125,140,200,140,295,137,380,140,450,140,545,140,630,130,720,130,800];
+tlc=[208,35,208,125,208,200,208,295,208,380,208,450,208,545,208,630,208,720,208,800];
 
 //plotit();
 const shownotes=true;
@@ -204,14 +205,12 @@ for(t=0;t<10;t++){  //ten tests
        blue=ref_data.data[2];
        ctx3.fillStyle='rgb('+red+","+green+","+blue+')';
        //alert("fillStyle "+ctx3.fillStyle+ "colour ");
-       ctx3.fillRect(60+r*79,tlc[t*2+1]-20,40,15); //show ref colour pickup
+       ctx3.fillRect(r*79+140,tlc[t*2+1]-20,40,15); //show ref colour pickup
        //alert("comparing "+t+r+" "+strip_data.data[0]+" "+ref_data.data[0]); 
        diff=lsq(strip_data,ref_data);
        matches[t][r]=diff;  // used by tagmatch which picks minimum value in test [t]
        ctx3.fillStyle='rgb(255,255,255)';
-       ctx3.fillText(parseInt(diff),65+r*79,tlc[t*2+1]-10);
-       //alert("Compare lsq "+int(diff)+" "+60+" "+r*79+" "+tlc[t*2]-40)
-
+       ctx3.fillText(parseInt(diff),145+r*79,tlc[t*2+1]-10);
        for(i=0;i<diagvalues.length;i++)ctx3.fillText(diagvalues[i],tlc[i*2],tlc[i*2+1]);
     }
  }
@@ -232,7 +231,7 @@ tagmatch()
 function plotit(minima){
   TESTER=document.getElementById("plotly");
   Plotly.newPlot(TESTER,[{
-  x: [1,2,3,4,5,6,7,8,9], y:minima, type:'bar'}],{
+  x: [1,2,3,4,5,6,7,8,9,10], y:minima, type:'bar'}],{
   margin:{t:0}});
 }
 
@@ -241,6 +240,7 @@ function tagmatch(){ //write diagnostic texts for minimal match to file
 thismatch=999;
 thisx=0;
 minmatch=[];
+matchat=[];
 //alert("Matches 9 6 & 8 6 "+matches[9][6]+" "+matches[8][6]);
 //diagnostic.println("Diagnostic printed "+day()+":"+month()+":"+year()+":"+hour()+":"+minute());
 for(t=0;t<10;t++){
@@ -250,12 +250,14 @@ for(t=0;t<10;t++){
 // matches set in compare
      if(thismatch>matches[t][r]){
      thismatch=matches[t][r];
-     thisx=t;
+     thisx=r;
      minmatch[t]=thismatch;
    }
+  matchat[t]=thisx;
   }
-//  document.getElementById("dropzone").innerHTML+="<br>test "+t+" is "+parseInt(minmatch[t]);
- plotit(minmatch);
+
+  document.getElementById("dropzone").innerHTML+="<br>"+testnames[t]+" minimum is "+parseInt(minmatch[t])+" column "+matchat[t];
+  plotit(minmatch);
  }
   document.getElementById("diagzone").innerHTML+="<H4>diagnosis_tag <br>"+diagvalues+"</H4>";
 }
