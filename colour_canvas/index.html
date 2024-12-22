@@ -87,7 +87,7 @@ minmatch=[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0];
 document.getElementById("dropzone").innerHTML="//dropzone";
 
 //strip legends array is 8 wide by 10 deep
-testnames=["Leucocytes","Nitrite","Urobilinogen","Protein","pH","Specific Gravity","Ketone","Bilirubin","Glucose"]
+testnames=["Leucocytes","Nitrite","Urobilinogen","Protein","pH","Blood","Specific Gravity","Ketone","Bilirubin","Glucose"]
 l1="Leucocytes       :0neg:. :. :15trace:70+:125++:500+++:"; 
 l2="Nitrite          :neg:. :. :. :Positive:Positive:Positive:";
 l3="Urobilinogen     :0.2normal:16Normal:. . :33umol/L:66umol/L:131umol/L:";
@@ -100,8 +100,6 @@ l10="Glucose         :neg:.:trace5.5mmol/L:14mmol/L:28++mmol/L:55+++mmol/L:>=111
 diagvalues=[l1+"<br>",l2+"<br>",l3+"<br>",l4+"<br>",l5+"<br>",l6+"<br>",l7+"<br>",l8+"<br>",l9+"<br>",l10]+"<br>";
 // top left corners on reference canvas
 tlc=[208,35,208,125,208,200,208,295,208,380,208,450,208,545,208,630,208,720,208,800];
-//simple array of testnames for user to confirm, say, hover. 
-testname=["Leucocytes","Nitrite","Urobilinogen","Protein","pH","Blood","Specific Gravity","Ketone","Bilirubin","Glucose"];
 //plotit();
 const shownotes=true;
 
@@ -113,7 +111,9 @@ const selectedColor = document.getElementById("selected-color");//
 
 const canvas2 = document.getElementById("canvas2");//canvas2 shows picked colour for drag/drop
 canvas2.addEventListener("click", (event) => pick(event, selectedColor));
+
 const canvas3=document.getElementById("canvas3");
+canvas3.addEventListener("click", (event) => showconfirm(event));
 canvas3.addEventListener("drop", (event) => {
   // prevent default action (open as a link for some elements)
   event.preventDefault();
@@ -158,10 +158,6 @@ function pick(event, destination) {
   const y = event.clientY - bounding.top;
   document.getElementById("canvas2").style.cursor="crosshair";
 
-//check if showconfirm click on test name
-if(x<20)showconfirm(y);
-else
-{
 var data=ctx2.getImageData(x,y,1,1).data;   //pick pixel colour at mouse coords
 var colour=[data[0],data[1],data[2]];
 //alert("pick coords "+x+","+y+"pixel data "+ data[0]+","+data[1]+","+data[2]);
@@ -182,7 +178,6 @@ document.getElementById("notes").style.color='rgb('+colour+')'; //write note in 
 //  if(shownotes)destination.textContent = rgbColor;
  return pickcolour;
 }
-}
 
 function dropit(ev){
 //alert("dropit");
@@ -198,11 +193,9 @@ function dropit(ev){
   ctx3.fillRect(dropX,dropY,40,40);
   ctx3.fillStyle='rgb(0,0,0)';
   ctx3.fillRect(dropX+10,dropY+15,15,10);
-  alert("pick and drop colours at "+dropX+", "+dropY+" are "+pickcolour.data+" "+dropcolour.data);
+//  alert("pick and drop colours at "+dropX+", "+dropY+" are "+pickcolour.data+" "+dropcolour.data);
   lsq(pickcolour,dropcolour);
 };
-
-
 
 function lsq( c1, c2){
 //   alert("c1 colour red="+c1.data[0]+"green="+c1.data[1]+"blue="+c1.data[2]);
@@ -290,7 +283,6 @@ for(t=0;t<10;t++){
    }
   matchat[t]=thisx;
   }
-
   document.getElementById("dropzone").innerHTML+="<br>"+testnames[t]+" minimum is "+parseInt(minmatch[t])+" column "+matchat[t];
 //  plotit(minmatch);
   plotit(matchat);
@@ -298,9 +290,11 @@ for(t=0;t<10;t++){
   document.getElementById("diagzone").innerHTML+="<H4>diagnosis_tag <br>"+diagvalues+"</H4>";
 }
 
-function showconfirm(ycoord){
+function showconfirm(event){ // responds to refernce click with notes about test name
+  X=event.clientX;
+  ycoord=event.clientY;
 text=diag_notes.split("Home");
-thisy=1+ycoord/80;
+thisy=ycoord/80;
 for(i=0;i<tlc.length;i+=2)if(ycoord>=tlc[2*i+1] && ycoord<=tlc[2*i+1])thisy=i/2; 
 //alert(" text is "+text.length+" long"+" ycoord was "+ycoord+" thisy= "+thisy);
 confirm(text[parseInt([thisy])]);
