@@ -1,10 +1,13 @@
 <!-- Make enquiry on Mashup.txt derived from Box-Bin.csv via Processing mashup.pde
    1/2/2025 added boxcrry checkbox for query text associated box lines 
    Association only gets last line box number. Need to have multiple boxes capability
+   also query 660nm yields 2 lines for box21 carry but only one line without
+   this is because boxcarry resets the query value to a box number during search.
    which requires query to handle BOX20 BOX32 multiple entries ie nested searches.
+   would be helpful to add boxnumber to image labels...done 2/2/2025   
+
    11/11/2024 enlarged font sizes in a couple of places
    detail item in line seems to affect "click to see larger image" - fixed already!
-
    9/11/2024 multiple results clear the .PDF link. Should show on line click also
    9/11/2024 added click on link to last item in result line - checks if pdf and should be extended to handle multiple items
    7/11/2024 included BOX number (item[0]) in search
@@ -205,9 +208,9 @@ found=true;
       thisimage=thisname[6].split(","); 
 //    extract all images for line
       for(i=0;i<thisimage.length;i++)
-      if(thisimage[i].toUpperCase().indexOf("HTTPS")==-1)document.getElementById("namestack").innerHTML+="<img src=\""+imgdir+thisimage[i]+"\" width=\"50\" onclick =\"expand("+l+")\" title=\"Click to see larger image\">:: ";
+      if(thisimage[i].toUpperCase().indexOf("HTTPS")==-1)document.getElementById("namestack").innerHTML+=thisname[0]+"<img src=\""+imgdir+thisimage[i]+"\" width=\"50\" onclick =\"expand("+l+")\" title=\"Click to see larger image\">:: ";
 else 
-document.getElementById("namestack").innerHTML+="<img src=\""+thisimage[i]+"\" width=\"50\" onclick =\"expand("+l+")\" title=\"Click to see https:// image\">:: ";
+document.getElementById("namestack").innerHTML+=thisname[0]+"<img src=\""+thisimage[i]+"\" width=\"50\" onclick =\"expand("+l+")\" title=\"Click to see https:// image\">:: ";
       }
    }
    document.getElementById("namestack").innerHTML+="<h3><br>End of search results<br></h3>";  
