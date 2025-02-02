@@ -1,4 +1,7 @@
 <!-- Make enquiry on Mashup.txt derived from Box-Bin.csv via Processing mashup.pde
+   1/2/2025 added boxcrry checkbox for query text associated box lines 
+   Association only gets last line box number. Need to have multiple boxes capability
+   which requires query to handle BOX20 BOX32 multiple entries ie nested searches.
    11/11/2024 enlarged font sizes in a couple of places
    detail item in line seems to affect "click to see larger image" - fixed already!
 
@@ -64,7 +67,13 @@
 
 <body>
 
-<h2>Box_Bin Catalogue Search 9/11/2024. <br>Enter case-insensitive search text (e.g. opamp lm741).<br>Explicit .png/.jpg/.bmp extension image is shown.<br>Click on search-retrieved images for bin details.</h2><br>
+<h2>Box_Bin Catalogue Search 9/11/2024. <br>Enter case-insensitive search text (e.g. opamp lm741).<br>Explicit .png/.jpg/.bmp extension image is shown.<br>Click on search-retrieved images for bin details.<br>
+
+  <div>
+    <input id="boxcarry" type="checkbox" id="Box Carry over" value="xxx" name="carry" unchecked />
+    <label for="boxcarry">boxcarry</label>
+  </div>
+</h2>
 
 <div class="myDIV">
   <img id="demo" src="images/logo.png" width="100" ><br>
@@ -92,6 +101,8 @@ texts=".txt.html.htm.csv";
 
 function myFunction() // called by input click
 {
+// if(boxcarry.checked)alert("boxcarry is checked. Will show associated box lines ");
+
   var x = document.getElementById("textin").value;
   document.getElementById("demo").innerHTML = x;
   if(x===".....")searching=false;
@@ -185,6 +196,8 @@ found=true;
 //    thisname [6] is image name(s) for line. If thisname has 7 entries they are details https link to doco(e.g. pdf)
 
       if(thisname[thisname.length-1].toUpperCase().indexOf(".PDF")!=-1)document.getElementById("result").innerHTML="Detail item in line <a href=\""+ thisname[thisname.length-1]+"\">click this </a>";
+
+      if(boxcarry.checked)textin.value=thisname[0];//alert("Associating box to query "+ thisname[0]);
 
       document.getElementById("namestack").innerHTML+=thisname[6];
 //    fill image namestack from boxbin lines
