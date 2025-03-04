@@ -1,0 +1,156 @@
+//function block for Multitest
+
+function allowDrop(ev) {
+  ev.preventDefault();
+}
+function drag(ev){
+  alert("drag invoked");
+}
+
+function pick(event, destination) {
+  const bounding = canvas2.getBoundingClientRect();
+  const x = event.clientX - bounding.left;
+  const y = event.clientY - bounding.top;
+  document.getElementById("canvas2").style.cursor="crosshair";
+
+var data=ctx2.getImageData(x,y,1,1).data;   //pick pixel colour at mouse coords
+var colour=[data[0],data[1],data[2]];
+//alert("pick coords "+x+","+y+"pixel data "+ data[0]+","+data[1]+","+data[2]);
+pickcolour=ctx2.getImageData(x,y,1,1)//"rgb("+data[0]+","+data[1]+","+data[2]+")";
+//alert("pickcolour "+pickcolour.data[0]+pickcolour.data[1]+pickcolour.data[2]); 
+rgbColor=data[0]<<24||data[1]<<16||data[2]<<8||data[3]; 
+
+//alert("pick text colour "+'rgb('+data[0]+","+data[1]+","+data[2]+')');
+ctx2.fillStyle='rgb('+data[0]+","+data[1]+","+data[2]+')';
+ctx2.fillRect(0,0,50,20);
+ctx2.strokeStyle='white';ctx2.lineWidth="2";ctx2.rect(0,0,50,20);ctx2.stroke();
+document.getElementById("notes").style.color='rgb('+colour+')'; //write note in colour
+//if(shownotes)document.getElementById("notes").innerHTML=" Image data[0-3]"+data[0]+"R "+data[1]+"G "+data[2]+"B "+imageData.data[3]+"A";
+
+//alert("(notes).style.color "+document.getElementById("notes").style.color);
+
+  destination.style.background = rgbColor;//'destination is null'
+//  if(shownotes)destination.textContent = rgbColor;
+ return pickcolour;
+}
+
+function dropit(ev){
+//alert("dropit");
+  dropX=ev.clientX-80;
+  dropY=ev.clientY-80;
+  ev.preventDefault();
+  dropcolour=ctx3.getImageData(dropX,dropY,1,1);
+  ctx3.drawImage(img, 0, 0);
+  r=pickcolour.data[0];
+  g=pickcolour.data[1];
+  b=pickcolour.data[2];
+  ctx3.fillStyle='rgb('+r+","+g+","+b+')';
+  ctx3.fillRect(dropX,dropY,40,40);
+  ctx3.fillStyle='rgb(0,0,0)';
+  ctx3.fillRect(dropX+10,dropY+15,15,10);
+//  alert("pick and drop colours at "+dropX+", "+dropY+" are "+pickcolour.data+" "+dropcolour.data);
+  lsq(pickcolour,dropcolour);
+};
+
+function lsq( c1, c2){
+//   alert("c1 colour red="+c1.data[0]+"green="+c1.data[1]+"blue="+c1.data[2]);
+//   alert("c2 colour red="+c2.data[0]+"green="+c2.data[1]+"blue="+c2.data[2]);
+   rdif=c1.data[0]-c2.data[0];
+   gdif=c1.data[1]-c2.data[1];
+   bdif=c1.data[2]-c2.data[2];
+   lsqdistance=Math.sqrt(rdif*rdif+2*gdif*gdif+4*bdif*bdif);
+   bright=(c1.data[0]+c1.data[1]+c1.data[2])/800;
+//alert("lsqdistance"+lsqdistance*bright);
+   return(lsqdistance*bright);
+}
+
+function compare(){  //do compare of strip colours to reference colours
+
+for(t=0;t<10;t++){  //ten tests
+//   alert("compare "+t+" "+tlc[t*2+1]);
+   strip_data=ctx2.getImageData(30,tlc[t*2+1],10,10);
+   for(r=0;r<7;r++){ //seven refs
+       ref_data=ctx3.getImageData(80+r*79,tlc[t*2+1]+20,1,1);
+       red=ref_data.data[0];
+       green=ref_data.data[1];
+       blue=ref_data.data[2];
+       ctx3.fillStyle='rgb('+red+","+green+","+blue+')';
+       //alert("fillStyle "+ctx3.fillStyle+ "colour ");
+       ctx3.fillRect(r*79+140,tlc[t*2+1]-20,40,15); //show ref colour pickup
+       //alert("comparing "+t+r+" "+strip_data.data[0]+" "+ref_data.data[0]); 
+       diff=lsq(strip_data,ref_data);
+       matches[t][r]=diff;  // used by tagmatch which picks minimum value in test [t]
+       ctx3.fillStyle='rgb(255,255,255)';
+       ctx3.fillText(parseInt(diff),145+r*79,tlc[t*2+1]-10);
+       for(i=0;i<diagvalues.length;i++)ctx3.fillText(diagvalues[i],tlc[i*2],tlc[i*2+1]);
+    }
+ }
+//       document.getElementById("dropzone").innerHTML+="<H4>Strip legend</H4><br>"+diagvalues;
+
+}
+
+function loaded(){ //script draws fail if not loaded. ctx2 and ctx3 need explicit draw
+//alert("Loaded "+img.src);
+isloaded=true;
+ctx2.drawImage(img2, 0, 0);
+ctx3.drawImage(img, 0, 0);
+compare();
+tagmatch()
+//document.getElementById("body").innerHTML+="<br><h4>Loaded</H4>";
+}
+
+function plotit(minima){
+  mean=(Math.max(minima)-Math.min(minima))/2
+  layout={
+  grid:{rows:1,columns:2,pattern:'independent'},
+  };
+  data1={
+  x:[1,2,3,4,5,6,7,8,9,10],y:minima,type:'bar'},{margin:{t:0}};
+  data2={
+    x:[1,10],y:[4,4],type:'line'},{margin:{t:0}};
+;
+  data=[data1,data2];
+  TESTER=document.getElementById("plotly");
+  Plotly.newPlot(TESTER,data,layout);
+//  Linechart=document.getElementById("plotzone");
+//  Plotly.newPlot(Linechart,[{
+//  x: [1,2,3,4,5,6,7,8,9,10], y:minima, type:'line'}],{
+//  margin:{t:0}};
+}
+
+function tagmatch(){ //write diagnostic texts for minimal match to file
+//document.getElementById("diagzone").innerHTML+="<br><H4>diagnosis</H4>";
+thismatch=999;
+thisx=0;
+minmatch=[];
+matchat=[];
+//alert("Matches 9 6 & 8 6 "+matches[9][6]+" "+matches[8][6]);
+//diagnostic.println("Diagnostic printed "+day()+":"+month()+":"+year()+":"+hour()+":"+minute());
+for(t=0;t<10;t++){
+  minmatch[t]=0;
+  thismatch=999;
+  for(r=0;r<7;r++){
+// matches set in compare
+     if(thismatch>matches[t][r]){
+     thismatch=matches[t][r];
+     thisx=r;
+     minmatch[t]=thismatch;
+   }
+  matchat[t]=thisx;
+  }
+  document.getElementById("dropzone").innerHTML+="<br>"+test_names[t]+" minimum is "+parseInt(minmatch[t])+" column "+matchat[t];
+//  plotit(minmatch);
+  plotit(matchat);
+ }
+  document.getElementById("diagzone").innerHTML+="<H4>diagnosis_tag <br>"+diagvalues+"</H4>";
+}
+
+function showconfirm(event){ // responds to reference click with notes about test name
+  X=event.clientX;
+  ycoord=event.clientY;
+text=diag_notes.split("Home");
+thisy=ycoord/80;
+for(i=0;i<tlc.length;i+=2)if(ycoord>=tlc[2*i+1] && ycoord<=tlc[2*i+1])thisy=i/2; 
+//alert(" text is "+text.length+" long"+" ycoord was "+ycoord+" thisy= "+thisy);
+confirm(text[parseInt([thisy])]);
+}
