@@ -1,5 +1,20 @@
 <!DOCTYPE html>
 <!-- 
+4/3/2025 test_profiles now comes from test_profiles.txt and reference images from reference_images/
+4/3/2025 Could use  <script src='tlc_Siemens'></script> for multiple test value sets
+1/3/2025 began multi-test changes. Some issues with reference chart y separation anomalies 
+28/2/2025 looking at extending to Roche,Siemens and Livingstone test strips
+could annotate chart with test names.
+
+This Index.htlm lives here because it does not work unless server executed.
+hence removed from local trevorblum.name folder.
+
+For changes see test_strip_dimensions.txt. Involves strip and reference spacing,
+strip and reference island number size and spacing and test label position.
+
+BTW confirm is a javascript builtin with cancel/OK buttons. Maybe replace with
+a text display invoked by hover with size change, print and dismiss buttons.
+
 15/12/2024 added showconfirm (leucocytes) as start of user info facility.
            showconfirm now OK but might be on hover rather than subset of pick
            could add .mouseover=showconfirm() for user readout on canvas3
@@ -22,12 +37,13 @@
 27/8/2024 added canvas crosshair cursor on mouse move/press and concatenated readout to 'notes'
 -->
 <html
-><title> Coloured canvas desktop V0 </title>
+><title> Multitest local  </title>
 <head>
 	<!-- Load plotly.js into the DOM -->
 	<script src='plotly.js'></script>
         <body onload="loaded()" id="body"></body>
         <script src='diag_notes.txt'></script>
+        <script src='test_profiles.txt'></script>
 </head>
 
 <body >
@@ -74,32 +90,58 @@
 
 <script>
 //============================script begins here ====================
+test_ID="Livingstone";
+test_num=1 //Livingstone for now 4/3/2025
 
-//showconfirm();
+//alert("Test_profiles.txt"+multi_test);
+//alert("test name_list "+namelist[test_num]);
+//multi_test=["Combur,9,5,50,50,60,70","Siemens,10,7,45,28,65,70","Livingstone,10,7,35,40,65,70"];
+
+testvalues=multi_test[test_num].split(","); //Livingstone as first trial
+Manufacturer=testvalues[0];
+ntests=testvalues[1];
+nvalues=testvalues[2];
+spotX=testvalues[3];
+spotY=testvalues[4];
+islandX=testvalues[5];
+islandY=testvalues[6];
+test_names=namelist[test_num];
+image_names=ref_image_src;
+thisImage=image_names[test_num];
+
+//alert("first test name of "+test_names.length+" names "+test_names[0]+" Image name "+thisImage);
+
 matches=[];
-for(t=0;t<10;t++){
+for(t=0;t<ntests;t++){
    matches[t]=[];
-       for(r=0;r<8;r++)matches[t][r]=t+r*8;
+       for(r=0;r<nvalues;r++)matches[t][r]=t+r*nvalues;
 }
 //document.getElementById("body").innerHTML+=matches;
 minmatch=[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0];
 
 document.getElementById("dropzone").innerHTML="//dropzone";
 
-//strip legends array is 8 wide by 10 deep
-testnames=["Leucocytes","Nitrite","Urobilinogen","Protein","pH","Blood","Specific Gravity","Ketone","Bilirubin","Glucose"]
+//strip legends array is 8 wide( by 10 deep
+//testnames need to come from namelist
+
 l1="Leucocytes       :0neg:. :. :15trace:70+:125++:500+++:"; 
 l2="Nitrite          :neg:. :. :. :Positive:Positive:Positive:";
 l3="Urobilinogen     :0.2normal:16Normal:. . :33umol/L:66umol/L:131umol/L:";
 l4="Protein          :neg:trace:.:0.3g/L:1++:3+++:>20++++:";
-l5="pH               :5.0:6.0:6.5:7.0:7.5:8.0:8.5:"; l6="Blood            :neg:Trace10:Moderate80:trace:small25:moderate60:large200:";
+l5="pH               :5.0:6.0:6.5:7.0:7.5:8.0:8.5:"; 
+l6="Blood            :neg:Trace10:Moderate80:trace:small25:moderate60:large200:";
 l7="Specific Gravity :1.000:1.005:1.010:1.015:1.020:1.025:1.030:";
 l8="Ketone           :neg:.:0.5mmol/L:1.5mmol/L:4mmol/L:8mmol/L:16mmol/L:"
 l9="Bilirubin        :neg:. :. :. :small+:moderate++:large+++:";
 l10="Glucose         :neg:.:trace5.5mmol/L:14mmol/L:28++mmol/L:55+++mmol/L:>=111++++mmol/L:";
 diagvalues=[l1+"<br>",l2+"<br>",l3+"<br>",l4+"<br>",l5+"<br>",l6+"<br>",l7+"<br>",l8+"<br>",l9+"<br>",l10]+"<br>";
+
+//need to base spacings on multi-test data,eg yoffset,spotX,spotY,yoffset,spotX+islandX*i,spotY+islandY*i
+//but reference pages are not evenly spaced.
+
 // top left corners on reference canvas
-tlc=[208,35,208,125,208,200,208,295,208,380,208,450,208,545,208,630,208,720,208,800];
+
+tlc=multi_tlc[test_num];//[208,35,208,125,208,200,208,295,208,380,208,450,208,545,208,630,208,720,208,800];
 //plotit();
 const shownotes=true;
 
@@ -128,7 +170,8 @@ const ctx2 = canvas2.getContext("2d");
 //ctx2.fillStyle="orange";
 //ctx2.fillRect(0,0,50,850);
 img2=new Image();
-img2.src="mid_strip.png";//"one_strip.png";//"one_strip_max.png";//+"<br>".  
+img2.src="mid_strip.png";//"one_strip.png";//"one_strip_max.png";//+"<br>". //modify this for multi-tests 
+
 ctx2.drawImage(img2, 0, 0);
 
 //const canvas3 = document.getElementById("canvas3");//canvas3 shows reference image
@@ -136,7 +179,8 @@ const ctx3 = canvas3.getContext("2d");
 //ctx3.fillStyle="yellow";
 //ctx3.fillRect(0,0,650,850);
 img=new Image();
-img.src="reference.png";
+img.src=thisImage;                //for multi-test                                                   //modify this for multi-tests
+
 ctx3.drawImage(img, 0, 0);
 //draw diagvalues at tlc positions
 //for(i=0;i<diagvalues.length;i++)ctx3.fillText(diagvalues[i],tlc[i*2],tlc[i*2+1]);//put diags on canvas3
@@ -234,8 +278,8 @@ for(t=0;t<10;t++){  //ten tests
 
 }
 
-function loaded(){ //script draws fail if not loaded. ctx2 and ctx3 need explicit draws
-//alert("Loaded");
+function loaded(){ //script draws fail if not loaded. ctx2 and ctx3 need explicit draw
+//alert("Loaded "+img.src);
 isloaded=true;
 ctx2.drawImage(img2, 0, 0);
 ctx3.drawImage(img, 0, 0);
@@ -290,7 +334,7 @@ for(t=0;t<10;t++){
   document.getElementById("diagzone").innerHTML+="<H4>diagnosis_tag <br>"+diagvalues+"</H4>";
 }
 
-function showconfirm(event){ // responds to refernce click with notes about test name
+function showconfirm(event){ // responds to reference click with notes about test name
   X=event.clientX;
   ycoord=event.clientY;
 text=diag_notes.split("Home");

@@ -1,0 +1,23 @@
+/*
+Strip charts : Dimensions of varieties.
+
+Combur 9 :
+9 tests 5 Values. 50x50 pixel islands,about 60 X,70 Y separation
+test strips separation 7mm, total strip length 67mm
+image size 
+
+Siemens 10:
+10 tests, 7 Values, 65 X, 70 Y separation
+test strips separation 7mm total length 75mm
+45x28 Islands
+Image size 660x850
+
+Livingstone 10 :
+As for siemens.
+35x40 islands
+*/
+ref_image_src=["reference_images/Combur9.jpg","reference_images/Livingstone10.png","reference_images/Siemens10.png"]
+multi_test=["Combur,9,5,50,50,60,70","Siemens,10,7,45,28,65,70","Livingstone,10,7,35,40,65,70"];
+namelist=[["Leuk(c)cytes","Nitrit(i)(os)","Specific Gravity","Glucose","Keton(es)","Urobilinogene","Bilirubine,Blood","Haemoglobin"],["Leucocytes","Nitrite","Urobilinogen","Protein","pH","Blood","Specific Gravity","Ketone","Bilirubin","Glucose"],["LEU","NIT","URO","PRO","pH","BLO","SG","KET","BIL","GLU"]];
+//tlc_Roche.tlc_Livingstone.tlc_Siemens
+multi_tlc=[[280,15,280,90,280,167,280,273,280,360,280,435,280,520,280,590,350,680],[208,35,208,125,208,200,208,295,208,380,208,450,208,545,208,630,208,720,208,800],[186,91,457,166,186,236,186,321,186,386,186,481,186,542,186,624,186,698,186,795]];
