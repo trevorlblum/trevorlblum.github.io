@@ -1,4 +1,8 @@
 <!-- Make enquiry on Mashup.txt derived from Box-Bin.csv via Processing mashup.pde
+   14/3/2025 Should show detail.png as well as text for pdf's
+   5/2/2025 canot make words and multiple[0] do the same thing. Some parsing issue???
+   4/2/2025 WIP provide multiple item searches using "+". Problems with parsing " " and "+" delimiters
+   eg 'level shifter + opamp lm741' must parse as 'level shifter' and  'opamp lm741'
    1/2/2025 added boxcrry checkbox for query text associated box lines 
    Association only gets last line box number. Need to have multiple boxes capability
    also query 660nm yields 2 lines for box21 carry but only one line without
@@ -22,17 +26,12 @@
     17/6/2023 WIP multiple word search. Conjunction is to use all terms.
     modified to accept only if all terms present ie "pot 50k" or "ultra 40"
     28/6/2023 onclick should enlarge clicked image (self)- pretty much right. Function bigger deleted.
-    15/6/2023 line 47 <script ....></script> works but Komodo,
-    Sublime and browser complain. No answer yet
+
     14/6/2023 tidy up with new logo and expand line more informative
     added graphics ".png.jpg.jpeg.bmp" file extensions for direct display
     
     13/6/2023 Search function case-insensitive seems to work 
     fixed png name with spaces. Added search true/false based on default ..... in input.
-
-    WIP bigger clicks and function should expand clicked image NOT logo
-    WIP get .png and .jpg /.jpeg/.bmp for file image display working
-    WIP get search using space separated multiple terms
 
     12/6/2023 added parse for multiple images to expand.
     Needs to run from website - URL for imgdir works but startup and fetches are local.
@@ -69,7 +68,6 @@
 </head>
 
 <body>
-
 <h2>Box_Bin Catalogue Search 9/11/2024. <br>Enter case-insensitive search text (e.g. opamp lm741).<br>Explicit .png/.jpg/.bmp extension image is shown.<br>Click on search-retrieved images for bin details.<br>
 
   <div>
@@ -121,11 +119,18 @@ document.getElementById("showit").innerHTML="<br>This is the entry "+imgdir+x+" 
 
 //if(graphics.indexOf(x.substring(x.length-4))!=-1) 
   {
-    document.getElementById("showit").innerHTML+="<br>The input entered was "+textin.value;
+    document.getElementById("showit").innerHTML+="<br>The input entered was _"+textin.value+"_";
 
 // process the mashup text
-if(searching) search();
 
+words=textin.value.split(" ");
+
+
+if(searching){
+//alert("Search words "+words);   
+search(words);//textin.value.split(" "));
+
+}
 //document.getElementById("showit").innerHTML+="<br>This is the text in mashup.txt file <br>";
 
 if(!searching)
@@ -178,21 +183,30 @@ document.getElementById("result").innerHTML+="<img src=\""+img[i]+"\"  onclick=\
 //needs to invoke link if last item is .PDF
 
 }
-  if(parse[parse.length-1].toUpperCase().indexOf(".PDF")!=-1) document.getElementById("result").innerHTML+="<br>Detail item in line <a href=\""+ parse[parse.length-1]+"\">click this </a>";
+//WIP
+  if(parse[parse.length-1].toUpperCase().indexOf(".PDF")!=-1){
+    document.getElementById("result").innerHTML+="<br>Detail item in line "+"<img src=\"https://trevorblum.name/box_bin/images/detail.jpg\"></img>"+"<a href=\""+ parse[parse.length-1]+"\">click this </a>";
+  }
 }
 
-function search(){ //setup search for input text
+function search(words){ //setup search for input text. abcd defg retrieves where both in line
 //console.log("search invoked ");
 found=true;
- for(l=1;l<textdata.length;l++) // extract boxbin lines. Start at 1 to avoid .csv title line
+if(words=="" || words===undefined){
+   alert("undefined or empty words passed to search");
+return;  // don't do empty search
+}
+//var words=textin.value.split(" ");//replaced by call argument
+
+for(l=1;l<textdata.length;l++) // extract boxbin lines. Start at 1 to avoid .csv title line
   { 
     found=true;
-    var words=textin.value.split(" ");
+
     var thisname;
     thisname=textdata[l].split("|");//thisname= | separated items in line
     for(w=0;w<words.length;w++){
 //      if(l<10)console.log("Search term "+words[w]);
-      if((thisname[0]+thisname[5]).toUpperCase().indexOf(words[w].toUpperCase())===-1)found=false; 
+if((thisname[0]+thisname[5]).toUpperCase().indexOf(words[w].toUpperCase())===-1)found=false; 
      }     
       if(found===true)
       {
@@ -213,7 +227,7 @@ else
 document.getElementById("namestack").innerHTML+=thisname[0]+"<img src=\""+thisimage[i]+"\" width=\"50\" onclick =\"expand("+l+")\" title=\"Click to see https:// image\">:: ";
       }
    }
-   document.getElementById("namestack").innerHTML+="<h3><br>End of search results<br></h3>";  
+   document.getElementById("namestack").innerHTML+="<h3><br>End of search results for "+words+"<br></h3>";  
 }
 
 </script>
