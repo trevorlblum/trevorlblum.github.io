@@ -1,6 +1,11 @@
 <!DOCTYPE HTML> 
 <html>
 <!--- 
+Partial match in OR mode, ie not full word ie search word uel beck matches to Samuel Beckett.
+In AND mode, searches for partially ended match ie Samuel Beck matches, but not Sam Beckett.
+This differs from a word length match and has no facility for misspellings.
+
+15/3/2025 changed line number ( in all-boxes.txt ) to item number within box 
 11/11/2024 for all items search, don't parse the query so that it acts as a single string, not delimited words.
 11/11/2024 added reject identical result lines for multiple items in line
 5/11/2024 Removed NOT option - shows every line not containing - USELESS!
@@ -27,10 +32,10 @@
  <div class="grid-container" id="grid-container" >
 </div>
 <div class="qinput">
-<label for="qn">queryitems ( space separated ) Click enlarges image</label>
+<label for="qn">Enter queryitems (below) space-separated Click enlarges result image</label>
 <input id="qname" type="text" name="qn" value="Samuel Beckett" style="font-size: 30px"><br>
 </div>
-<div class="qclick" id="query" onclick="querytext()" >Click here for query </div>
+<div class="qclick" id="query" onclick="querytext()" >...Click here to execute query... </div>
 <div class="include"  ><img id="include" src="box0.jpg" width=400px height=400px onclick="enlarge(400)"></div>
 <div class="options">
 .......Set your query options here........<br>
@@ -45,7 +50,7 @@
 </div>
 
 <p id="thequery" ><br></p>
-<div class="query_result"> <p id="query_result"> query result goes here</p></div>
+<div class="query_result"> <p id="query_result"> query result appears here</p></div>
 <script id="all_boxes" type="text/javascript" src="all_boxes.txt"></script>
 
 <body>
@@ -54,6 +59,7 @@
 </body>
 
 <script>
+item=0; // item is line within box
 gridcount=5*5;
 boxlist=8;
 last_query_result="";
@@ -128,12 +134,13 @@ last_query_result="";
 //respect case
 if(respectcase){
 for(b=0;b<all_boxes_parse.length;b++){                //scan every line in all_boxes
- if(all_boxes_parse[b].substring(0,3)=="BOX")boxnum+=1;
+item+=1;
+ if(all_boxes_parse[b].substring(0,3)=="BOX"){boxnum+=1;item=1;}
  for(s=0;s<queryitems.length;s++){                     //compare with every query word
    if(anditems){queryitems=[""];queryitems[0]=thisquery;}  // fails query accepts all lines regardless
    if(all_boxes_parse[b].indexOf(queryitems[s])!=-1){  // item[s] found in line[b]
    if(last_query_result!=all_boxes_parse[b])           //don't show the same line multiple times
-    document.getElementById("query_result").innerHTML+="<br> BOX "+boxnum+" line "+b+":" +all_boxes_parse[b]; //add unique line to query_result
+    document.getElementById("query_result").innerHTML+="<br> BOX "+boxnum+" item "+item+":" +all_boxes_parse[b]; //add unique line to query_result
     found=true;
 // alert("found - queryitems "+queryitems[s]+" length "+queryitems.length+" This query "+thisquery);
     if(all_boxes_parse[b].substring(0,3).toUpperCase()!="BOX")gridimage(boxnum); //show thumbnail of box in grid if found
@@ -151,12 +158,13 @@ for(b=0;b<all_boxes_parse.length;b++){                //scan every line in all_b
 //ignore case
  if(!respectcase){
   for(b=0;b<all_boxes_parse.length;b++){
-  if(all_boxes_parse[b].substring(0,3)=="BOX")boxnum+=1;
+  item+=1;
+  if(all_boxes_parse[b].substring(0,3)=="BOX"){boxnum+=1;item=1;}
    for(s=0;s<queryitems.length;s++){
     if(anditems){queryitems=[""];queryitems[0]=thisquery.toUpperCase();}  // fails query accepts all lines regardless
     if(all_boxes_parse[b].toUpperCase().indexOf(queryitems[s].toUpperCase())!=-1){
     if(last_query_result!=all_boxes_parse[b])
-    document.getElementById("query_result").innerHTML+="<br> BOX "+boxnum+" line "+b+":" +all_boxes_parse[b];   
+    document.getElementById("query_result").innerHTML+="<br> BOX "+boxnum+" item "+item+":" +all_boxes_parse[b];   
     found=true;
 //    alert("found - queryitems "+queryitems[s]+" length "+queryitems.length+" This query "+queryitems);
     if(all_boxes_parse[b].substring(0,3).toUpperCase()!="BOX")gridimage(boxnum);
