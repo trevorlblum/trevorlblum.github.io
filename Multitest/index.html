@@ -1,5 +1,11 @@
 <!DOCTYPE html>
 <!-- 
+17/3/2025 fixed pick by setting ondragstart NOT click for canvasstrip
+17/3/2025 does invoke pick function during drag and drop from test strip (dropend nor click)
+16/3/2025 some canvas name changes for easier identification of origins
+NOTE: Reference image name from "Combur,9,5,50,50,60,70","Livingstone,10,7,35,40,65,70","Siemens,10,7,45,28,65,70"
+In test_profiles.txt as ref_image_src[].
+
 4/3/2025 test_profiles now comes from test_profiles.txt and reference images from reference_images/. Works but needs some tweaking for various test sets.
 1/3/2025 began multi-test changes. Done
 28/2/2025 looking at extending to Roche,Siemens and Livingstone test strips
@@ -16,7 +22,7 @@ a text display invoked by hover with size change, print and dismiss buttons.
 
 15/12/2024 added showconfirm (leucocytes) as start of user info facility.
            showconfirm now OK but might be on hover rather than subset of pick
-           could add .mouseover=showconfirm() for user readout on canvas3
+           could add .mouseover=showconfirm() for user readout on canvasref
            Need to learn about plotly and div space use.
 11/12/2024 tagmatch now working with compare to give test minima
 
@@ -31,7 +37,7 @@ a text display invoked by hover with size change, print and dismiss buttons.
 25/11/2024 modified for testing bigger colour patch, repositioned. fixed reference position
 10/9/2024 sets pickcolour from mouseY pos.
 9/9/2024 pick with press , drop with release. Mousemove event in canvas commented out.
-8/9/2024 Dragging and dropping to canvas3. Mouse drop coords relative to canvas3 coords.
+8/9/2024 Dragging and dropping to canvasref. Mouse drop coords relative to canvasref coords.
 27/8/2024 trouble getting text color to change. Forced document.getElementById("notes").style.color='#03f7ff';
 27/8/2024 added canvas crosshair cursor on mouse move/press and concatenated readout to 'notes'
 -->
@@ -49,8 +55,8 @@ a text display invoked by hover with size change, print and dismiss buttons.
 <body >
 
 <h4>Displaying mid-strip comparison 11/12/2024 NOTE: can only run from .name server<br></H4>
-<canvas id="canvas2" width="50px" height="875px" draggable="true"></canvas>
-<canvas id="canvas3" width="780px" height="880px" ondrop="dropit(event)" ondragover="allowDrop(event)"></canvas>
+<canvas id="canvasstrip" width="50px" height="875px" draggable="true" ondragstart="pick(event)" ></canvas>
+<canvas id="canvasref" width="780px" height="880px" ondrop="dropit(event)" ondragover="allowDrop(event)"></canvas>
 <div id="plotly" style="width:800px;height:450px;"></div>
 
 <p id="hovered-color"</p>
@@ -91,13 +97,13 @@ a text display invoked by hover with size change, print and dismiss buttons.
 <script>
 //============================script begins here ====================
 test_ID="Livingstone";
-test_num=1 //Livingstone for now 4/3/2025
+test_num=1 //Livingstone==1 for now 4/3/2025
 
-//alert("Test_profiles.txt"+multi_test);
-//alert("test name_list "+namelist[test_num]);
-//multi_test=["Combur,9,5,50,50,60,70","Siemens,10,7,45,28,65,70","Livingstone,10,7,35,40,65,70"];
+alert("test name_list "+namelist[test_num]);
 
-testvalues=multi_test[test_num].split(","); //Livingstone as first trial
+alert("Test_profiles.txt"+multi_test+" reference image "+ref_image_src);
+//from test_profiles.txt get multi_test, namelist and multi_tlc
+testvalues=multi_test[test_num].split(","); //Livingstone as default trial
 Manufacturer=testvalues[0];
 ntests=testvalues[1];
 nvalues=testvalues[2];
@@ -109,7 +115,7 @@ test_names=namelist[test_num];
 image_names=ref_image_src;
 thisImage=image_names[test_num];
 
-//alert("first test name of "+test_names.length+" names "+test_names[0]+" Image name "+thisImage);
+alert("first test name of "+test_names.length+" names "+test_names[0]+" Image name "+thisImage);
 
 matches=[];
 for(t=0;t<ntests;t++){
@@ -134,6 +140,7 @@ l7="Specific Gravity :1.000:1.005:1.010:1.015:1.020:1.025:1.030:";
 l8="Ketone           :neg:.:0.5mmol/L:1.5mmol/L:4mmol/L:8mmol/L:16mmol/L:"
 l9="Bilirubin        :neg:. :. :. :small+:moderate++:large+++:";
 l10="Glucose         :neg:.:trace5.5mmol/L:14mmol/L:28++mmol/L:55+++mmol/L:>=111++++mmol/L:";
+
 diagvalues=[l1+"<br>",l2+"<br>",l3+"<br>",l4+"<br>",l5+"<br>",l6+"<br>",l7+"<br>",l8+"<br>",l9+"<br>",l10]+"<br>";
 
 //need to base spacings on multi-test data,eg yoffset,spotX,spotY,yoffset,spotX+islandX*i,spotY+islandY*i
@@ -151,12 +158,14 @@ var pickcolour;
 const hoveredColor = document.getElementById("hovered-color");
 const selectedColor = document.getElementById("selected-color");// 
 
-const canvas2 = document.getElementById("canvas2");//canvas2 shows picked colour for drag/drop
-canvas2.addEventListener("click", (event) => pick(event, selectedColor));
+const canvasstrip = document.getElementById("canvasstrip");//canvasstrip shows picked colour for drag/drop
+canvasstrip.addEventListener("click", (event) => pick(event, selectedColor));
+canvasstrip.addEventListener( "dragend",(event)=>{event.preventDefault()});
 
-const canvas3=document.getElementById("canvas3");
-canvas3.addEventListener("click", (event) => showconfirm(event));
-canvas3.addEventListener("drop", (event) => {
+
+const canvasref=document.getElementById("canvasref");
+canvasref.addEventListener("click", (event) => showconfirm(event));
+canvasref.addEventListener("drop", (event) => {
   // prevent default action (open as a link for some elements)
   event.preventDefault();
   // move dragged element to the selected drop target
@@ -166,24 +175,24 @@ canvas3.addEventListener("drop", (event) => {
   }
 });
 
-const ctx2 = canvas2.getContext("2d");
-//ctx2.fillStyle="orange";
-//ctx2.fillRect(0,0,50,850);
+const ctxstrip = canvasstrip.getContext("2d");
+//ctxstrip.fillStyle="orange";
+//ctxstrip.fillRect(0,0,50,850);
 img2=new Image();
 img2.src="mid_strip.png";//"one_strip.png";//"one_strip_max.png";//+"<br>". //modify this for multi-tests 
 
-ctx2.drawImage(img2, 0, 0);
+ctxstrip.drawImage(img2, 0, 0);
 
-//const canvas3 = document.getElementById("canvas3");//canvas3 shows reference image
-const ctx3 = canvas3.getContext("2d");
-//ctx3.fillStyle="yellow";
-//ctx3.fillRect(0,0,650,850);
+//const canvasref = document.getElementById("canvasref");//canvasref shows reference image
+const ctxref = canvasref.getContext("2d");
+//ctxref.fillStyle="yellow";
+//ctxref.fillRect(0,0,650,850);
 img=new Image();
-img.src=thisImage;                //for multi-test                                                   //modify this for multi-tests
+img.src=thisImage;         //modify this for multi-tests (Combur...)
 
-ctx3.drawImage(img, 0, 0);
+ctxref.drawImage(img, 0, 0);
 //draw diagvalues at tlc positions
-//for(i=0;i<diagvalues.length;i++)ctx3.fillText(diagvalues[i],tlc[i*2],tlc[i*2+1]);//put diags on canvas3
+//for(i=0;i<diagvalues.length;i++)ctxref.fillText(diagvalues[i],tlc[i*2],tlc[i*2+1]);//put diags on canvasref
 //compare();//show strip/ref colour diffs now in loaded()
 //tagmatch();
 
