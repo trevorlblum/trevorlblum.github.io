@@ -1,0 +1,27 @@
+The Mozilla team suggests in their post about CORS that you should check for the existence of the withCredentials property to determine if the browser supports CORS via XHR. You can then couple with the existence of the XDomainRequest object to cover all browsers:
+
+function createCORSRequest(method, url){
+    var xhr = new XMLHttpRequest();
+    if ("withCredentials" in xhr){
+        xhr.open(method, url, true);
+    } else if (typeof XDomainRequest != "undefined"){
+        xhr = new XDomainRequest();
+        xhr.open(method, url);
+    } else {
+        xhr = null;
+    }
+    return xhr;
+}
+
+var request = createCORSRequest("get", "http://www.stackoverflow.com/");
+if (request){
+    request.onload = function() {
+        // ...
+    };
+    request.onreadystatechange = handler;
+    request.send();
+}
+
+Note that for the CORS method to work, you need to have access to any type of server header mechanic and can't simply access any third-party resource.
+
+Source: http://www.nczonline.net/blog/2010/05/25/cross-domain-ajax-with-cross-origin-resource-sharing/
