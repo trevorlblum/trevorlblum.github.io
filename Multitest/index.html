@@ -3,7 +3,7 @@
 21/3/2025 some tidying of displays, adjusting tlc's and added x spacing param
 20/3/2025 compare tlc's need fixing for combur and siemens-done for siemens and livingstone
 20/3/2025 compare needs to be called when manufacture is known. Combur is 9 items, so compare fails on fixed 10.
-18/3/2025 Roche tlc dies on fixed 10 for matches
+18/3/2025 Roche tlc dies on fixed 10 for matches-WIP
 17/3/2025 test strip displays need to be uniform size and position for pick and match.
 17/3/2025 fixed pick by setting ondragstart NOT click for canvasstrip
 17/3/2025 does invoke pick function during drag and drop from test strip (dropend nor click)
@@ -14,7 +14,7 @@ In test_profiles.txt as ref_image_src[].
 4/3/2025 test_profiles now comes from test_profiles.txt and reference images from reference_images/. Works but needs some tweaking for various test sets.
 
 <html
-><title> Multitest local  </title>
+><title> Multitest local  22/3</title>
 <head>
 	<!-- Load plotly.js into the DOM -->
 	<script src='plotly.js'></script>
@@ -26,7 +26,7 @@ In test_profiles.txt as ref_image_src[].
 
 <body >
 
-<h4 id="notice" >...Displaying mid-strip comparison 20/3/2025 NOTE: can only run from server localhost or trevorblum.name</H4>
+<h4 id="notice" >...Displaying mid-strip comparison 22/03/2025 NOTE: can only run from server localhost or trevorblum.name</H4>
 <canvas id="canvasstrip" width="50px" height="875px" draggable="true" ondragstart="pick(event)" ></canvas>
 <canvas id="canvasref" width="780px" height="880px" ondrop="dropit(event)" ondragover="allowDrop(event)"></canvas>
 <div id="plotly" style="width:800px;height:450px;"></div>
@@ -71,7 +71,7 @@ In test_profiles.txt as ref_image_src[].
 
 test_ID=["Combur","Siemens","Livingstone"];
 
-test_num=1;//Combur=0,Siemens=1,Livingstone=2 //siemens and livingstone swapped???
+test_num=2;//Combur=0,Siemens=1,Livingstone=2 //siemens and livingstone swapped???
 
 //alert("test name_list "+namelist[test_num]);
 
@@ -91,6 +91,8 @@ document.getElementById("notice").innerHTML+=" chosen test is "+test_ID[test_num
 diagvalues=diags[test_num];
 image_names=ref_image_src;
 space=refspacing[test_num];
+count=numoftests[test_num];
+//alert(" count "+count+" multi_tlc[test_num] "+multi_tlc[0]);
 //get diagvalues from test_profiles
 //alert(diagvalues);
 
@@ -113,9 +115,8 @@ document.getElementById("dropzone").innerHTML="//dropzone";
 
 // top left corners on reference canvas's from test_profiles.txt
 
-tlc=multi_tlc[test_num];//[208,35,208,125,208,200,208,295,208,380,208,450,208,545,208,630,208,720,208,800];
-//alert("tlc"+tlc);
-//plotit();
+tlc=multi_tlc[test_num];
+
 const shownotes=true;
 
 var rgbColor;

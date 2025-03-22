@@ -16,11 +16,11 @@ Livingstone 10 :
 As for siemens.
 35x40 islands
 */
-numoftests=[9,10,10];
+numoftests=[11,10,10];
 //ntests=numoftests[test_num];
 ref_image_src=["reference_images/Combur9.jpg","reference_images/Siemens10.png","reference_images/Livingstone10.png"];
 
-multi_test=["Combur,9,5,50,50,60,70","Siemens,10,7,45,28,65,70","Livingstone,10,7,35,40,65,70"];
+multi_test=["Combur,11,5,50,50,60,70","Siemens,10,7,45,28,65,70","Livingstone,10,7,35,40,65,70"];
 
 /*Combur Siemens Livingston*/
 
@@ -58,10 +58,12 @@ diags=[["Specific Gravity: 1.000:1.005:1.010:1.015:1.20:1.025:1.030:",
 "Bilirubin        :neg:. :. :. :small+:moderate++:large+++:",
 "Glucose          :neg:.:trace5.5mmol/L:14mmol/L:28++mmol/L:55+++mmol/L:>=111++++mmol/L:"]];
 
-refspacing=[99,70,79];
+rochediags=[0,7,5,1,2,4,10,8,3,9,6,6];
+refspacing=[60,70,79];
+refhorspacing=[72,79,82];
 namelist=[["Leuk(c)cytes","Nitrit(i)(os)","Specific Gravity","Glucose","Keton(es)","Urobilinogene","Bilirubine,Blood","Haemoglobin"],
 ["LEU","NIT","URO","PRO","pH","BLO","SG","KET","BIL","GLU"],
 ["Leucocytes","Nitrite","Urobilinogen","Protein","pH","Blood","Specific Gravity","Ketone","Bilirubin","Glucose"]];
 
 //tlc_Roche.tlc_Livingstone.tlc_Siemens
-multi_tlc=[[280,15,280,90,280,167,280,273,280,360,280,435,280,520,280,590,350,680],[170,75,240,150,240,220,240,310,240,375,240,465,240,525,240,605,230,680,240,785],[120,30,136,110,130,200,136,290,136,360,136,450,136,542,136,624,115,710,120,790]];
+multi_tlc=[ [120,25,160,90,167,160,273,240,360,300,435,370,520,440,590,510,350,580,350,650,350,720],[170,75,240,150,240,220,240,310,240,375,240,465,240,525,240,605,230,680,240,785],[130,30,136,110,130,200,136,290,136,360,136,450,136,542,136,624,115,710,120,790]];
