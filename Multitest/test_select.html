@@ -1,0 +1,68 @@
+<!---->
+<!DOCTYPE html>
+<html>
+<title> Multitest Selection </title>
+<h2>Select the Urine test set from the drop-down</a>
+<div class='buttons' align='left' >
+<img src='tlb2.png' onclick='chartfreqs()' >
+
+</div>
+</h2>
+<head>
+<style>
+ .buttons { 
+        left: 15px;
+        top: 150px;
+        width:170px;
+        height:100px;
+        background-color: #aaaaff; 
+      }
+ .matrix{
+      align: 'center';
+      left: 200px;
+      width:500px;
+      top:450px;
+     }
+.div1{
+    position:Absolute;
+    top:55px;
+    left:30px;
+    align: 'center';
+    }
+.clues{
+    position:fixed;
+    align: left;
+    top: 20px;
+    }
+.rectangle{
+    width:460px;height:460px;background:#aaaaff;
+   }
+</style>
+
+<div id='clues'>
+<div id='header' >
+
+<div id='div1' align='left'></div>
+<div id='matrix' </div>
+
+</head>
+<body>
+<p id="selectedtest"></p>
+<div class='div1'>
+<select id="selected" onclick="showselect()" size=3>
+<option value="Combur 9">Combur 9</option>
+<option value="Siemens 10SG">Siemens 10SG</option>
+<option value="Livingstone 10SG">Livingstone 10SG</option>
+</select>
+
+</div>
+</body>
+
+<script>
+function showselect(){
+//confirm("Is that your choice?");
+document.getElementById("selectedtest").innerHTML="You have selected "+document.getElementById("selected").value;
+}
+</script>
+
+</html> 

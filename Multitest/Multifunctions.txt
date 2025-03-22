@@ -1,5 +1,5 @@
 //function block for Multitest
-
+//fixed 10's should be ntests (to suit Combur with 9)
 function allowDrop(ev) {
   ev.preventDefault();
 }
@@ -7,7 +7,7 @@ function drag(ev){
   alert("drag invoked");
 }
 
-function pick(event, destination) {
+function pick(event) {
 //alert("In Pick");
   const bounding = canvasstrip.getBoundingClientRect();
   const x = event.clientX - bounding.left;
@@ -30,8 +30,6 @@ document.getElementById("notes").style.color='rgb('+colour+')'; //write note in 
 
 //alert("(notes).style.color "+document.getElementById("notes").style.color);
 
-  destination.style.background = rgbColor;//'destination is null'
-//  if(shownotes)destination.textContent = rgbColor;
  return pickcolour;
 }
 
@@ -41,7 +39,7 @@ function dropit(ev){
   dropY=ev.clientY-80;
   ev.preventDefault();
   dropcolour=ctxref.getImageData(dropX,dropY,1,1);
-  ctxref.drawImage(img, 0, 0);
+  ctxref.drawImage(refimage, 0, 0);
   r=pickcolour.data[0];
   g=pickcolour.data[1];
   b=pickcolour.data[2];
@@ -67,22 +65,24 @@ function lsq( c1, c2){
 
 function compare(){  //do compare of strip colours to reference colours
 
-for(t=0;t<10;t++){  //ten tests
-//   alert("compare "+t+" "+tlc[t*2+1]);
-   strip_data=ctxstrip.getImageData(30,tlc[t*2+1],10,10);
+for(t=0;t<10;t++){  //ten tests - error on roche with only 9 - ntests???
+   strip_data=ctxstrip.getImageData(30,tlc[t*2+1]+10,10,10);
+   ctxstrip.fillStyle='rgb(0,0,0)';
+//   ctxstrip.fillRect(25,tlc[t*2+1]+10,10,10);
+   ctxref.fillStyle='rgb(0,0,0)';//'+red+","+green+","+blue+')';
    for(r=0;r<7;r++){ //seven refs
-       ref_data=ctxref.getImageData(80+r*79,tlc[t*2+1]+20,1,1);
+       ref_data=ctxref.getImageData(tlc[0]+r*space+30,tlc[t*2+1]+20,1,1);
+//       ctxref.fillRect(tlc[0]+r*space+30,tlc[t*2+1]+25,10,10);
        red=ref_data.data[0];
        green=ref_data.data[1];
        blue=ref_data.data[2];
        ctxref.fillStyle='rgb('+red+","+green+","+blue+')';
-       //alert("fillStyle "+ctxref.fillStyle+ "colour ");
-       ctxref.fillRect(r*79+140,tlc[t*2+1]-20,40,15); //show ref colour pickup
-       //alert("comparing "+t+r+" "+strip_data.data[0]+" "+ref_data.data[0]); 
+       ctxref.fillRect(tlc[0]+10+r*space,tlc[t*2+1],40,15); //show ref colour pickup
+       //alert("comparing "+t+r+" : "+strip_data.data[0]+" "+ref_data.data[0]); 
        diff=lsq(strip_data,ref_data);
        matches[t][r]=diff;  // used by tagmatch which picks minimum value in test [t]
        ctxref.fillStyle='rgb(255,255,255)';
-       ctxref.fillText(parseInt(diff),145+r*79,tlc[t*2+1]-10);
+       ctxref.fillText(parseInt(diff),tlc[0]+20+r*space,tlc[t*2+1]+10);
        for(i=0;i<diagvalues.length;i++)ctxref.fillText(diagvalues[i],tlc[i*2],tlc[i*2+1]);
     }
  }
@@ -91,22 +91,29 @@ for(t=0;t<10;t++){  //ten tests
 }
 
 function loaded(){ //script draws fail if not loaded. ctxstrip and ctxref need explicit draw
-//alert("Loaded "+img.src);
+//alert("Loaded "+refimage.src);
 isloaded=true;
-ctxstrip.drawImage(img2, 0, 0);
-ctxref.drawImage(img, 0, 0);
+ctxstrip.drawImage(stripimage, 0, 0);
+ctxref.drawImage(refimage, 0, 0);
+
+//compare fails on combur with 9 items when called this early.
 compare();
 tagmatch()
 //document.getElementById("body").innerHTML+="<br><h4>Loaded</H4>";
 }
 
 function plotit(minima){
-  mean=(Math.max(minima)-Math.min(minima))/2
+  minmax=Math.max(minima);
+  minmin=Math.min(minima);
+  alert("max , min "+minmax+" : "+minmin+"\n minima "+minima+" test "+Math.max(0,1,2));
+  mean=(minmax-minmin)/2
+  mininverse=[0,0,0,0,0,0,0,0,0,0];
+  for(i=0;i<minima.length;i++)mininverse[i]=minima[i]-mean;
   layout={
   grid:{rows:1,columns:2,pattern:'independent'},
   };
   data1={
-  x:[1,2,3,4,5,6,7,8,9,10],y:minima,type:'bar'},{margin:{t:0}};
+  x:[1,2,3,4,5,6,7,8,9,10],y:mininverse,type:'bar'},{margin:{t:0}};
   data2={
     x:[1,10],y:[4,4],type:'line'},{margin:{t:0}};
 ;
@@ -117,6 +124,7 @@ function plotit(minima){
 //  Plotly.newPlot(Linechart,[{
 //  x: [1,2,3,4,5,6,7,8,9,10], y:minima, type:'line'}],{
 //  margin:{t:0}};
+  alert("minima "+minima+"\n Inverse "+mininverse+"\n mean "+mean);
 }
 
 function tagmatch(){ //write diagnostic texts for minimal match to file
@@ -140,10 +148,10 @@ for(t=0;t<10;t++){
   matchat[t]=thisx;
   }
   document.getElementById("dropzone").innerHTML+="<br>"+test_names[t]+" minimum is "+parseInt(minmatch[t])+" column "+matchat[t];
-//  plotit(minmatch);
-  plotit(matchat);
  }
-  document.getElementById("diagzone").innerHTML+="<H4>diagnosis_tag <br>"+diagvalues+"</H4>";
+  plotit(minmatch);
+//  plotit(matchat);
+  document.getElementById("diagzone").innerHTML+="<H4>diagnosis_tag diagvalues <br>"+ diagvalues+"</H4>";
 }
 
 function showconfirm(event){ // responds to reference click with notes about test name

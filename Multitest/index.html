@@ -1,5 +1,10 @@
 <!DOCTYPE html>
 <!-- 
+21/3/2025 some tidying of displays, adjusting tlc's and added x spacing param
+20/3/2025 compare tlc's need fixing for combur and siemens-done for siemens and livingstone
+20/3/2025 compare needs to be called when manufacture is known. Combur is 9 items, so compare fails on fixed 10.
+18/3/2025 Roche tlc dies on fixed 10 for matches
+17/3/2025 test strip displays need to be uniform size and position for pick and match.
 17/3/2025 fixed pick by setting ondragstart NOT click for canvasstrip
 17/3/2025 does invoke pick function during drag and drop from test strip (dropend nor click)
 16/3/2025 some canvas name changes for easier identification of origins
@@ -7,40 +12,7 @@ NOTE: Reference image name from "Combur,9,5,50,50,60,70","Livingstone,10,7,35,40
 In test_profiles.txt as ref_image_src[].
 
 4/3/2025 test_profiles now comes from test_profiles.txt and reference images from reference_images/. Works but needs some tweaking for various test sets.
-1/3/2025 began multi-test changes. Done
-28/2/2025 looking at extending to Roche,Siemens and Livingstone test strips
-could annotate chart with test names. - Done
 
-This Index.htlm lives here because it does not work unless server executed.(CORS)
-hence removed from local trevorblum.name folder.
-
-For changes see test_strip_dimensions.txt. Involves strip and reference spacing,
-strip and reference island number size and spacing and test label position. Done
-
-BTW confirm is a javascript builtin with cancel/OK buttons. Maybe replace with
-a text display invoked by hover with size change, print and dismiss buttons.
-
-15/12/2024 added showconfirm (leucocytes) as start of user info facility.
-           showconfirm now OK but might be on hover rather than subset of pick
-           could add .mouseover=showconfirm() for user readout on canvasref
-           Need to learn about plotly and div space use.
-11/12/2024 tagmatch now working with compare to give test minima
-
-10/12/2024 Finally solved the on-load redraw/reload canvas issue with a loaded() function
-7/12/2024 tlc and positioning need work.
-6/12/2024 diagvalues a proper mess but working.
-6/12/2024 pick and drop working ok now need to do scan/compare etc.
-          had to change pickcolour to get drag/drop correct, now pickcolour.data as for dropcolour
-          Math.sqrt in lsq now all ok.
-28/11/2024 downloaded plotly.js as local file to javascript folder. Added test plot
-27/11/2024 pick and drop working. Now do perceptual compare across reference strip.
-25/11/2024 modified for testing bigger colour patch, repositioned. fixed reference position
-10/9/2024 sets pickcolour from mouseY pos.
-9/9/2024 pick with press , drop with release. Mousemove event in canvas commented out.
-8/9/2024 Dragging and dropping to canvasref. Mouse drop coords relative to canvasref coords.
-27/8/2024 trouble getting text color to change. Forced document.getElementById("notes").style.color='#03f7ff';
-27/8/2024 added canvas crosshair cursor on mouse move/press and concatenated readout to 'notes'
--->
 <html
 ><title> Multitest local  </title>
 <head>
@@ -54,7 +26,7 @@ a text display invoked by hover with size change, print and dismiss buttons.
 
 <body >
 
-<h4>Displaying mid-strip comparison 11/12/2024 NOTE: can only run from .name server<br></H4>
+<h4 id="notice" >...Displaying mid-strip comparison 20/3/2025 NOTE: can only run from server localhost or trevorblum.name</H4>
 <canvas id="canvasstrip" width="50px" height="875px" draggable="true" ondragstart="pick(event)" ></canvas>
 <canvas id="canvasref" width="780px" height="880px" ondrop="dropit(event)" ondragover="allowDrop(event)"></canvas>
 <div id="plotly" style="width:800px;height:450px;"></div>
@@ -96,14 +68,16 @@ a text display invoked by hover with size change, print and dismiss buttons.
 
 <script>
 //============================script begins here ====================
-test_ID="Livingstone";
-test_num=1 //Livingstone==1 for now 4/3/2025
+
+test_ID=["Combur","Siemens","Livingstone"];
+
+test_num=1;//Combur=0,Siemens=1,Livingstone=2 //siemens and livingstone swapped???
 
 //alert("test name_list "+namelist[test_num]);
 
 //alert("Test_profiles.txt"+multi_test+" reference image "+ref_image_src);
 //from test_profiles.txt get multi_test, namelist and multi_tlc
-testvalues=multi_test[test_num].split(","); //Livingstone as default trial
+testvalues=multi_test[test_num].split(","); 
 Manufacturer=testvalues[0];
 ntests=testvalues[1];
 nvalues=testvalues[2];
@@ -112,10 +86,15 @@ spotY=testvalues[4];
 islandX=testvalues[5];
 islandY=testvalues[6];
 test_names=namelist[test_num];
+document.getElementById("notice").innerHTML+=" chosen test is "+test_ID[test_num]+"<br>";
+//alert("test names "+test_ID[test_num]);
+diagvalues=diags[test_num];
 image_names=ref_image_src;
-thisImage=image_names[test_num];
+space=refspacing[test_num];
+//get diagvalues from test_profiles
+//alert(diagvalues);
 
-//alert("first test name of "+test_names.length+" names "+test_names[0]+" Image name "+thisImage);
+//alert("first test name of "+test_names.length+" names "+test_names[0]+" Image name "+image_names[test_num]);
 
 matches=[];
 for(t=0;t<ntests;t++){
@@ -128,27 +107,14 @@ minmatch=[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0];
 document.getElementById("dropzone").innerHTML="//dropzone";
 
 //strip legends array is 8 wide( by 10 deep
-//testnames need to come from namelist
-
-l1="Leucocytes       :0neg:. :. :15trace:70+:125++:500+++:"; 
-l2="Nitrite          :neg:. :. :. :Positive:Positive:Positive:";
-l3="Urobilinogen     :0.2normal:16Normal:. . :33umol/L:66umol/L:131umol/L:";
-l4="Protein          :neg:trace:.:0.3g/L:1++:3+++:>20++++:";
-l5="pH               :5.0:6.0:6.5:7.0:7.5:8.0:8.5:"; 
-l6="Blood            :neg:Trace10:Moderate80:trace:small25:moderate60:large200:";
-l7="Specific Gravity :1.000:1.005:1.010:1.015:1.020:1.025:1.030:";
-l8="Ketone           :neg:.:0.5mmol/L:1.5mmol/L:4mmol/L:8mmol/L:16mmol/L:"
-l9="Bilirubin        :neg:. :. :. :small+:moderate++:large+++:";
-l10="Glucose         :neg:.:trace5.5mmol/L:14mmol/L:28++mmol/L:55+++mmol/L:>=111++++mmol/L:";
-
-diagvalues=[l1+"<br>",l2+"<br>",l3+"<br>",l4+"<br>",l5+"<br>",l6+"<br>",l7+"<br>",l8+"<br>",l9+"<br>",l10]+"<br>";
 
 //need to base spacings on multi-test data,eg yoffset,spotX,spotY,yoffset,spotX+islandX*i,spotY+islandY*i
 //but reference pages are not evenly spaced.
 
-// top left corners on reference canvas
+// top left corners on reference canvas's from test_profiles.txt
 
 tlc=multi_tlc[test_num];//[208,35,208,125,208,200,208,295,208,380,208,450,208,545,208,630,208,720,208,800];
+//alert("tlc"+tlc);
 //plotit();
 const shownotes=true;
 
@@ -159,8 +125,8 @@ const hoveredColor = document.getElementById("hovered-color");
 const selectedColor = document.getElementById("selected-color");// 
 
 const canvasstrip = document.getElementById("canvasstrip");//canvasstrip shows picked colour for drag/drop
-canvasstrip.addEventListener("click", (event) => pick(event, selectedColor));
-canvasstrip.addEventListener( "dragend",(event)=>{event.preventDefault()});
+//canvasstrip.addEventListener("click", (event) => pick(event, selectedColor));
+//canvasstrip.addEventListener( "dragend",(event)=>{event.preventDefault()});
 
 
 const canvasref=document.getElementById("canvasref");
@@ -178,19 +144,21 @@ canvasref.addEventListener("drop", (event) => {
 const ctxstrip = canvasstrip.getContext("2d");
 //ctxstrip.fillStyle="orange";
 //ctxstrip.fillRect(0,0,50,850);
-img2=new Image();
-img2.src="mid_strip.png";//"one_strip.png";//"one_strip_max.png";//+"<br>". //modify this for multi-tests 
 
-ctxstrip.drawImage(img2, 0, 0);
+stripimage=new Image();
+stripimagesources=["roche test strips/Roche_central.png","siemens test strips/siemens_max.png","livingstone test strip/strips/one_strip_max.png"];
+//alert("Strip png "+stripimagesources[test_num]); 
+stripimage.src=stripimagesources[test_num];
+ctxstrip.drawImage(stripimage, 0, 0);
 
 //const canvasref = document.getElementById("canvasref");//canvasref shows reference image
 const ctxref = canvasref.getContext("2d");
 //ctxref.fillStyle="yellow";
 //ctxref.fillRect(0,0,650,850);
-img=new Image();
-img.src=thisImage;         //modify this for multi-tests (Combur...)
+refimage=new Image();
+refimage.src=image_names[test_num];         //modified for multi-tests (Combur...)
 
-ctxref.drawImage(img, 0, 0);
+ctxref.drawImage(refimage, 0, 0);
 //draw diagvalues at tlc positions
 //for(i=0;i<diagvalues.length;i++)ctxref.fillText(diagvalues[i],tlc[i*2],tlc[i*2+1]);//put diags on canvasref
 //compare();//show strip/ref colour diffs now in loaded()
