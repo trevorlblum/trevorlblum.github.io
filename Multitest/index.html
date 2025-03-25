@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <!-- 
+25/3/2025 added select for test-strip and example choices ( pretty awful really...)
+25/3/2025 needs style sheet to reduce clutter in index.html
 25/3/2025 added example test strips as strip_num from 'examples.txt'
 21/3/2025 some tidying of displays, adjusting tlc's and added x spacing param
 20/3/2025 compare tlc's need fixing for combur and siemens-done for siemens and livingstone
@@ -28,7 +30,7 @@ In test_profiles.txt as ref_image_src[].
 
 <body >
 
-<h4 id="notice" >...Displaying mid-strip comparison 22/03/2025 NOTE: can only run from server localhost or trevorblum.name</H4>
+<h4 id="notice" > 25/03/2025 CORS restrictions mean only runs from server localhost or trevorblum.name</H4>
 <canvas id="canvasstrip" width="50px" height="875px" draggable="true" ondragstart="pick(event)" ></canvas>
 <canvas id="canvasref" width="780px" height="880px" ondrop="dropit(event)" ondragover="allowDrop(event)"></canvas>
 <div id="plotly" style="width:800px;height:450px;"></div>
@@ -38,6 +40,15 @@ In test_profiles.txt as ref_image_src[].
 
 <p id="notes"></p> 
 <style>
+.choices{
+        width: 670px;
+        height: 30px;
+        top:20px;
+        left:800px;
+        margin-bottom: 20px;
+        background: yellow;
+        position:absolute;
+}   
 .diagzone {
         width: 800px;
         height: 200px;
@@ -48,7 +59,7 @@ In test_profiles.txt as ref_image_src[].
 }
 .dropzone {
   width: 600px;
-  height: 200px;
+  height: 250px;
   background: orange;
   margin: 10px;
   padding: 10px;
@@ -66,15 +77,42 @@ In test_profiles.txt as ref_image_src[].
 <div class="dropzone" id="dropzone"></div>
 <div class="Plotzone" id="plotzone"></div>
 
+<div class="choices" id="choicezone">
+<select name="testchoice" id="testchoice">
+<option value="Combur">Combur</option>
+  <optgroup label="example">
+   <option value="0,0">Specific Gravity</option>
+   <option value="0,1">Leucocytes</option>
+   <option value="0,2">Nitrites</option>
+</optgroup>
+<option value="Siemens">Siemens </option>
+  <optgroup label="example">
+   <option value="1,0" >Leucocytes</option>
+   <option value="1,1" >Nitrites</option>
+   <option value="1,2">Urobilinogen</option>
+</optgroup>
+<option value="Livingstone"> Livingstone</option>
+  <optgroup label="example">
+   <option value="2,0">Leucocytes</option>
+   <option value="2,1">Nitrites</option>
+   <option value="2,2">Urobilinogen</option>
+</optgroup>
+</select>
+</div>
 </body id="body">
 
 <script>
 //============================script begins here ====================
 
+//alert("Choices checked "+document.getElementById("testchoice").value);
+test_choice=document.getElementById("testchoice").value
+test_num=test_choice.substring(0,1);
+strip_num=test_choice.substring(2,3);
+alert(test_num+" strip_num "+strip_num);
 test_ID=["Combur","Siemens","Livingstone"];
 
-test_num=0;//Combur=0,Siemens=1,Livingstone=2
-strip_num=2;//example_strips[test_num][item];
+//test_num=0;//Combur=0,Siemens=1,Livingstone=2
+//strip_num=1;//example_strips[test_num][item];
 
 //alert("test name_list "+namelist[test_num]);
 
@@ -155,7 +193,7 @@ stripimagesources=["roche test strips/Roche_central.png","siemens test strips/si
 //stripimage.src=stripimagesources[test_num];
 
 stripimage.src=example_strips[test_num][strip_num];
-alert(stripimage.src);
+//alert(stripimage.src);
 ctxstrip.drawImage(stripimage, 0, 0);
 
 //const canvasref = document.getElementById("canvasref");//canvasref shows reference image
