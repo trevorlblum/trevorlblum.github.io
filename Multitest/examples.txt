@@ -1,0 +1,3 @@
+example_strips=[["roche test strips/Roche_central.png"],
+["siemens test strips/siemens_min.png"],
+["livingstone test strips/leucocytes_nitrites_v.png","livingstone test strips/leucocytes_v.png","livingstone test strips/one_strip_max.png","livingstone test strips/one_strip_unused.png"]];
