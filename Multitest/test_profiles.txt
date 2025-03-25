@@ -16,6 +16,7 @@ Livingstone 10 :
 As for siemens.
 35x40 islands
 */
+
 numoftests=[11,10,10];
 //ntests=numoftests[test_num];
 ref_image_src=["reference_images/Combur9.jpg","reference_images/Siemens10.png","reference_images/Livingstone10.png"];
