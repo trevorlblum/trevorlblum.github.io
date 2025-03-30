@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <!-- 
+28/3/2025 adding pull-down reload-page onchange
 25/3/2025 added select for test-strip and example choices ( pretty awful really...)
 25/3/2025 needs style sheet to reduce clutter in index.html
 25/3/2025 added example test strips as strip_num from 'examples.txt'
@@ -78,7 +79,7 @@ In test_profiles.txt as ref_image_src[].
 <div class="Plotzone" id="plotzone"></div>
 
 <div class="choices" id="choicezone">
-<select name="testchoice" id="testchoice">
+<select name="testchoice" id="testchoice" onchange="reload_page()" >
 <option value="Combur">Combur</option>
   <optgroup label="example">
    <option value="0,0">Specific Gravity</option>
@@ -209,6 +210,9 @@ ctxref.drawImage(refimage, 0, 0);
 //compare();//show strip/ref colour diffs now in loaded()
 //tagmatch();
 
+function reload_page(){
+location.reload();
+}
 // =====================end of javascript mainline code================================
 
 
