@@ -83,7 +83,7 @@ for(t=0;t<count;t++){  //ten tests - error on roche with only 9 - ntests???
        matches[t][r]=diff;  // used by tagmatch which picks minimum value in test [t]
        ctxref.fillStyle='rgb(255,255,255)';
        ctxref.fillText(parseInt(diff),tlc[0]+20+r*space,tlc[t*2+1]+10);
-       for(i=0;i<diagvalues.length;i++)ctxref.fillText(diagvalues[i],tlc[i*2],tlc[i*2+1]);
+       for(i=0;i<diagvalues.length;i++)ctxref.fillText(diagvalues[i]+"<br>",tlc[i*2],tlc[i*2+1]);
     }
  }
 //       document.getElementById("dropzone").innerHTML+="<H4>Strip legend</H4><br>"+diagvalues;
