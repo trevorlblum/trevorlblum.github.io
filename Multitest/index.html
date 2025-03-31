@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <!-- 
-30/3/2025 Could not align diagvalues texts with <br> or \n. Looks messy - fixit!
+31/3/2025 adjuatments and diagnosis values list fixed
+30/3/2025 Could not align diagvalues texts with <br> or \n. Looks messy fixed!
 30/3/2025 moved plotly up and left. Tested index.php if iframe works.
 29/3/2025 made livingstone the selected default to overcome first load issue
 29/3/2025 made group defaults "0,0" "1.0" and "2,0" done
@@ -58,15 +59,15 @@ In test_profiles.txt as ref_image_src[].
 .diagzone {
         width: 600px;
         height: 300px;
-        top:450px;
-        left:800px;
-        margin-bottom: 20px;
+        top:420px;
+        left:850px;
+        margin: 10px;
         background: yellow;
         position:absolute;
 }
 .dropzone {
   top:700px;
-  left:800px;
+  left:850px;
   width: 600px;
   height: 250px;
   background: orange;
@@ -79,7 +80,7 @@ In test_profiles.txt as ref_image_src[].
   top:50px;
   left:50%;
   width: 600px;
-  height: 400px;
+  height: 350px;
   margin: 10px;
   padding: 10px;
 }
@@ -141,13 +142,10 @@ islandY=testvalues[6];
 test_names=namelist[test_num];
 document.getElementById("notice").innerHTML+=" chosen test is "+test_ID[test_num]+"<br>";
 //alert("test names "+test_ID[test_num]);
-diagvalues=diags[test_num];
 image_names=ref_image_src;
 space=refspacing[test_num];
 count=numoftests[test_num];
 //alert(" count "+count+" multi_tlc[test_num] "+multi_tlc[0]);
-//get diagvalues from test_profiles
-//alert(diagvalues);
 
 //alert("first test name of "+test_names.length+" names "+test_names[0]+" Image name "+image_names[test_num]);
 
@@ -217,10 +215,6 @@ refimage=new Image();
 refimage.src=image_names[test_num];         //modified for multi-tests (Combur...)
 
 ctxref.drawImage(refimage, 0, 0);
-//draw diagvalues at tlc positions
-//for(i=0;i<diagvalues.length;i++)ctxref.fillText(diagvalues[i],tlc[i*2],tlc[i*2+1]);//put diags on canvasref
-//compare();//show strip/ref colour diffs now in loaded()
-//tagmatch();
 
 function reload_page(){
   location.reload();

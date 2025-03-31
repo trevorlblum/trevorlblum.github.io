@@ -83,7 +83,7 @@ for(t=0;t<count;t++){  //ten tests - error on roche with only 9 - ntests???
        matches[t][r]=diff;  // used by tagmatch which picks minimum value in test [t]
        ctxref.fillStyle='rgb(255,255,255)';
        ctxref.fillText(parseInt(diff),tlc[0]+20+r*space,tlc[t*2+1]+10);
-       for(i=0;i<diagvalues.length;i++)ctxref.fillText(diagvalues[i]+"<br>",tlc[i*2],tlc[i*2+1]);
+      // for(i=0;i<diagvalues.length;i++)ctxref.fillText(diagvalues[i]+"<br>",tlc[i*2],tlc[i*2+1]);
     }
  }
 //       document.getElementById("dropzone").innerHTML+="<H4>Strip legend</H4><br>"+diagvalues;
@@ -149,7 +149,12 @@ for(t=0;t<numoftests[test_num];t++){
  }
 //  plotit(minmatch);
   plotit(matchat);
-  document.getElementById("diagzone").innerHTML+="<H4>diagnosis_tag diagvalues <br>"+ diagvalues+"</H4>";
+  diagvalues=[""];
+  document.getElementById("diagzone").innerHTML="<H4>diagnosis_tag diagvalues <br>"+"</H4>";
+  for(i=0;i<diags[test_num].length;i++){
+    diagvalues+=diags[test_num][i]+"<br>";
+  }
+  document.getElementById("diagzone").innerHTML+=diagvalues;
 }
 
 function showconfirm(event){ // responds to reference click with notes about test name
