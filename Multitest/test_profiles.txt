@@ -1,8 +1,9 @@
 /*
+1/4/2025 updated Combur names for dropzone
 Strip charts : Dimensions of varieties.
 
-Combur 9 :
-9 tests 5 Values. 50x50 pixel islands,about 60 X,70 Y separation
+Combur 10 : // not all rows have 7 active values row 3  has only cols 3 and 4 active.
+11 tests 7 Values. 50x50 pixel islands,about 60 X,70 Y separation
 test strips separation 7mm, total strip length 67mm
 image size 
 
@@ -18,11 +19,12 @@ As for siemens.
 */
 
 
-numoftests=[11,10,10];
+numoftests=[10,10,10]; //roche clags at 11 tests
 //ntests=numoftests[test_num];
 ref_image_src=["reference_images/Combur9.jpg","reference_images/Siemens10.png","reference_images/Livingstone10.png"];
 
-multi_test=["Combur,11,5,50,50,60,70","Siemens,10,7,45,28,65,70","Livingstone,10,7,35,40,65,70"];
+// manufacturer,number of tests,number of test values,tlc spacing
+multi_test=["Combur,11,7,50,50,60,70","Siemens,10,7,45,28,65,70","Livingstone,10,7,35,40,65,70"];
 
 /*Combur Siemens Livingston*/
 
@@ -35,7 +37,7 @@ diags=[["Specific Gravity: 1.000:1.005:1.010:1.015:1.20:1.025:1.030:",
 "Ketones	:.:.:neg:1+:2+:3+:.:",
 "Urobilogen	:.:.:normal:1+:2+:3+:4+",
 "Bilirubin	:neg:1+:2+:3+:.:",
-"Blood	:.:.:neg:1+:2+:3+:4+",
+"Blood		:.:.:neg:1+:2+:3+:4+",
 "Haemoglobin	:.:.:.:1+:2+:3+:4+"],
 
 ["LEU	:negative:,:,:trace:small:moderate:large:",
@@ -60,12 +62,13 @@ diags=[["Specific Gravity: 1.000:1.005:1.010:1.015:1.20:1.025:1.030:",
 "Bilirubin        :neg:. :. :. :small+:moderate++:large+++:",
 "Glucose          :neg:.:trace5.5mmol/L:14mmol/L:28++mmol/L:55+++mmol/L:>=111++++mmol/L:"]];
 
-rochediags=[0,7,5,1,2,4,10,8,3,9,6,6];
-refspacing=[60,70,79];
-refhorspacing=[72,79,82];
-namelist=[["Leuk(c)cytes","Nitrit(i)(os)","Specific Gravity","Glucose","Keton(es)","Urobilinogene","Bilirubine,Blood","Haemoglobin"],
+//roche diags SG pH Leu Nit Pro Glu Ket Uro Bil Blo Haem
+rochediags=[0,7,5,1,2,4,10,8,3,9,6];
+refspacing=[60,70,79];//horizontal spacing on reference
+refhorspacing=[70,79,82];//vertical spacing on reference
+namelist=[["Leuk(c)cytes","Nitrit(i)(os)","Protein","Specific Gravity","Glucose","Keton(es)","Urobilinogene","Bilirubine","Blood","Haemoglobin"],
 ["LEU","NIT","URO","PRO","pH","BLO","SG","KET","BIL","GLU"],
 ["Leucocytes","Nitrite","Urobilinogen","Protein","pH","Blood","Specific Gravity","Ketone","Bilirubin","Glucose"]];
 
 //tlc_Roche.tlc_Livingstone.tlc_Siemens
-multi_tlc=[ [120,25,160,90,167,160,273,240,360,300,435,370,520,440,590,510,350,580,350,650,350,720],[170,75,240,150,240,220,240,310,240,375,240,465,240,525,240,605,230,680,240,785],[130,30,136,110,130,200,136,290,136,360,136,450,136,542,136,624,115,710,120,790]];
+multi_tlc=[ [120,25,160,90,167,160,273,240,360,300,435,370,520,440,590,510,350,580,350,650],[170,75,240,150,240,220,240,310,240,375,240,465,240,525,240,605,230,680,240,785],[130,30,136,110,130,200,136,290,136,360,136,450,136,542,136,624,115,710,120,790]];

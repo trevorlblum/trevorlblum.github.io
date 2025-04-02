@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <!-- 
-31/3/2025 adjuatments and diagnosis values list fixed
+1/4/2025 completely at a loss about dropzone namelist and haemoglobin confirm for roche
+
+31/3/2025 adjustments and diagnosis values list fixed
 30/3/2025 Could not align diagvalues texts with <br> or \n. Looks messy fixed!
 30/3/2025 moved plotly up and left. Tested index.php if iframe works.
 29/3/2025 made livingstone the selected default to overcome first load issue
@@ -58,7 +60,7 @@ In test_profiles.txt as ref_image_src[].
 }   
 .diagzone {
         width: 600px;
-        height: 300px;
+        height: 250px;
         top:420px;
         left:850px;
         margin: 10px;
@@ -66,10 +68,10 @@ In test_profiles.txt as ref_image_src[].
         position:absolute;
 }
 .dropzone {
-  top:700px;
+  top:650px;
   left:850px;
   width: 600px;
-  height: 250px;
+  height: 230px;
   background: orange;
   margin: 10px;
   padding: 10px;
@@ -84,11 +86,22 @@ In test_profiles.txt as ref_image_src[].
   margin: 10px;
   padding: 10px;
 }
+.Diagnostic {
+  position: absolute;
+  top:50px;
+  left:70%;
+  width: 600px;
+  height: 350px;
+  margin: 10px;
+  padding: 10px;
+}
+
 
 </style>
 <div class="diagzone" id="diagzone"></div>
 <div class="dropzone" id="dropzone"></div>
 <div class="Plotzone" id="plotly"></div>
+<div class="Diagnostic" id="diagnostic">diagnostics</div>
 
 <div class="choices" id="choicezone">
 <select name="testchoice" id="testchoice" onchange="reload_page()" >
@@ -155,10 +168,9 @@ for(t=0;t<ntests;t++){
        for(r=0;r<nvalues;r++)matches[t][r]=t+r*nvalues;
 }
 //document.getElementById("body").innerHTML+=matches;
-minmatch=[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0];
+minmatch=[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0]; // added 11th for combur
 
-document.getElementById("dropzone").innerHTML="//dropzone";
-
+//document.getElementById("dropzone").innerHTML="//dropzone";//removed 1/4/2025
 //strip legends array is 8 wide( by 10 deep
 
 //need to base spacings on multi-test data,eg yoffset,spotX,spotY,yoffset,spotX+islandX*i,spotY+islandY*i

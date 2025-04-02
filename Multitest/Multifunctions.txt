@@ -65,8 +65,8 @@ function lsq( c1, c2){
 
 function compare(){  //do compare of strip colours to reference colours
 //alert("tlc[0] "+tlc[0]+" tlc[1] "+tlc[1]);
-for(t=0;t<count;t++){  //ten tests - error on roche with only 9 - ntests???
-   strip_data=ctxstrip.getImageData(30,tlc[t*2+1]+10,count,count);
+for(t=0;t<count;t++){                                           
+   strip_data=ctxstrip.getImageData(30,tlc[t*2+1]+10,count,count);  //ten or 11 tests - error on roche ntests???
    ctxstrip.fillStyle='rgb(0,0,0)';
    ctxstrip.fillRect(25,tlc[t*2+1]+10,count,count);
    ctxref.fillStyle='rgb(0,0,0)';//'+red+","+green+","+blue+')';
@@ -131,12 +131,15 @@ thismatch=999;
 thisx=0;
 //minmatch=[];
 matchat=[];
-//alert("Matches 9 6 & 8 6 "+matches[9][6]+" "+matches[8][6]);
-//diagnostic.println("Diagnostic printed "+day()+":"+month()+":"+year()+":"+hour()+":"+minute());
-for(t=0;t<numoftests[test_num];t++){
+
+document.getElementById("diagnostic").innerHTML="Diagnostic printed 01/04/2025 ";//+day()+":"+month()+":"+year()+":"+hour()+":"+minute());
+
+for(tt=0;tt<numoftests[test_num];tt++){
+  t=tt;        
+  if(test_num==0)t=rochediags[t];
   minmatch[t]=0;
   thismatch=999;
-  for(r=0;r<7;r++){
+  for(r=0;r<7;r++){           //all three manufacturers have 7 test values ( x's )
 // matches set in compare
      if(thismatch>matches[t][r]){
      thismatch=matches[t][r];
@@ -150,14 +153,14 @@ for(t=0;t<numoftests[test_num];t++){
 //  plotit(minmatch);
   plotit(matchat);
   diagvalues=[""];
-  document.getElementById("diagzone").innerHTML="<H4>diagnosis_tag diagvalues <br>"+"</H4>";
+//  document.getElementById("diagzone").innerHTML="<H4>diagnosis_tag diagvalues <br>"+"</H4>";//removed 1/4/2025
   for(i=0;i<diags[test_num].length;i++){
     diagvalues+=diags[test_num][i]+"<br>";
   }
   document.getElementById("diagzone").innerHTML+=diagvalues;
 }
 
-function showconfirm(event){ // responds to reference click with notes about test name
+function showconfirm(event){ // responds to reference click with notes about test name //roche diags are reordered
   X=event.clientX;
   ycoord=event.clientY;
 text=diag_notes.split("Home");
