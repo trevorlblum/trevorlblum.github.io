@@ -1,7 +1,9 @@
 <!DOCTYPE html>
-<!-- 
-1/4/2025 completely at a loss about dropzone namelist and haemoglobin confirm for roche
-
+<!--    
+7/4/2025 partially implemented debug on/off black spots
+5/4/2025 Diagnotes item 11 (haem apology) added. diagnotes lookup table for Roche fixed. 
+2/4/2025 still cannot get dropzone names for roche correct but diagzone is fine - fixed
+1/4/2025 completely at a loss about dropzone namelist and haemoglobin confirm for roche -fixed
 31/3/2025 adjustments and diagnosis values list fixed
 30/3/2025 Could not align diagvalues texts with <br> or \n. Looks messy fixed!
 30/3/2025 moved plotly up and left. Tested index.php if iframe works.
@@ -49,8 +51,17 @@ In test_profiles.txt as ref_image_src[].
 
 <p id="notes"></p> 
 <style>
+.About{
+        width: 170px;
+        height: 70px;
+        top:20px;
+        left:1000px;
+        margin-bottom: 20px;
+        background:yellow;
+        position:absolute;
+}   
 .choices{
-        width: 270px;
+        width: 200px;
         height: 30px;
         top:20px;
         left:800px;
@@ -64,7 +75,6 @@ In test_profiles.txt as ref_image_src[].
         top:420px;
         left:850px;
         margin: 10px;
-        background: yellow;
         position:absolute;
 }
 .dropzone {
@@ -72,7 +82,6 @@ In test_profiles.txt as ref_image_src[].
   left:850px;
   width: 600px;
   height: 230px;
-  background: orange;
   margin: 10px;
   padding: 10px;
   position:absolute;
@@ -82,7 +91,7 @@ In test_profiles.txt as ref_image_src[].
   top:50px;
   left:50%;
   width: 600px;
-  height: 350px;
+  height: 320px;
   margin: 10px;
   padding: 10px;
 }
@@ -96,12 +105,20 @@ In test_profiles.txt as ref_image_src[].
   padding: 10px;
 }
 
-
 </style>
-<div class="diagzone" id="diagzone"></div>
+<div class="diagzone" id="diagzone"><br></div>
 <div class="dropzone" id="dropzone"></div>
 <div class="Plotzone" id="plotly"></div>
-<div class="Diagnostic" id="diagnostic">diagnostics</div>
+<div class="Diagnostic" id="diagnostic"></div>
+
+<div class="About" id="about">
+<input type="checkbox" id="About" name="About1" value="about">
+<label for="about">About this app</label><br>
+<input type="checkbox" id="Debug" name="Debug" value="debug">
+<label for="debug">Show debug markers</label><br>
+<input type="checkbox" id="Diags" name="Diags" value="diags">
+<label for="diags">Show Diagnostics</label><br>
+</div>
 
 <div class="choices" id="choicezone">
 <select name="testchoice" id="testchoice" onchange="reload_page()" >
@@ -130,6 +147,8 @@ In test_profiles.txt as ref_image_src[].
 <script>
 //============================script begins here ====================
 
+//Get choice Manufacturer(test_num) and example strip name
+//
 //alert("Choices checked "+document.getElementById("testchoice").value);
 test_choice=document.getElementById("testchoice").value
 test_num=test_choice.substring(0,1);
@@ -143,7 +162,10 @@ test_ID=["Combur","Siemens","Livingstone"];
 //alert("test name_list "+namelist[test_num]);
 
 //alert("Test_profiles.txt"+multi_test+" reference image "+ref_image_src);
+
 //from test_profiles.txt get multi_test, namelist and multi_tlc
+//manufacturer and screen spacing defaults for x and y
+//show manufacturer in top line left side notice
 testvalues=multi_test[test_num].split(","); 
 Manufacturer=testvalues[0];
 ntests=testvalues[1];
@@ -154,7 +176,9 @@ islandX=testvalues[5];
 islandY=testvalues[6];
 test_names=namelist[test_num];
 document.getElementById("notice").innerHTML+=" chosen test is "+test_ID[test_num]+"<br>";
-//alert("test names "+test_ID[test_num]);
+//alert("namelist[0] is"+namelist[0]);
+//alert("test names for test_num "+test_num+" test_name " +test_ID[test_num]+" are "+test_names);
+
 image_names=ref_image_src;
 space=refspacing[test_num];
 count=numoftests[test_num];
@@ -178,9 +202,14 @@ minmatch=[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0]; // added 11th for combur
 
 // top left corners on reference canvas's from test_profiles.txt
 
-tlc=multi_tlc[test_num];
+tlc=multi_tlc[test_num];//set pad image locations for manufacturer
 
-const shownotes=true;
+var debug=false;
+//alert(document.getElementById("Debug").checked);
+if(Debug.checked) debug=true;
+if(About.checked)showabout();
+if(Diags.checked)showdiagnostics();
+
 
 var rgbColor;
 var dropcolour;
@@ -189,9 +218,9 @@ const hoveredColor = document.getElementById("hovered-color");
 const selectedColor = document.getElementById("selected-color");// 
 
 const canvasstrip = document.getElementById("canvasstrip");//canvasstrip shows picked colour for drag/drop
+//now defined in canvas
 //canvasstrip.addEventListener("click", (event) => pick(event, selectedColor));
 //canvasstrip.addEventListener( "dragend",(event)=>{event.preventDefault()});
-
 
 const canvasref=document.getElementById("canvasref");
 canvasref.addEventListener("click", (event) => showconfirm(event));
@@ -225,9 +254,17 @@ const ctxref = canvasref.getContext("2d");
 //ctxref.fillRect(0,0,650,850);
 refimage=new Image();
 refimage.src=image_names[test_num];         //modified for multi-tests (Combur...)
-
 ctxref.drawImage(refimage, 0, 0);
 
+function showabout(){
+alert("Placeholder for about docs");
+}
+function showdiagnostics(){
+alert("Placeholder for diagnostic summary");
+}
+
+//invoked by select to reload page for manufacturer or example change
+//
 function reload_page(){
   location.reload();
 }

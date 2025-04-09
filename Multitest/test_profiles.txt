@@ -19,7 +19,7 @@ As for siemens.
 */
 
 
-numoftests=[10,10,10]; //roche clags at 11 tests
+numoftests=[11,10,10]; //roche clags at 11 tests
 //ntests=numoftests[test_num];
 ref_image_src=["reference_images/Combur9.jpg","reference_images/Siemens10.png","reference_images/Livingstone10.png"];
 
@@ -63,12 +63,14 @@ diags=[["Specific Gravity: 1.000:1.005:1.010:1.015:1.20:1.025:1.030:",
 "Glucose          :neg:.:trace5.5mmol/L:14mmol/L:28++mmol/L:55+++mmol/L:>=111++++mmol/L:"]];
 
 //roche diags SG pH Leu Nit Pro Glu Ket Uro Bil Blo Haem
-rochediags=[0,7,5,1,2,4,10,8,3,9,6];
+rochediags=[7,5,1,2,4,10,8,3,9,6,11]; //0,7,5,1,2,4,10,8,3,9,6
 refspacing=[60,70,79];//horizontal spacing on reference
 refhorspacing=[70,79,82];//vertical spacing on reference
-namelist=[["Leuk(c)cytes","Nitrit(i)(os)","Protein","Specific Gravity","Glucose","Keton(es)","Urobilinogene","Bilirubine","Blood","Haemoglobin"],
+
+//namelist for manufacturers
+namelist=[["Specific Gravity","pH","Leuk(c)cytes","Nitrit(i)(os)","Protein","Glucose","Keton(es)","Urobilinogene","Bilirubine","Blood","Haemoglobin"],
 ["LEU","NIT","URO","PRO","pH","BLO","SG","KET","BIL","GLU"],
 ["Leucocytes","Nitrite","Urobilinogen","Protein","pH","Blood","Specific Gravity","Ketone","Bilirubin","Glucose"]];
 
 //tlc_Roche.tlc_Livingstone.tlc_Siemens
-multi_tlc=[ [120,25,160,90,167,160,273,240,360,300,435,370,520,440,590,510,350,580,350,650],[170,75,240,150,240,220,240,310,240,375,240,465,240,525,240,605,230,680,240,785],[130,30,136,110,130,200,136,290,136,360,136,450,136,542,136,624,115,710,120,790]];
+multi_tlc=[ [120,25,250,95,250,160,250,230,250,300,250,370, 250,445,250,510,250,585,250,650,310,720],[170,75,240,150,240,220,240,310,240,375,240,465,240,525,240,605,230,680,240,785],[130,30,136,110,130,200,136,290,136,360,136,450,136,542,136,624,115,710,120,790]];
