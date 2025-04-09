@@ -34,6 +34,8 @@ Neg. 	1/10 		(ir.) 	1/4 		1/2 	1 	2+ \ 100 		250 		500 	1,000 	2,000+ \
 Wait 30 Seconds - g/dL (%) - Expected result: Negative \ Top numbers = Grams per deciliter (g/dL) - A gram is equal to the weight of one milliliter or 16 drops of water. \
 › Bottom numbers = Milligrams per deciliter (mg/dL) - A milligram is one-thousandth of a gram. \
 To measure the amount of sugar in your urine, you need a urine test strip (dipstick) and a container for collecting urine. It is important to speak with your doctor about the best time of day to perform the urine glucose test, and whether to do it before or after eating. Glucose in the urine could indicate diabetes or renal glycosuria. Having sugar in your urine is usually a sign of very high blood sugar levels. The extra sugar in the bloodstream is typically only removed via the kidneys and detectable in urine at blood sugar concentrations of 10 mmol/L (180 mg/dL) and above. Normally, the amount of sugar (glucose) in urine is too low to be detected. Any detection of sugar on this test often calls for follow-up testing for diabetes. Blood sugar levels can be measured a lot more accurately by taking a blood sample and having it tested in a laboratory. NOTE: These last two parameters are commonly used to screen for possible metabolic disorders. \
+Home Urine Haemoglobin Test \
+Hemoglobin is a protein found in red blood cells responsible for transporting oxygen from the lungs to the rest of the body. It plays a vital role in maintaining overall health by ensuring that tissues receive adequate oxygen. When there is hemoglobin present in urine, it usually signals that there is an issue within the urinary tract or kidneys. \
 Home Urine End of diags \
 Haemoglobin notes not available from Roche \
 Home end of notes \

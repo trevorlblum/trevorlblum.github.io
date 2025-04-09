@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <!--    
+9/4/2025 added check boxes for about,debug and diagnostics displays
 7/4/2025 partially implemented debug on/off black spots
 5/4/2025 Diagnotes item 11 (haem apology) added. diagnotes lookup table for Roche fixed. 
 2/4/2025 still cannot get dropzone names for roche correct but diagzone is fine - fixed
@@ -149,7 +150,6 @@ In test_profiles.txt as ref_image_src[].
 
 //Get choice Manufacturer(test_num) and example strip name
 //
-//alert("Choices checked "+document.getElementById("testchoice").value);
 test_choice=document.getElementById("testchoice").value
 test_num=test_choice.substring(0,1);
 strip_num=test_choice.substring(2,3);
