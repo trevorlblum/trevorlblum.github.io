@@ -1,35 +1,19 @@
 <!DOCTYPE html>
-<!--    
+<!-- 
+11/4/2025 added 1 to diags position line 192. Rearranged dropzone and diagzone positions
+11/4/2025 wip adding diagbostic values to dropzone
 9/4/2025 added check boxes for about,debug and diagnostics displays
 7/4/2025 partially implemented debug on/off black spots
 5/4/2025 Diagnotes item 11 (haem apology) added. diagnotes lookup table for Roche fixed. 
 2/4/2025 still cannot get dropzone names for roche correct but diagzone is fine - fixed
 1/4/2025 completely at a loss about dropzone namelist and haemoglobin confirm for roche -fixed
 31/3/2025 adjustments and diagnosis values list fixed
-30/3/2025 Could not align diagvalues texts with <br> or \n. Looks messy fixed!
-30/3/2025 moved plotly up and left. Tested index.php if iframe works.
-29/3/2025 made livingstone the selected default to overcome first load issue
-29/3/2025 made group defaults "0,0" "1.0" and "2,0" done
-28/3/2025 addied pull-down reload-page "onchange"done
-25/3/2025 added select for test-strip and example choices done
-25/3/2025 needs style sheet to reduce clutter in index.html WIP
-25/3/2025 added example test strips as strip_num from 'examples.txt' done
-21/3/2025 some tidying of displays, adjusting tlc's and added x spacing param done
-20/3/2025 compare tlc's need fixing for combur and siemens-done
-20/3/2025 compare needs to be called when manufacture is known.
-18/3/2025 Roche tlc dies on fixed 10 for matches-fixed
-17/3/2025 test strip displays need to be uniform size and position for pick and match.
-17/3/2025 fixed pick by setting ondragstart NOT click for canvasstrip
-17/3/2025 does invoke pick function during drag and drop from test strip (dropend nor click)
-16/3/2025 some canvas name changes for easier identification of origins
-NOTE: Reference image name from "Combur,9,5,50,50,60,70","Livingstone,10,7,35,40,65,70","Siemens,10,7,45,28,65,70"
-In test_profiles.txt as ref_image_src[].
-
-4/3/2025 test_profiles now comes from test_profiles.txt and reference images from reference_images/. Works but needs some tweaking for various test sets.
+-->
 
 <html>
-><title> Multitest local  22/3</title>
+<title> Multitest app</title>
 <head>
+        <link rel="stylesheet" href="multistyle.css">
 	<!-- Load plotly.js into the DOM -->
 	<script src='plotly.js'></script>
         <body onload="loaded()" id="body"></body>
@@ -40,9 +24,9 @@ In test_profiles.txt as ref_image_src[].
 
 </head>
 
-<body >
+<body>
 
-<h4 id="notice" > 25/03/2025 CORS restrictions mean only runs from server localhost or trevorblum.name</H4>
+<h4 id="notice" > 25/03/2025 CORS needs run from server localhost or trevorblum.name</H4>
 <canvas id="canvasstrip" width="50px" height="875px" draggable="true" ondragstart="pick(event)" ></canvas>
 <canvas id="canvasref" width="780px" height="880px" ondrop="dropit(event)" ondragover="allowDrop(event)"></canvas>
 
@@ -71,39 +55,40 @@ In test_profiles.txt as ref_image_src[].
         position:absolute;
 }   
 .diagzone {
-        width: 600px;
-        height: 250px;
-        top:420px;
-        left:850px;
+        top:385px;
+        left:1150px;
+        width: 475px;
+        height: 650px;
         margin: 10px;
         position:absolute;
 }
 .dropzone {
-  top:650px;
-  left:850px;
-  width: 600px;
-  height: 230px;
-  margin: 10px;
-  padding: 10px;
-  position:absolute;
+       top:385px;
+       left:750px;
+       width: 300px;
+       height: 230px;
+       margin: 10px;
+       padding: 20px;
+       position:absolute;
+       border: 5px solid blue;
 }
 .Plotzone {
-  position: absolute;
-  top:50px;
-  left:50%;
-  width: 600px;
-  height: 320px;
-  margin: 10px;
-  padding: 10px;
+       position: absolute;
+       top:50px;
+       left:50%;
+       width: 600px;
+       height: 320px;
+       margin: 10px;
+       padding: 10px;
 }
 .Diagnostic {
-  position: absolute;
-  top:50px;
-  left:70%;
-  width: 600px;
-  height: 350px;
-  margin: 10px;
-  padding: 10px;
+       position: absolute;
+       top:30px;
+       left:70%;
+       width: 600px;
+       height: 350px;
+       margin: 10px;
+       padding: 10px;
 }
 
 </style>
@@ -118,7 +103,7 @@ In test_profiles.txt as ref_image_src[].
 <input type="checkbox" id="Debug" name="Debug" value="debug">
 <label for="debug">Show debug markers</label><br>
 <input type="checkbox" id="Diags" name="Diags" value="diags">
-<label for="diags">Show Diagnostics</label><br>
+<label for="diags">Email Diagnostics</label><br>
 </div>
 
 <div class="choices" id="choicezone">
@@ -126,8 +111,8 @@ In test_profiles.txt as ref_image_src[].
 <option value="0,0">Combur SG</option>
   <optgroup label="example">
    <option value="0,0">Specific Gravity</option>
-   <option value="0,1">Leucocytes</option>
-   <option value="0,2">Nitrites</option>
+   <option value="0,1">Nitrites</option>
+   <option value="0,2">Infection</option>
 </optgroup>
 <option value="1,0">Siemens Leucocytes</option>
   <optgroup label="example">
@@ -206,7 +191,7 @@ tlc=multi_tlc[test_num];//set pad image locations for manufacturer
 
 var debug=false;
 //alert(document.getElementById("Debug").checked);
-if(Debug.checked) debug=true;
+if(Debug.checked)debug=true;
 if(About.checked)showabout();
 if(Diags.checked)showdiagnostics();
 
@@ -260,7 +245,7 @@ function showabout(){
 alert("Placeholder for about docs");
 }
 function showdiagnostics(){
-alert("Placeholder for diagnostic summary");
+alert("Diagnostic summary data will be emailed to pyhysician");
 }
 
 //invoked by select to reload page for manufacturer or example change

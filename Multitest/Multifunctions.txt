@@ -1,6 +1,12 @@
 //function block for Multitest
+//WIP - sticky drag/drop to ref
 // set defaults off so drag/drops happen
 //
+var refdrops=[];  // record the reference drops from drag/drop
+var diagvalues=[""];
+
+const date=new Date();
+
 function allowDrop(ev) {
   ev.preventDefault();
 }
@@ -44,10 +50,16 @@ function dropit(ev){
   dropY=ev.clientY-80;
   ev.preventDefault();
   dropcolour=ctxref.getImageData(dropX,dropY,1,1);
-  ctxref.drawImage(refimage, 0, 0);
+//  ctxref.drawImage(refimage, 0, 0);      // redraw reference image - removed for sticky
+
   r=pickcolour.data[0];
   g=pickcolour.data[1];
   b=pickcolour.data[2];
+
+// save drop colour and coordinates  
+  refdrops+=r+","+g+","+b+","+dropX+","+dropY+":";
+//  alert(refdrops);
+
   ctxref.fillStyle='rgb('+r+","+g+","+b+')';   // drop colour patch for visual
   ctxref.fillRect(dropX,dropY,40,40);
   ctxref.fillStyle='rgb(0,0,0)';
@@ -83,7 +95,7 @@ for(t=0;t<count;t++){
    ctxref.fillStyle='rgb(0,0,0)';//'+red+","+green+","+blue+')';
    for(r=0;r<7;r++){ //seven refs
        ref_data=ctxref.getImageData(tlc[0]+r*space+30,tlc[t*2+1]+20,1,1);
-       if(debug)ctxref.fillRect(tlc[0]+r*space+30,tlc[t*2+1]+25,count,count);
+       if(debug)ctxref.fillRect(tlc[0]+r*space+30,tlc[t*2+1]+25,count,count); // debug patch rects
        red=ref_data.data[0];
        green=ref_data.data[1];
        blue=ref_data.data[2];
@@ -151,9 +163,12 @@ function tagmatch(){ //write diagnostic texts for minimal match to file
   thisx=0;
 //minmatch=[];
   matchat=[];
-  if(debug)document.getElementById("diagnostic").innerHTML="Diagnostic printed 01/04/2025 ";//+day()+":"+month()+":"+year()+":"+hour()+":"+minute());
-
- for(t=0;t<numoftests[test_num];t++){ //Siemens and Livingstone have 10 test rows
+  if(debug){
+month=date.getMonth()+1;
+document.getElementById("diagnostic").innerHTML="Diagnostic printed "+date.getDate()+"/"+month+"/"+date.getFullYear();
+}
+ 
+for(t=0;t<numoftests[test_num];t++){ //Siemens and Livingstone have 10 test rows
     minmatch[t]=0;
     thismatch=999;
     for(r=0;r<7;r++){           //all three manufacturers have 7 test value cols ( x's )
@@ -165,16 +180,14 @@ function tagmatch(){ //write diagnostic texts for minimal match to file
       }
     matchat[t]=thisx;
    }
-  if(debug)document.getElementById("dropzone").innerHTML+="<br>"+test_names[t]+" minimum is "+parseInt(minmatch[t])+" column "+matchat[t];
+  diagtmp=diags[test_num][t].split(":");
+  document.getElementById("dropzone").innerHTML+="<br>"+test_names[t]+" diagvalue= "+diagtmp[1+thisx];//diags to dropzone 
  }
-// plotit(minmatch); //plot minimum value
   if(debug)plotit(matchat);   //plot match column
-  diagvalues=[""];
-//  document.getElementById("diagzone").innerHTML="<H4>diagnosis_tag diagvalues <br>"+"</H4>";//removed 1/4/2025
   for(i=0;i<diags[test_num].length;i++){
     diagvalues+=diags[test_num][i]+"<br>";
   }
-  if(debug)document.getElementById("diagzone").innerHTML+=diagvalues;
+  if(debug)document.getElementById("diagzone").innerHTML+=diagvalues;// diags to diagzone when debug
 }
 
 //Put up a confirm message box to display diagnostic row item description
