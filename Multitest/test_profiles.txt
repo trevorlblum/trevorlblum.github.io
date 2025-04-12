@@ -28,7 +28,7 @@ multi_test=["Combur,11,7,50,50,60,70","Siemens,10,7,45,28,65,70","Livingstone,10
 
 /*Combur Siemens Livingston*/
 
-diags=[["Specific Gravity: 1.000:1.005:1.010:1.015:1.20:1.025:1.030:",
+diags=[["Specific Gravity: 1.000:1.005:1.010:1.015:1.020:1.025:1.030:",
 "pH		: .:.:5:6:7:8:9:",
 "Leukocytes	:.:.:neg:1+:2+:3+:",
 "Nitrite	:.:.:neg:pos:",
