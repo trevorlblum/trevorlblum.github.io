@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <!-- 
-13/4/2025 added green-red debug image. Livingstone URO is wrong... 
+13/4/2025 debug selection change now does reload_page
+13/4/2025 added green-red debug image. Livingstone URO corrected. 
 11/4/2025 added 1 to diags position line 192. Rearranged dropzone and diagzone positions
 11/4/2025 wip adding diagbostic values to dropzone
 9/4/2025 added check boxes for about,debug and diagnostics displays
@@ -108,14 +109,15 @@
    
 <div class="About" id="about">
 <input type="checkbox" id="About" name="About1" value="about">
-<label for="about">About this app</label><br>
-<input type="checkbox" id="Debug" name="Debug" value="debug">
-<label for="debug">Show debug markers</label><br>
+<label for="about"><strong>About this app</strong></label><br>
+<input type="checkbox" id="Debug" name="Debug" value="debug" onchange="debuginvoked()">
+<label for="debug"><strong>Show debug markers<strong></label><br>
 <input type="checkbox" id="Diags" name="Diags" value="diags">
-<label for="diags">Email Diagnostics</label><br>
+<label for="diags"><strong>Email Diagnostics</strong></label><br>
 </div>
 
 <div class="choices" id="choicezone">
+<label for="testchoice"><strong>make a choice</strong>:</label>
 <select name="testchoice" id="testchoice" onchange="reload_page()" >
 <option value="0,0">Combur SG</option>
   <optgroup label="example">
@@ -144,6 +146,7 @@
 
 //Get choice Manufacturer(test_num) and example strip name
 //
+
 test_choice=document.getElementById("testchoice").value
 test_num=test_choice.substring(0,1);
 strip_num=test_choice.substring(2,3);
@@ -205,7 +208,6 @@ if(About.checked)showabout();
 if(Diags.checked)showdiagnostics();
 if(debug)document.getElementById('greenredhor').innerHTML= '<img width="530px" height= "10px"  src="images/green_red_hor.png"></img>';
 
-
 var rgbColor;
 var dropcolour;
 var pickcolour;
@@ -256,6 +258,11 @@ alert("Placeholder for about docs");
 }
 function showdiagnostics(){
 alert("Diagnostic summary data will be emailed to pyhysician");
+}
+
+function debuginvoked(){
+//if(debug)alert("debuginvoked called");
+  reload_page();
 }
 
 //invoked by select to reload page for manufacturer or example change
