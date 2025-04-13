@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <!-- 
+13/4/2025 added green-red debug image. Livingstone URO is wrong... 
 11/4/2025 added 1 to diags position line 192. Rearranged dropzone and diagzone positions
 11/4/2025 wip adding diagbostic values to dropzone
 9/4/2025 added check boxes for about,debug and diagnostics displays
@@ -21,8 +22,7 @@
         <script src='test_profiles.txt'></script>
         <script src='Multifunctions.txt'></script>
         <script src='examples.txt'></script>
-
-</head>
+ </head>
 
 <body>
 
@@ -36,6 +36,13 @@
 
 <p id="notes"></p> 
 <style>
+.greenredhor{
+        top:5px;
+        width: 170px;
+        height: 5px;
+        left:190px;
+        position:absolute;
+}   
 .About{
         width: 170px;
         height: 70px;
@@ -97,6 +104,8 @@
 <div class="Plotzone" id="plotly"></div>
 <div class="Diagnostic" id="diagnostic"></div>
 
+<div class="greenredhor" id="greenredhor"></div>
+   
 <div class="About" id="about">
 <input type="checkbox" id="About" name="About1" value="about">
 <label for="about">About this app</label><br>
@@ -194,6 +203,7 @@ var debug=false;
 if(Debug.checked)debug=true;
 if(About.checked)showabout();
 if(Diags.checked)showdiagnostics();
+if(debug)document.getElementById('greenredhor').innerHTML= '<img width="530px" height= "10px"  src="images/green_red_hor.png"></img>';
 
 
 var rgbColor;
