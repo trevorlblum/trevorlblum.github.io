@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <!-- 
+cannot get vertical image to show preparatory to colour spotting diagnostics
+document.getElementById('greenredver').innerHTML= '<img width="530px" height= "10px"  src="images/green_red_ver.png"></img>';
+
 13/4/2025 debug selection change now does reload_page
 13/4/2025 added green-red debug image. Livingstone URO corrected. 
 11/4/2025 added 1 to diags position line 192. Rearranged dropzone and diagzone positions
@@ -37,6 +40,14 @@
 
 <p id="notes"></p> 
 <style>
+.greenredver{
+        top:5px;
+        width: 200 px;
+        height: 450px;
+        left:1000px;
+        position:absolute;
+        background:red;
+}   
 .greenredhor{
         top:5px;
         width: 170px;
@@ -106,6 +117,7 @@
 <div class="Diagnostic" id="diagnostic"></div>
 
 <div class="greenredhor" id="greenredhor"></div>
+<div class="greenredver" id="greenredver"></div>
    
 <div class="About" id="about">
 <input type="checkbox" id="About" name="About1" value="about">
