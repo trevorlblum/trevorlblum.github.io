@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <!-- 
-cannot get vertical image to show preparatory to colour spotting diagnostics
-document.getElementById('greenredver').innerHTML= '<img width="530px" height= "10px"  src="images/green_red_ver.png"></img>';
-
+16/4/2025 WIP added warningspots - needs to parameterise vspace and use column for green to orange.
 13/4/2025 debug selection change now does reload_page
 13/4/2025 added green-red debug image. Livingstone URO corrected. 
 11/4/2025 added 1 to diags position line 192. Rearranged dropzone and diagzone positions
@@ -34,19 +32,25 @@ document.getElementById('greenredver').innerHTML= '<img width="530px" height= "1
 <canvas id="canvasstrip" width="50px" height="875px" draggable="true" ondragstart="pick(event)" ></canvas>
 <canvas id="canvasref" width="780px" height="880px" ondrop="dropit(event)" ondragover="allowDrop(event)"></canvas>
 
-
 <p id="hovered-color"</p>
 <p id="selected-color"</p>
 
 <p id="notes"></p> 
 <style>
+.colourcanvas{
+        top:90px;
+        width: 30px;
+        height: 820px;
+        left:720px;
+        position:absolute;
+        border: 5px solid greenyellow;
+} 
 .greenredver{
         top:5px;
-        width: 200 px;
+        width: 200px;
         height: 450px;
-        left:1000px;
+        left:1200px;
         position:absolute;
-        background:red;
 }   
 .greenredhor{
         top:5px;
@@ -151,6 +155,11 @@ document.getElementById('greenredver').innerHTML= '<img width="530px" height= "1
 </optgroup>
 </select>
 </div>
+
+<div class="colourcanvas" id="cnvcolour">
+<canvas id="colourcanvas" width="50px" height="880px" ></canvas>>
+</div>
+
 </body id="body">
 
 <script>
@@ -265,6 +274,8 @@ refimage=new Image();
 refimage.src=image_names[test_num];         //modified for multi-tests (Combur...)
 ctxref.drawImage(refimage, 0, 0);
 
+warningspots();
+
 function showabout(){
 alert("Placeholder for about docs");
 }
@@ -281,6 +292,17 @@ function debuginvoked(){
 //
 function reload_page(){
   location.reload();
+}
+
+function warningspots(){
+//alert("warningspots");
+  const colcanvas=document.getElementById("colourcanvas");
+  const spotctx=colcanvas.getContext("2d");
+  col=["red","green","blue","yellow","purple","orange","pink","greenyellow","brown","darkgreen"];
+  for(i=0;i<10;i++){
+     spotctx.fillStyle=col[i];
+     spotctx.fillRect(5,10+i*85,20,20);
+  }
 }
 
 // =====================end of javascript mainline code================================
