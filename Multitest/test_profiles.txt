@@ -36,7 +36,7 @@ diags=[["Specific Gravity: 1.000:1.005:1.010:1.015:1.020:1.025:1.030:",
 "Glucose	:.:.:normal:1+:2+:3+:4+",
 "Ketones	:.:.:neg:1+:2+:3+:.:",
 "Urobilogen	:.:.:normal:1+:2+:3+:4+",
-"Bilirubin	:neg:1+:2+:3+:.:",
+"Bilirubin	:.:.:neg:1+:2+:3+:.:",
 "Blood		:.:.:neg:1+:2+:3+:4+",
 "Haemoglobin	:.:.:.:1+:2+:3+:4+"],
 
