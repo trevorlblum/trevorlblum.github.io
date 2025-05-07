@@ -1,5 +1,5 @@
 /*
-25/4/2025 updated Combur names for dropzone. Added Comburalt see line 87
+25/4/2025 updated Combur names for dropzone. see line 87
 Strip charts : Dimensions of varieties.
 
 Combur 10: Combur basic 5 test columns, 10 tests
