@@ -1,29 +1,27 @@
 <!DOCTYPE html>
 <!-- 
-16/4/2025 WIP added warningspots - needs to parameterise vspace and use column for green to orange.
-13/4/2025 debug selection change now does reload_page
-13/4/2025 added green-red debug image. Livingstone URO corrected. 
-11/4/2025 added 1 to diags position line 192. Rearranged dropzone and diagzone positions
-11/4/2025 wip adding diagbostic values to dropzone
-9/4/2025 added check boxes for about,debug and diagnostics displays
-7/4/2025 partially implemented debug on/off black spots
-5/4/2025 Diagnotes item 11 (haem apology) added. diagnotes lookup table for Roche fixed. 
-2/4/2025 still cannot get dropzone names for roche correct but diagzone is fine - fixed
-1/4/2025 completely at a loss about dropzone namelist and haemoglobin confirm for roche -fixed
-31/3/2025 adjustments and diagnosis values list fixed
+7/5/2025 changed colourcanvas to colourwarn for warning colour pallette
+7/5/2025 added pick/drop colours to dropzone debug after pick/drop
+1/5/2025 rochealt replaced with roche (5 testvalues)
+changed select and tlc still need to fix spacing and number of tests on combur
+24/4/2025 Livingstone diags not showing
+24/4/2025 added (almost roche Combur to various places... 
+19/4/2025 used <script> to load various external files but fails if file has html tags.
+18/4/2025 added warning color patches but needs some thought about thresholds and colour warning equivalents
+          <script> sources need MIME type=text/javascript stated.
+
 -->
 
 <html>
 <title> Multitest app</title>
 <head>
-        <link rel="stylesheet" href="multistyle.css">
 	<!-- Load plotly.js into the DOM -->
 	<script src='plotly.js'></script>
-        <body onload="loaded()" id="body"></body>
-        <script src='diag_notes.txt'></script>
-        <script src='test_profiles.txt'></script>
-        <script src='Multifunctions.txt'></script>
-        <script src='examples.txt'></script>
+        <body onload="loaded()" id="body">
+        <script src='diag_notes.js'></script>
+        <script src='test_profiles.js'></script>
+        <script src='Multifunctions.js'></script>
+        <script src='examples.js'></script>
  </head>
 
 <body>
@@ -32,8 +30,8 @@
 <canvas id="canvasstrip" width="50px" height="875px" draggable="true" ondragstart="pick(event)" ></canvas>
 <canvas id="canvasref" width="780px" height="880px" ondrop="dropit(event)" ondragover="allowDrop(event)"></canvas>
 
-<p id="hovered-color"</p>
-<p id="selected-color"</p>
+<p id="hovered-color"></p>
+<p id="selected-color"></p>
 
 <p id="notes"></p> 
 <style>
@@ -89,7 +87,7 @@
        top:385px;
        left:750px;
        width: 300px;
-       height: 230px;
+       height: 290px;
        margin: 10px;
        padding: 20px;
        position:absolute;
@@ -127,14 +125,14 @@
 <input type="checkbox" id="About" name="About1" value="about">
 <label for="about"><strong>About this app</strong></label><br>
 <input type="checkbox" id="Debug" name="Debug" value="debug" onchange="debuginvoked()">
-<label for="debug"><strong>Show debug markers<strong></label><br>
+<label for="debug"><strong>Show debug markers</strong></label><br>
 <input type="checkbox" id="Diags" name="Diags" value="diags">
 <label for="diags"><strong>Email Diagnostics</strong></label><br>
 </div>
 
 <div class="choices" id="choicezone">
 <label for="testchoice"><strong>make a choice</strong>:</label>
-<select name="testchoice" id="testchoice" onchange="reload_page()" >
+<select name="testchoice" id="testchoice" onchange="reload_page()"  >
 <option value="0,0">Combur SG</option>
   <optgroup label="example">
    <option value="0,0">Specific Gravity</option>
@@ -157,17 +155,15 @@
 </div>
 
 <div class="colourcanvas" id="cnvcolour">
-<canvas id="colourcanvas" width="50px" height="880px" ></canvas>>
+<canvas id="colourwarn" width="50px" height="880px" ></canvas>
 </div>
 
-</body id="body">
 
-<script>
+<script type="text/javascript">
 //============================script begins here ====================
 
 //Get choice Manufacturer(test_num) and example strip name
 //
-
 test_choice=document.getElementById("testchoice").value
 test_num=test_choice.substring(0,1);
 strip_num=test_choice.substring(2,3);
@@ -179,7 +175,7 @@ test_ID=["Combur","Siemens","Livingstone"];
 
 //alert("test name_list "+namelist[test_num]);
 
-//alert("Test_profiles.txt"+multi_test+" reference image "+ref_image_src);
+//alert("Test_profiles.js"+multi_test+" reference image "+ref_image_src);
 
 //from test_profiles.txt get multi_test, namelist and multi_tlc
 //manufacturer and screen spacing defaults for x and y
@@ -258,12 +254,8 @@ const ctxstrip = canvasstrip.getContext("2d");
 //ctxstrip.fillRect(0,0,50,850);
 
 stripimage=new Image();
-stripimagesources=["roche test strips/Roche_central.png","siemens test strips/siemens_max.png","livingstone test strip/strips/one_strip_max.png"];
-//alert("Strip png "+stripimagesources[test_num]); 
-//stripimage.src=stripimagesources[test_num];
-
 stripimage.src=example_strips[test_num][strip_num];
-//alert(stripimage.src);
+//alert(stripimage.src+"test num "+test_num+" strip_num "+strip_num);
 ctxstrip.drawImage(stripimage, 0, 0);
 
 //const canvasref = document.getElementById("canvasref");//canvasref shows reference image
@@ -272,9 +264,7 @@ const ctxref = canvasref.getContext("2d");
 //ctxref.fillRect(0,0,650,850);
 refimage=new Image();
 refimage.src=image_names[test_num];         //modified for multi-tests (Combur...)
-ctxref.drawImage(refimage, 0, 0);
-
-warningspots();
+ctxref.drawImage(refimage, 0, 0)
 
 function showabout(){
 alert("Placeholder for about docs");
@@ -294,20 +284,12 @@ function reload_page(){
   location.reload();
 }
 
-function warningspots(){
-//alert("warningspots");
-  const colcanvas=document.getElementById("colourcanvas");
-  const spotctx=colcanvas.getContext("2d");
-  col=["red","green","blue","yellow","purple","orange","pink","greenyellow","brown","darkgreen"];
-  for(i=0;i<10;i++){
-     spotctx.fillStyle=col[i];
-     spotctx.fillRect(5,10+i*85,20,20);
-  }
-}
 
 // =====================end of javascript mainline code================================
 
 
 </script>
+</body>
+
 </html>
 

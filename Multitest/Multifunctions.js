@@ -1,0 +1,239 @@
+//function block for Multitest
+//compare starts at line 93
+// warnings colors need a lookup rather than calced value white as 1, orange as 7
+//WIP - sticky drag/drop to ref
+// set defaults off so drag/drops happen
+// 19/4/2025 plotit should show column and value 
+
+// 17/4/2025 line 184 added column as basis for color patch 'seriousness' indicator
+var refdrops=[];  // record the reference drops from drag/drop
+var diagvalues=[""];
+var warningints=[""];
+var testtickle="this is a test of transfer to main code";
+const date=new Date();
+
+function allowDrop(ev) {
+  ev.preventDefault();
+}
+
+//monitor mouse for pick visual compare
+function drag(ev){
+  alert("drag invoked");
+}
+
+// Pick up the strip colour at the mouse pointer
+// in white against ref pad colour
+function pick(event) {
+//alert("In Pick");
+  const bounding = canvasstrip.getBoundingClientRect();
+  const x = event.clientX - bounding.left;
+  const y = event.clientY - bounding.top;
+  document.getElementById("canvasstrip").style.cursor="crosshair";
+  var data=ctxstrip.getImageData(x,y,1,1).data;   //pick pixel colour at mouse coords
+  var colour=[data[0],data[1],data[2]];
+//alert("pick coords "+x+","+y+"pixel data "+ data[0]+","+data[1]+","+data[2]);
+  pickcolour=ctxstrip.getImageData(x,y,1,1)//"rgb("+data[0]+","+data[1]+","+data[2]+")";
+//alert("pickcolour "+pickcolour.data[0]+pickcolour.data[1]+pickcolour.data[2]); 
+  rgbColor=data[0]<<24||data[1]<<16||data[2]<<8||data[3]; 
+
+//alert("pick text colour "+'rgb('+data[0]+","+data[1]+","+data[2]+')');
+  ctxstrip.fillStyle='rgb('+data[0]+","+data[1]+","+data[2]+')';
+  ctxstrip.fillRect(0,0,50,20);
+  ctxstrip.strokeStyle='white';ctxstrip.lineWidth="2";ctxstrip.rect(0,0,50,20);ctxstrip.stroke();
+  document.getElementById("notes").style.color='rgb('+colour+')'; //write note in colour
+//if(shownotes)document.getElementById("notes").innerHTML=" Image data[0-3]"+data[0]+"R "+data[1]+"G "+data[2]+"B "+imageData.data[3]+"A";
+
+//alert("(notes).style.color "+document.getElementById("notes").style.color);
+ return pickcolour;
+}
+
+//Picked strip colour drop to ref at mouse pointer for visual compare.maybe alert colours of pick and ref drop
+//
+function dropit(ev){
+//alert("dropit");
+  dropX=ev.clientX-80;
+  dropY=ev.clientY-80;
+  ev.preventDefault();
+  dropcolour=ctxref.getImageData(dropX,dropY,1,1);
+//  ctxref.drawImage(refimage, 0, 0);      // redraw reference image - removed for sticky
+
+  r=pickcolour.data[0];
+  g=pickcolour.data[1];
+  b=pickcolour.data[2];
+
+// save drop colour and coordinates  
+  refdrops+=r+","+g+","+b+","+dropX+","+dropY+":";
+//  alert("Pick_drop "+refdrops);
+
+  ctxref.fillStyle='rgb('+r+","+g+","+b+')';   // drop colour patch for visual
+  ctxref.fillRect(dropX,dropY,40,40);
+  ctxref.fillStyle='rgb(0,0,0)';
+  if(debug)ctxref.fillRect(dropX+10,dropY+15,15,10);  //mark black tlc coord
+  if(debug)document.getElementById("dropzone").innerHTML+="<br><br>pick and drop colours at "+dropX+", "+dropY+" are "+pickcolour.data[0]+" "+pickcolour.data[1]+" "+pickcolour.data[2]+" : "+dropcolour.data[0]+" "+dropcolour.data[1]+" "+dropcolour.data[1]+" lsq= "+parseInt(lsq(pickcolour,dropcolour));
+
+  lsq(pickcolour,dropcolour);
+};
+
+//Use least-square difference as match value for comparison
+//
+function lsq( c1, c2){
+//   alert("c1 colour red="+c1.data[0]+"green="+c1.data[1]+"blue="+c1.data[2]);
+//   alert("c2 colour red="+c2.data[0]+"green="+c2.data[1]+"blue="+c2.data[2]);
+   rdif=c1.data[0]-c2.data[0];
+   gdif=c1.data[1]-c2.data[1];
+   bdif=c1.data[2]-c2.data[2];
+   lsqdistance=Math.sqrt(rdif*rdif+2*gdif*gdif+4*bdif*bdif);
+   bright=(c1.data[0]+c1.data[1]+c1.data[2])/800;
+//alert("lsqdistance"+lsqdistance*bright);
+   return(lsqdistance*bright);
+}
+
+
+//Compare strip row colour to nvalues reference row colour pads
+//write least-square difference to reference image row/item blobs.
+//
+function compare(){  //do compare of strip colours to reference colours
+//alert("tlc[0] "+tlc[0]+" tlc[1] "+tlc[1]);
+for(t=0;t<count;t++){                                           
+   strip_data=ctxstrip.getImageData(30,tlc[t*2+1]+10,count,count);  //ten or 11 tests 
+   ctxstrip.fillStyle='rgb(0,0,0)';
+   if(debug)ctxstrip.fillRect(25,tlc[t*2+1]+10,count,count);
+   ctxref.fillStyle='rgb(0,0,0)';//'+red+","+green+","+blue+')';
+//   alert("Multifunctions compare space is "+space);
+   for(r=0;r<nvalues;r++){ //seven refs for Siemens, Livingstone: 5 for roche
+       ref_data=ctxref.getImageData(tlc[0]+r*space+30,tlc[t*2+1]+20,1,1);
+       if(debug)ctxref.fillRect(tlc[0]+r*space+30,tlc[t*2+1]+25,count,count); // debug patch rects
+       red=ref_data.data[0];
+       green=ref_data.data[1];
+       blue=ref_data.data[2];
+       ctxref.fillStyle='rgb('+red+","+green+","+blue+')';
+       if(debug)ctxref.fillRect(tlc[0]+10+r*space,tlc[t*2+1],40,15); //show ref colour pickup
+       //alert("comparing "+t+r+" : "+strip_data.data[0]+" "+ref_data.data[0]); 
+       diff=lsq(strip_data,ref_data);
+       matches[t][r]=diff;  // used by tagmatch which picks minimum value in test [t]
+       ctxref.fillStyle='rgb(255,255,255)';
+       if(debug)ctxref.fillText(parseInt(diff),tlc[0]+20+r*space,tlc[t*2+1]+10); // show tlc diffs
+      // for(i=0;i<diagvalues.length;i++)ctxref.fillText(diagvalues[i]+"<br>",tlc[i*2],tlc[i*2+1]);
+    }
+ }
+//       document.getElementById("dropzone").innerHTML+="<H4>Strip legend</H4><br>"+diagvalues;
+}
+
+// on load show ref and strip images and do compare and tagmatch functions
+//
+function loaded(){ //script draws fail if not loaded. ctxstrip and ctxref need explicit draw
+//alert("Loaded "+refimage.src);
+isloaded=true;
+ctxstrip.drawImage(stripimage, 0, 0);
+ctxref.drawImage(refimage, 0, 0);
+compare();
+tagmatch()
+//document.getElementById("body").innerHTML+="<br><h4>Loaded</H4>";
+//alert("namelist[0] at load is "+namelist[0]);   // WIP ALERT
+
+}
+
+// plot bar chart of match row and column value
+//
+function plotit(column){
+  minval=999;
+  maxval=0;
+  for(i=0;i<column.length;i++)if(column[i]<minval)minval=column[i];
+  for(i=0;i<column.length;i++)if(column[i]>maxval)maxval=column[i];
+  mean=(maxval-minval)/2
+  layout={
+  grid:{rows:1,columns:2,pattern:'independent'},
+  };
+  data1={
+  x:[1,2,3,4,5,6,7,8,9,10,11],y:column,type:'bar'},{margin:{t:0}};
+  data2={
+    x:[1,count],y:[maxval,maxval],type:'line'},{margin:{t:0}};  
+;
+  data=[data1,data2];
+  TESTER=document.getElementById("plotly");
+  Plotly.newPlot(TESTER,data,layout);
+//  Linechart=document.getElementById("plotzone");
+//  Plotly.newPlot(Linechart,[{
+//  x: [1,2,3,4,5,6,7,8,9,10], y:minima, type:'line'}],{
+//  margin:{t:0}};
+}
+
+//Generate diagnostic texts for matches
+//displays in diagnostic div place holder message for eventual record of patient data
+//Displays diagnostic and dropzone versions of compares
+//
+function tagmatch(){ //write diagnostic texts for minimal match to file
+//document.getElementById("diagzone").innerHTML+="<br><H4>diagnosis</H4>";
+  thismatch=999;
+  thisx=0;
+//minmatch=[];
+  matchat=[];
+  if(debug){
+month=date.getMonth()+1;
+document.getElementById("diagnostic").innerHTML="Diagnostic printed "+date.getDate()+"/"+month+"/"+date.getFullYear();
+}
+  
+document.getElementById("dropzone").innerHTML="dropzone nvalues="+nvalues+"<br>";
+for(t=0;t<numoftests[test_num];t++){ //Siemens and Livingstone have 10 test rows
+    minmatch[t]=0;
+    thismatch=999;
+    for(r=0;r<nvalues;r++){           //manufacturers have 7 test value cols ( x's ) except Combur with 5
+// matches set in compare
+      if(thismatch>matches[t][r]){
+      thismatch=matches[t][r];
+      thisx=r;
+      minmatch[t]=thismatch;
+      }
+    matchat[t]=thismatch;
+   }
+  diagtmp=diags[test_num][t].split(":");
+  document.getElementById("dropzone").innerHTML+="<br>"+test_names[t]+" diagvalue= "+diagtmp[1+thisx]+" ("+parseInt(1+thisx)+")";//diags to dropzone #190
+  warningints[t]=1+parseInt(thisx);
+ }
+  if(debug)plotit(matchat);   //plot match column
+  for(i=0;i<diags[test_num].length;i++){
+    diagvalues+=diags[test_num][i]+"<br>";
+  }
+//  alert("warningints "+warningints);
+  warningspots();
+
+  if(debug)document.getElementById("diagzone").innerHTML+=diagvalues;// diags to diagzone when debug
+}
+
+//Put up a confirm message box to display diagnostic row item description
+//click on row left hand text should invoke this
+//
+function showconfirm(event){ // responds to reference click with notes about test name //roche diags are reordered
+  X=event.clientX;
+  ycoord=event.clientY;
+  text=diag_notes.split("Home");
+//  alert("diag_notes [11] is "+text[11]);
+  vspace=refhorspacing[test_num];
+  thisy=ycoord/vspace;
+  for(i=0;i<tlc.length;i+=2)if(ycoord>=tlc[2*i+1] && ycoord<=tlc[2*i+1])thisy=i/2; 
+  if(test_num==0){
+    index=parseInt(ycoord/vspace)-1
+    thisy=rochediags[index];
+//    alert(" ycoord was "+ycoord+" index= \n"+index +" thisy= "+thisy);
+//    if(thisy==undefined)thisy=11;
+  }
+//alert("Test_num "+test_num+" ycoord "+ycoord+" space "+space+" thisy "+thisy+" text "+text[parseInt(thisy)] );
+  confirm(text[parseInt(thisy)]);
+}
+function warningspots(){
+//  alert("warningints "+warningints);
+  const colcanvas=document.getElementById("colourwarn");
+  const spotctx=colcanvas.getContext("2d");
+  col=["red","green","blue","yellow","purple","orange","pink","greenyellow","brown","darkgreen"];
+  for(i=0;i<10;i++){
+     r=parseInt(warningints[i]*32).toString(16)+parseInt(warningints[i]*32).toString(16);
+     r="#"+r+"00";//;
+//.  alert("hex "+r);
+     spotctx.fillStyle=r;//col[i];
+     spotctx.fillRect(5,10+i*85,20,20);
+     spotctx.fillStyle="black";
+     spotctx.fillText(warningints[i],10,10+i*85);
+  }
+//     alert("ints "+warningints);
+}
+
