@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <!-- 
+20/5/2025 startup siemens strip error / not .png in examples
 7/5/2025 changed colourcanvas to colourwarn for warning colour pallette
 7/5/2025 added pick/drop colours to dropzone debug after pick/drop
 1/5/2025 rochealt replaced with roche (5 testvalues)
@@ -255,6 +256,7 @@ const ctxstrip = canvasstrip.getContext("2d");
 
 stripimage=new Image();
 stripimage.src=example_strips[test_num][strip_num];
+alert("example_strips[test_num["+test_num+"][strip_num["+strip_num+"] name "+stripimage.src);
 //alert(stripimage.src+"test num "+test_num+" strip_num "+strip_num);
 ctxstrip.drawImage(stripimage, 0, 0);
 
